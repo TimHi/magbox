@@ -12,7 +12,7 @@ import (
 func main() {
 	app := pocketbase.New()
 	// go run .\main.go serve --http="localhost:8090"
-
+	// go run main.go serve --http="localhost:8090"
 	// serves static files from the provided public dir (if exists)
 	app.OnBeforeServe().Add(func(e *core.ServeEvent) error {
 		e.Router.GET("/*", apis.StaticDirectoryHandler(os.DirFS("./pb_public"), false))

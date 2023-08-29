@@ -1,2 +1,8 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script>
+	import LoginButton from '../components/LoginButton.svelte';
+</script>
+
+<LoginButton />
+<div class="h-screen grid place-content-center bg-gray-200">
+	<h1 class="text-5xl text-black-600 font-nationalpark">Magbox</h1>
+</div>
