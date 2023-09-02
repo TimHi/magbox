@@ -5,20 +5,20 @@ export class PocketBaseService {
 	private pocketBase: PocketBase;
 
 	constructor() { this.pocketBase = new PocketBase('http://127.0.0.1:8090'); }
-	async SignInUsingOAuth2(): Promise<boolean> {
-		this.pocketBase.collection('users').authWithOAuth2({ provider: 'discord' });
-
-		if (
-			this.pocketBase.authStore.isValid &&
-			this.pocketBase.authStore.token !== undefined &&
-			this.pocketBase.authStore.model
-		) {
-			isUserLoggedIn.update(() => true);
-			console.log("Login is true");
-			return true;
-		}
-		isUserLoggedIn.update(() => false);
-		return false;
+	async SignInUsingOAuth2(): Promise<void> {
+		this.pocketBase.collection('users').authWithOAuth2({ provider: 'discord' }).then(() => {
+			if (
+				this.pocketBase.authStore.isValid &&
+				this.pocketBase.authStore.token !== undefined &&
+				this.pocketBase.authStore.model
+			) {
+				isUserLoggedIn.set(true);
+				console.log("Login is true");
+			} else {
+				console.log('FOCKING BORKED');
+				isUserLoggedIn.set(false);
+			}
+		});
 	}
 
 	IsUserLoggedIn(): boolean {
@@ -67,7 +67,7 @@ export class PocketBaseService {
 	}
 
 	Logout() {
-		isUserLoggedIn.update(() => false);
+		isUserLoggedIn.set(false);
 		this.pocketBase.authStore.clear();
 	}
 
