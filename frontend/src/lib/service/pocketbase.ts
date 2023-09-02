@@ -20,20 +20,42 @@ export class PocketBaseService {
 	}
 
 	async GetLinks() {
+		console.log(this.pocketBase.authStore.model?.email);
 		console.log("Start fetch");
 		try {
-			const id = this.pocketBase.authStore.model?.email;
-			if (id === undefined) return [];
-			const record = await this.pocketBase.collection('links').getFullList(100000, {
-				filter: `userFK='${id}'`,
-			});
-			console.log(record.length);
+
+			const records = await this.pocketBase.collection('links').getFullList();
+			console.log(records.length);
+			console.log(records);
 		} catch (err: any) {
 			this.handleAuthError(err);
 		}
 	}
 
+	async CreateLink() {
+		// example create data
+		const data = {
+			"link": "https://example.com",
+			"description": "test",
+			"tagsFK": [
+
+			],
+			"userFK": this.pocketBase.authStore.model?.id,
+			"read": true,
+			"categorie": [
+
+			]
+		};
+		try {
+			const record = await this.pocketBase.collection('links').create(data);
+			console.log(record);
+		} catch (error: any) {
+			this.handleAuthError(error);
+		}
+	}
+
 	handleAuthError(err: ClientResponseError) {
+		console.log("Error>?");
 		console.error(err);
 		console.error(err.originalError);
 		//this.Logout();
