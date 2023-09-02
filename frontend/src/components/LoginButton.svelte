@@ -1,23 +1,23 @@
-<script>
-	import { PocketBaseService } from '$lib/service/pocketbase';
-	import { isUserLoggedIn } from '$lib/store/store';
-	const pocketBaseService = new PocketBaseService();
+<script lang="ts">
+  import { PocketBaseService } from '$lib/service/pocketbase';
+  import { isUserLoggedIn } from '$lib/store/store';
+
+  const pocketBaseService = new PocketBaseService();
+  
+  let signInPromise: Promise<boolean>;
+
+  function handleLogin() {
+    signInPromise = pocketBaseService.SignInUsingOAuth2();
+  }
 </script>
 
-<div class="bg-gray-400">
-	{#if $isUserLoggedIn}
-		<button
-			on:click={() => {
-				pocketBaseService.Logout();
-				isUserLoggedIn.update((_) => false);
-			}}>Log out</button
-		>
-	{:else}
-		<button
-			on:click={async () => {
-				const success = pocketBaseService.SignInUsingOAuth2();
-				isUserLoggedIn.update((_) => success);
-			}}>Log in</button
-		>
-	{/if}
+
+<div>
+  {#if $isUserLoggedIn}
+    <button class="btn btn-primary" on:click={() => {
+      pocketBaseService.Logout();
+    }}>Log out</button>
+  {:else}
+    <button class="btn btn-primary" on:click={handleLogin}>Log in</button>
+  {/if}
 </div>

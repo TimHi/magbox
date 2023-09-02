@@ -1,22 +1,26 @@
-import PocketBase, { ClientResponseError, type RecordModel } from 'pocketbase';
-
+import PocketBase, { ClientResponseError } from 'pocketbase';
+import { isUserLoggedIn } from '$lib/store/store';
 export class PocketBaseService {
-	private pocketBase = new PocketBase('http://localhost:8090');
-	SignInUsingOAuth2(): boolean {
-		const authData = this.pocketBase.collection('users').authWithOAuth2({ provider: 'discord' });
+	private pocketBase: PocketBase;
+
+	constructor() { this.pocketBase = new PocketBase('http://127.0.0.1:8090'); }
+	async SignInUsingOAuth2(): Promise<boolean> {
+		this.pocketBase.collection('users').authWithOAuth2({ provider: 'discord' });
 
 		if (
 			this.pocketBase.authStore.isValid &&
 			this.pocketBase.authStore.token !== undefined &&
 			this.pocketBase.authStore.model
-		)
+		) {
+			isUserLoggedIn.update(() => true);
 			return true;
+		}
+		isUserLoggedIn.update(() => false);
 		return false;
 	}
 
-	Logout() {
-		// "logout" the last authenticated account
-		this.pocketBase.authStore.clear();
+	IsUserLoggedIn(): boolean {
+		return this.pocketBase.authStore.isValid;
 	}
 
 	async GetLinks() {
@@ -27,8 +31,13 @@ export class PocketBaseService {
 			const records = await this.pocketBase.collection('links').getFullList();
 			console.log(records.length);
 			console.log(records);
-		} catch (err: any) {
-			this.handleAuthError(err);
+		} catch (err: unknown) {
+			console.log('ITS FUCKED MAN');
+			if (err instanceof ClientResponseError) {
+				this.handleAuthError(err);
+			} else {
+				console.error(err);
+			}
 		}
 	}
 
@@ -49,15 +58,23 @@ export class PocketBaseService {
 		try {
 			const record = await this.pocketBase.collection('links').create(data);
 			console.log(record);
-		} catch (error: any) {
-			this.handleAuthError(error);
+		} catch (err: unknown) {
+			if (err instanceof ClientResponseError) {
+				this.handleAuthError(err);
+			} else {
+				console.error(err);
+			}
 		}
 	}
 
+	Logout() {
+		isUserLoggedIn.update(() => false);
+		this.pocketBase.authStore.clear();
+	}
+
 	handleAuthError(err: ClientResponseError) {
-		console.log("Error>?");
 		console.error(err);
 		console.error(err.originalError);
-		//this.Logout();
+		this.Logout();
 	}
 }

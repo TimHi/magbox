@@ -8,6 +8,9 @@ export default {
     }
     },
   },
-  plugins: [],
+  daisyui: {
+    themes: ["night"],
+  },
+  plugins: [require("daisyui")],
 }
 
