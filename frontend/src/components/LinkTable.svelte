@@ -1,43 +1,45 @@
 <script lang="ts">
-	import { PocketBaseService } from '$lib/service/pocketbase';
-	import { onMount } from 'svelte';
-	const pocketBaseService = new PocketBaseService();
-	let createPromise: Promise<void>;
-	let tablePromise: Promise<void>;
+	import type { LinkModel } from '$lib/model/Link';
+	import SvelteTable from 'svelte-table';
+	import ReadColumn from './ReadColumn.svelte';
 
-	function fetchLinks() {
-		tablePromise = pocketBaseService.GetLinks();
-	}
-
-	function createLink() {
-		createPromise = pocketBaseService.CreateLink();
-	}
-
-	onMount(() => {
-		tablePromise = pocketBaseService.GetLinks();
-	});
+	export let linkData: LinkModel[] | undefined;
+	if (linkData === undefined) linkData = [];
+	console.log(linkData);
+	const rows = [...linkData];
+	const columns = [
+		{
+			key: 'date',
+			title: 'Added',
+			value: (v: LinkModel) => v.created,
+			sortable: true,
+			headerClass: 'text-left'
+		},
+		{
+			key: 'link',
+			title: 'Link',
+			value: (v: LinkModel) => v.link,
+			sortable: true,
+			headerClass: 'text-left'
+		},
+		{
+			key: 'desc',
+			title: 'Description',
+			value: (v: LinkModel) => v.description,
+			sortable: true,
+			headerClass: 'text-left'
+		},
+		{
+			key: 'read',
+			title: 'Read',
+			value: (v: LinkModel) => (v.read ? 'Read' : 'Unread'),
+			renderComponent: {
+				component: ReadColumn
+			},
+			sortable: true,
+			headerClass: 'text-left'
+		}
+	];
 </script>
 
-<p>
-	{#await tablePromise}
-		Loading...
-	{:then planet}
-		Result List: {planet}.
-	{:catch someError}
-		System error: {someError.message}.
-	{/await}
-</p>
-
-<p>
-	{#await createPromise}
-		Loading...
-	{:then planet}
-		Result Create: {planet}.
-	{:catch someError}
-		System error: {someError.message}.
-	{/await}
-</p>
-
-<button class="btn btn-primary" on:click={fetchLinks}> Fetch Links </button>
-
-<button class="btn btn-primary" on:click={createLink}> Create Link </button>
+<SvelteTable {columns} {rows} />

@@ -1,5 +1,6 @@
 import PocketBase, { ClientResponseError } from 'pocketbase';
 import { isUserLoggedIn } from '$lib/store/store';
+import type { LinkModel } from '$lib/model/Link';
 export class PocketBaseService {
 	private pocketBase: PocketBase;
 
@@ -13,6 +14,7 @@ export class PocketBaseService {
 			this.pocketBase.authStore.model
 		) {
 			isUserLoggedIn.update(() => true);
+			console.log("Login is true");
 			return true;
 		}
 		isUserLoggedIn.update(() => false);
@@ -23,16 +25,14 @@ export class PocketBaseService {
 		return this.pocketBase.authStore.isValid;
 	}
 
-	async GetLinks() {
-		console.log(this.pocketBase.authStore.model?.email);
-		console.log("Start fetch");
-		try {
+	delay(ms: number) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
 
-			const records = await this.pocketBase.collection('links').getFullList();
-			console.log(records.length);
-			console.log(records);
+	async GetLinks(): Promise<LinkModel[] | undefined> {
+		try {
+			return await this.pocketBase.collection('links').getFullList();
 		} catch (err: unknown) {
-			console.log('ITS FUCKED MAN');
 			if (err instanceof ClientResponseError) {
 				this.handleAuthError(err);
 			} else {
@@ -41,23 +41,22 @@ export class PocketBaseService {
 		}
 	}
 
-	async CreateLink() {
+	async CreateLink(link: string, description: string, read = false): Promise<LinkModel | undefined> {
 		// example create data
 		const data = {
-			"link": "https://example.com",
-			"description": "test",
+			"link": link,
+			"description": description,
 			"tagsFK": [
 
 			],
 			"userFK": this.pocketBase.authStore.model?.id,
-			"read": true,
+			"read": read,
 			"categorie": [
 
 			]
 		};
 		try {
-			const record = await this.pocketBase.collection('links').create(data);
-			console.log(record);
+			return await this.pocketBase.collection('links').create(data);
 		} catch (err: unknown) {
 			if (err instanceof ClientResponseError) {
 				this.handleAuthError(err);
@@ -73,8 +72,7 @@ export class PocketBaseService {
 	}
 
 	handleAuthError(err: ClientResponseError) {
-		console.error(err);
-		console.error(err.originalError);
 		this.Logout();
+		throw err;
 	}
 }

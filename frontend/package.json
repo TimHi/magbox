@@ -39,6 +39,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"pocketbase": "^0.17.3"
+		"pocketbase": "^0.17.3",
+		"svelte-table": "^0.6.1"
 	}
 }
