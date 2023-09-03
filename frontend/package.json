@@ -39,6 +39,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@lottiefiles/svelte-lottie-player": "^0.3.0",
 		"pocketbase": "^0.17.3",
 		"svelte-table": "^0.6.1"
 	}

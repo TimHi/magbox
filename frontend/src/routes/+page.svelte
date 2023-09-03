@@ -33,10 +33,12 @@
 			<LoginButton />
 		</div>
 	</div>
-	<AddLink on:message={handleNewData} />
+
 	{#await tablePromise}
 		<span class="loading loading-spinner loading-md" />
 	{:then linkData}
+		<p>Collection of your links.</p>
+		<AddLink on:message={handleNewData} />
 		<LinkTable {linkData} />
 	{:catch error}
 		<Error errorMessage={error.errorMessage} />
