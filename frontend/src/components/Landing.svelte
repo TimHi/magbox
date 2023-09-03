@@ -11,3 +11,4 @@
 	</div>
 </div>
 <p>Your read-later list for everything on the internet.</p>
+<p>Save posts you want to read later easily in one place.</p>

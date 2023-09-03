@@ -1,6 +1,8 @@
 <script lang="ts">
+	import Tag from './Tag.svelte';
 	import type { LinkModel } from '$lib/model/Link';
 	import { PocketBaseService } from '$lib/service/pocketbase';
+	import { isValidUrl } from '$lib/util/url';
 	import { createEventDispatcher } from 'svelte';
 
 	const dispatch = createEventDispatcher();
@@ -9,15 +11,8 @@
 	let isModalOpen = false;
 	let link: string = '';
 	let description: string = '';
-
-	function isValidUrl(url: string) {
-		try {
-			new URL(url);
-			return true;
-		} catch (err) {
-			return false;
-		}
-	}
+	let tags: string[] = [];
+	let tagInput = '';
 	function newDataDispatcher(record: Promise<LinkModel | undefined>) {
 		record.then((v: LinkModel | undefined) => {
 			if (v !== undefined) {
@@ -28,11 +23,10 @@
 </script>
 
 <button class="btn btn-secondary" on:click={() => (isModalOpen = true)}>Add new Link</button>
-
-<div class="modal" class:modal-open={isModalOpen}>
-	<div class="modal-box">
+<div class="modal flex flex-col" class:modal-open={isModalOpen}>
+	<div class="modal-box bg-accent">
 		<h3 class="font-bold text-lg">New Link</h3>
-		<form class="flex">
+		<form method="dialog">
 			<label>
 				Link:
 				<input type="text" bind:value={link} autocomplete="off" />
@@ -41,6 +35,23 @@
 				Description:
 				<input type="text" bind:value={description} autocomplete="off" />
 			</label>
+			<h3>Tags:</h3>
+			{#each tags as tag}
+				<Tag {tag} />
+			{/each}
+			<input
+				bind:value={tagInput}
+				on:keypress={(e) => {
+					if (e.code === 'Enter') {
+						if (!tags.includes(tagInput)) {
+							tags.push(tagInput);
+							tags = [...tags];
+							tagInput = '';
+						}
+					}
+				}}
+			/>
+
 			<!-- TODO: Add Tags & Cateogires -->
 		</form>
 		<div class="modal-action">
