@@ -1,4 +1,35 @@
 {
+  "compilerOptions": {
+    "target": "ESNEXT",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "importHelpers": true,
+    "lib": [
+      "ESNext",
+      "ESNext.AsyncIterable",
+      "DOM"
+    ],
+    "esModuleInterop": true,
+    "allowJs": true,
+    "sourceMap": true,
+    "strict": true,
+    "noEmit": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "paths": {
+      "~/*": [
+        "./*"
+      ],
+      "@/*": [
+        "./*"
+      ]
+    }
+  },
+  "include": [
+    "*.vue",
+    "*.ts"
+  ],
   "files": [],
   "references": [
     {
