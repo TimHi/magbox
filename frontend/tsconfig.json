@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "jsx": "preserve",
+    "allowSyntheticDefaultImports": true,
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
