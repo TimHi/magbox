@@ -1,45 +1,22 @@
 {
   "compilerOptions": {
-    "target": "ESNEXT",
-    "module": "ESNext",
-    "moduleResolution": "Node",
-    "importHelpers": true,
-    "lib": [
-      "ESNext",
-      "ESNext.AsyncIterable",
-      "DOM"
-    ],
-    "esModuleInterop": true,
-    "allowJs": true,
-    "sourceMap": true,
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
     "strict": true,
+    "importHelpers": true,
+    "isolatedModules": true,
     "noEmit": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "baseUrl": ".",
-    "paths": {
-      "~/*": [
-        "./*"
-      ],
-      "@/*": [
-        "./*"
-      ]
-    }
+    "lib": [
+      "dom",
+      "esnext"
+    ]
   },
-  "include": [
-    "*.vue",
-    "*.ts"
-  ],
-  "files": [],
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
-    },
-    {
-      "path": "./tsconfig.app.json"
-    },
-    {
-      "path": "./tsconfig.vitest.json"
-    }
+  "exclude": [
+    "node_modules",
+    "dist"
   ]
 }
