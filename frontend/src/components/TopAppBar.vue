@@ -3,6 +3,7 @@ import { PocketBaseService } from '../service/pocketBaseService';
 import { useUserStore } from '../stores/user';
 const pb = new PocketBaseService();
 const user = useUserStore();
+
 function login() {
     if (user.user.isLoggedIn) {
         pb.Logout();
@@ -14,9 +15,19 @@ function login() {
 </script>
 
 <template>
-    <h1>Magbox</h1>
-    <el-button type="primary" @click="login">
-        <p v-if="user.user.isLoggedIn">Logout</p>
-        <p v-else>Login</p>
-    </el-button>
+    <div class="topAppBar">
+        <h1>Magbox</h1>
+        <el-button type="primary" @click="login">
+            <p v-if="user.user.isLoggedIn">Logout</p>
+            <p v-else>Login</p>
+        </el-button>
+    </div>
 </template>
+
+<style scoped>
+.topAppBar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+</style>
