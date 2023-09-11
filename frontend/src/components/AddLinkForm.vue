@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { PocketBaseService } from '../service/pocketBaseService';
+import router from '../router';
 
-
+const pb = new PocketBaseService();
 const title = ref('');
 const link = ref('');
 const desc = ref('');
 function submit() {
-
+    pb.CreateLink(link.value, desc.value, false).then(() => {
+        router.push('/');
+    }).catch(() => console.log("Error creating link"));
 }
 </script>
 
