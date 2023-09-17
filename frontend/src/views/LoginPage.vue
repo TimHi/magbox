@@ -5,15 +5,12 @@ import { useUserStore } from '../stores/user';
 const pb = new PocketBaseService();
 const user = useUserStore();
 
+
 function login() {
     if (user.user.isLoggedIn) {
         pb.Logout();
     } else {
-        pb.SignInUsingOAuth2().then(() => {
-            console.log("Success loggin in, Nav back to home");
-            router.push('/');
-        }).catch(() => console.debug("error loggin in"));
-        console.log('login');
+        pb.SignInUsingOAuth2().then(() => router.push('/')).catch(() => console.error("Login Error"));
     }
 }
 </script>

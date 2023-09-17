@@ -15,8 +15,7 @@ if (isUserLoggedIn) {
         linksInStore.value = linkStore.links;
     });
 }
-console.log(useUserStore().user.isLoggedIn);
-console.log(linkStore.links.length);
+
 </script>
 
 <template>

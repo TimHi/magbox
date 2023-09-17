@@ -20,9 +20,7 @@ function validateURL(url: string) {
 
 async function submit() {
     const preview = await getPreview(link.value);
-    console.log("Preview received");
     pb.CreateLink(link.value, preview, false).then(() => {
-        console.log("Added link!");
         router.push('/');
     }).catch(() => console.log("Error creating link"));
 }
