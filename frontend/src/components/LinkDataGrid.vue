@@ -31,6 +31,5 @@ console.log(linkStore.links.length);
 .container {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
 }
 </style>

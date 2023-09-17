@@ -4,23 +4,52 @@ import { PocketBaseService } from '../service/pocketBaseService';
 import router from '../router';
 
 const pb = new PocketBaseService();
-const title = ref('');
 const link = ref('');
-const desc = ref('');
-function submit() {
-    pb.CreateLink(link.value, desc.value, false).then(() => {
+const validUrl = ref(false);
+
+function validateURL(url: string) {
+    try {
+        new URL(url);
+        validUrl.value = true;
+        return true;
+    } catch (validationError) {
+        validUrl.value = false;
+        return false;
+    }
+}
+
+async function submit() {
+    const preview = await getPreview(link.value);
+    console.log("Preview received");
+    pb.CreateLink(link.value, preview, false).then(() => {
+        console.log("Added link!");
         router.push('/');
     }).catch(() => console.log("Error creating link"));
+}
+
+async function getPreview(url: string) {
+    if (validateURL(url)) {
+        return await pb.GetPreview(url);
+    }
+    return undefined;
 }
 </script>
 
 <template>
-    <el-text class="text" tag="h1">Add new Link</el-text>
-    <el-text class="text" tag="h2">Title</el-text>
-    <el-input v-model="title" placeholder="Please enter title" />
-    <el-text class="text" tag="h2">Link</el-text>
-    <el-input v-model="link" placeholder="Please enter link" />
-    <el-text class="text" tag="h2">Description</el-text>
-    <el-input v-model="desc" :rows="2" type="textarea" placeholder="Please enter short description" />
-    <el-button @click="submit">Submit</el-button>
+    <div class="form">
+        <h1>Add new Link</h1>
+        <el-text class="text" tag="h2">Link</el-text>
+        <el-input v-model="link" placeholder="Please enter link" @input="validateURL" />
+        <el-divider />
+        <el-button v-if="validUrl" @click="submit">Submit</el-button>
+        <el-button><router-link to="/">Back</router-link> </el-button>
+
+    </div>
 </template>
+
+<style>
+.form {
+    width: 400px;
+    margin: 4px;
+}
+</style>

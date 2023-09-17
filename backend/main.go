@@ -1,11 +1,10 @@
 package main
 
 import (
-	"fmt"
-	"log"
 	"net/http"
 
 	"github.com/badoux/goscraper"
+	"github.com/charmbracelet/log"
 	"github.com/labstack/echo/v5"
 	"github.com/labstack/echo/v5/middleware"
 	"github.com/pocketbase/pocketbase"
@@ -25,21 +24,13 @@ func main() {
 			Path:   "/api/url_preview/:url",
 			Handler: func(c echo.Context) error {
 				url := c.PathParam("url")
-				s, err := goscraper.Scrape(url, 5)
+				s, err := goscraper.Scrape(url, 3)
 				if err != nil {
-					fmt.Println(err)
+					log.Error(err)
 					return c.JSON(http.StatusInternalServerError, "Error Scraping")
 				}
-				fmt.Printf("Icon : %s\n", s.Preview.Icon)
-				fmt.Printf("Name : %s\n", s.Preview.Name)
-				fmt.Printf("Title : %s\n", s.Preview.Title)
-				fmt.Printf("Description : %s\n", s.Preview.Description)
-				if len(s.Preview.Images) > 0 {
-					fmt.Printf("Image: %s\n", s.Preview.Images[0])
-				}
-				fmt.Printf("Url : %s\n", s.Preview.Link)
-				return c.JSON(http.StatusOK, "")
-
+				log.Print(s.Preview)
+				return c.JSON(http.StatusOK, s.Preview)
 			},
 			Middlewares: []echo.MiddlewareFunc{
 				apis.ActivityLogger(app),

@@ -2,6 +2,7 @@ import PocketBase, { ClientResponseError } from 'pocketbase';
 import { useUserStore } from '../stores/user';
 import { LinkModel } from '../model/linkModel';
 import { useLinkStore } from '../stores/links';
+import { DocumentPreview } from '../model/previewModel';
 export class PocketBaseService {
     private pocketBase: PocketBase;
 
@@ -39,6 +40,7 @@ export class PocketBaseService {
     async GetLinks(): Promise<LinkModel[]> {
         try {
             const links: LinkModel[] = await this.pocketBase.collection('links').getFullList();
+            console.log(links);
             if (links === undefined) { return [] as LinkModel[]; } else {
                 return links;
             }
@@ -52,27 +54,40 @@ export class PocketBaseService {
         }
     }
 
-    async CreateLink(link: string, description: string, read = false): Promise<LinkModel | undefined> {
+    GetPreview(url: string): Promise<DocumentPreview | undefined> {
+        return fetch('http://localhost:8090/api/url_preview/' + url)
+            // the JSON body is taken from the response
+            .then(res => res.json())
+            .then(res => {
+                if (res === "Error Scraping") { return undefined; }
+                // The response has an `any` type, so we need to cast
+                // it to the `User` type, and return it from the promise
+                return res as DocumentPreview
+            });
+    }
+
+    async CreateLink(link: string, preview: DocumentPreview | undefined, read = false): Promise<LinkModel | undefined> {
+        console.log(preview);
         // example create data
         const data = {
             "link": link,
-            "description": description,
+            "description": preview?.Description ?? "",
             "tagsFK": [
-
             ],
             "userFK": this.pocketBase.authStore.model?.id,
             "read": read,
             "categorie": [
-
-            ]
+            ],
+            title: preview?.Title ?? "",
+            "image": (preview?.Images.length ?? 0) > 0 ? preview?.Images[0] : "",
         };
+        console.log(data);
         try {
             return await this.pocketBase.collection('links').create(data);
         } catch (err: unknown) {
+            console.error(err);
             if (err instanceof ClientResponseError) {
                 this.handleAuthError(err);
-            } else {
-                console.error(err);
             }
         }
     }
@@ -86,7 +101,7 @@ export class PocketBaseService {
     }
 
     handleAuthError(err: ClientResponseError) {
-        this.Logout();
+        //this.Logout();
         throw err;
     }
 }

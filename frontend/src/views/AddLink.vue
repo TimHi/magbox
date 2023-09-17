@@ -6,5 +6,4 @@ import AddLinkForm from '../components/AddLinkForm.vue';
 
 <template>
     <AddLinkForm />
-    <router-link to="/">Back</router-link>
 </template>

@@ -4,38 +4,23 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
-import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
+
 
 import App from './App.vue'
-import AddLink from './views/AddLink.vue'
-import HomePage from './views/HomePage.vue'
-import LoginPage from './views/LoginPage.vue'
+
 import Button from "primevue/button"
 import { useUserStore } from './stores/user'
+import router from './router'
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 const app = createApp(App)
 
 app.component('PButton', Button);
 app.use(ElementPlus)
 app.use(createPinia())
-const routes = [
-    {
-        path: '/',
-        component: HomePage
-    },
-    {
-        path: '/add',
-        component: AddLink
-    },
-    {
-        path: '/login',
-        component: LoginPage
-    }
-];
-const router = createRouter({
-    history: createWebHashHistory(),
-    routes
-})
+for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+    app.component(key, component)
+}
 
 router.beforeEach(async (to, from, next) => {
     const isUserLoggedIn = useUserStore().user.isLoggedIn;

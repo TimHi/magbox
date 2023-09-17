@@ -18,7 +18,7 @@ user.setLoginStats(pb.IsUserLoggedIn());
             </el-header>
             <el-main>
                 <LinkDataGrid />
-                <router-link to="/add">Add Link</router-link>
+                <el-button><router-link to="/add">Add Link</router-link></el-button>
             </el-main>
         </el-container>
     </div>
