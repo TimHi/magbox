@@ -1,7 +1,7 @@
 // stores/linkStore.js
 
 import { defineStore } from 'pinia';
-import { LinkModel } from '../model/linkModel';
+import type { LinkModel } from '../model/linkModel';
 import { PocketBaseService } from '../service/pocketBaseService';
 
 

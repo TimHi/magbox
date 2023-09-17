@@ -1,8 +1,8 @@
 import PocketBase, { ClientResponseError } from 'pocketbase';
 import { useUserStore } from '../stores/user';
-import { LinkModel } from '../model/linkModel';
+import type { LinkModel } from '../model/linkModel';
 import { useLinkStore } from '../stores/links';
-import { DocumentPreview } from '../model/previewModel';
+import type { DocumentPreview } from '../model/previewModel';
 export class PocketBaseService {
     private pocketBase: PocketBase;
 

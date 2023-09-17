@@ -1,6 +1,9 @@
 <script setup lang="ts">
-import { PropType, ref } from 'vue';
-import { LinkModel } from '../model/linkModel';
+import { ref } from 'vue';
+import type {
+    PropType
+} from 'vue';
+import type { LinkModel } from '../model/linkModel';
 
 const props = defineProps({
     linkModel: Object as PropType<LinkModel>,

@@ -2,7 +2,7 @@
 
 
 import { ref } from 'vue';
-import { LinkModel } from '../model/linkModel';
+import type { LinkModel } from '../model/linkModel';
 import { useLinkStore } from '../stores/links';
 import { useUserStore } from '../stores/user';
 import LinkDataCard from './LinkDataCard.vue';
