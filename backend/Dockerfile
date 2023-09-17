@@ -8,7 +8,7 @@ COPY . .
 
 RUN go build -o main .
 
-EXPOSE 8090
+EXPOSE 9000
 
 # Run
-CMD ["./main", "serve",  "--http=0.0.0.0:8090"]
+CMD ["./main", "serve",  "--http=0.0.0.0:9000"]
