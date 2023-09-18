@@ -36,18 +36,25 @@ async function getPreview(url: string) {
 <template>
     <div class="form">
         <h1>Add new Link</h1>
-        <el-text class="text" tag="h2">Link</el-text>
-        <el-input v-model="link" placeholder="Please enter link" @input="validateURL" />
+        <el-text class="darkText" tag="h2">Link</el-text>
+        <el-input v-model="link" placeholder="https://de.wikipedia.org/wiki/Aale" @input="validateURL" />
         <el-divider />
         <el-button v-if="validUrl" @click="submit">Submit</el-button>
-        <el-button><router-link to="/">Back</router-link> </el-button>
+        <el-button class="button"><router-link to="/">Back</router-link> </el-button>
 
     </div>
 </template>
 
 <style>
+.darkText {
+    color: var(--color-heading);
+}
+
 .form {
     width: 400px;
-    margin: 4px;
+    margin: auto;
+    width: 50%;
 }
+
+.button {}
 </style>

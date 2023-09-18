@@ -4,15 +4,22 @@ import type {
     PropType
 } from 'vue';
 import type { LinkModel } from '../model/linkModel';
+import { PocketBaseService } from '../service/pocketBaseService';
 
 const props = defineProps({
     linkModel: Object as PropType<LinkModel>,
 });
 const read = ref(props.linkModel?.read)
-
+const pbService = new PocketBaseService();
 function deleteItem() {
-    console.log("Delete:");
-    console.log(props.linkModel?.id);
+    if (props.linkModel?.id) {
+        pbService.DeleteLinkEntry(props.linkModel?.id).then((success: boolean) => {
+            if (success) {
+                //TODO: Make all this through the store
+            }
+        });
+    }
+
 }
 
 </script>

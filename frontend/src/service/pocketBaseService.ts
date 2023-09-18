@@ -48,7 +48,7 @@ export class PocketBaseService {
     }
 
     GetPreview(url: string): Promise<DocumentPreview | undefined> {
-        return fetch(import.meta.env.VITE_PB_BACKEND + '/api/url_preview/' + url)
+        return fetch(import.meta.env.VITE_PB_BACKEND + 'api/url_preview/' + url)
             .then(res => res.json())
             .then(res => {
                 if (res === "Error Scraping") { return undefined; }
@@ -77,6 +77,18 @@ export class PocketBaseService {
             if (err instanceof ClientResponseError) {
                 this.handleAuthError(err);
             }
+        }
+    }
+
+    async DeleteLinkEntry(id: string): Promise<boolean> {
+        try {
+            return await this.pocketBase.collection('links').delete(id);
+        } catch (err: unknown) {
+            console.error(err);
+            if (err instanceof ClientResponseError) {
+                this.handleAuthError(err);
+            }
+            return false;
         }
     }
 

@@ -10,7 +10,9 @@ function login() {
     if (user.user.isLoggedIn) {
         pb.Logout();
     } else {
-        pb.SignInUsingOAuth2().then(() => router.push('/')).catch(() => console.error("Login Error"));
+        try {
+            pb.SignInUsingOAuth2().then(() => router.push('/')).catch(() => console.error("Login Error"));
+        } catch (err) { console.error(err) }
     }
 }
 </script>
