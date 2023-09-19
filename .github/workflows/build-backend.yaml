@@ -1,0 +1,44 @@
+name: Build Backend Container
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out
+        uses: actions/checkout@v2
+
+      - name: Docker meta
+        id: docker_meta
+        uses: crazy-max/ghaction-docker-meta@v1
+        with:
+          images: ghcr.io/TimHi/magbox-backend
+          tag-sha: true
+          tag-edge: false
+          tag-latest: true
+
+      - name: Login to GHCR
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN  }}
+
+      - name: Build image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./backend/
+          tags: ${{ steps.docker_meta.outputs.tags }}
+          file: ./backend/Dockerfile
+
+      - name: Push image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./backend/
+          push: true
+          tags: ${{ steps.docker_meta.outputs.tags }}
+          file: ./backend/Dockerfile
