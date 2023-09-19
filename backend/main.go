@@ -26,10 +26,9 @@ func main() {
 				url := c.PathParam("url")
 				s, err := goscraper.Scrape(url, 3)
 				if err != nil {
-					log.Error(err)
+					log.Print(err)
 					return c.JSON(http.StatusInternalServerError, "Error Scraping")
 				}
-				log.Print(s.Preview)
 				return c.JSON(http.StatusOK, s.Preview)
 			},
 			Middlewares: []echo.MiddlewareFunc{
@@ -43,6 +42,6 @@ func main() {
 	})
 
 	if err := app.Start(); err != nil {
-		log.Fatal(err)
+		log.Print(err)
 	}
 }
