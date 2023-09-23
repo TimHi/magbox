@@ -43,3 +43,5 @@ jobs:
           push: true
           tags: ${{ steps.docker_meta.outputs.tags }}
           file: ./backend/Dockerfile
+    outputs:
+      image_tag: ${{ steps.docker_meta.outputs.tags }}
