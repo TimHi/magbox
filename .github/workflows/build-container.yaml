@@ -39,7 +39,7 @@ jobs:
 
       # ----------------Build Images----------------
       - name: Build Frontend Image
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v5
         with:
           context: ./frontend/
           platforms: linux/amd64,linux/arm64,linux/arm64/v8
@@ -56,7 +56,7 @@ jobs:
           tag-latest: true
 
       - name: Build Backend Image
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v5
         with:
           context: ./backend/
           platforms: linux/amd64,linux/arm64,linux/arm64/v8
