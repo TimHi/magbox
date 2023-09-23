@@ -13,8 +13,8 @@ jobs:
       - name: Check out
         uses: actions/checkout@v2
 
-      - name: Docker meta
-        id: docker_meta
+      - name: Docker meta Frontend
+        id: docker_meta_frontend
         uses: crazy-max/ghaction-docker-meta@v1
         with:
           images: ghcr.io/TimHi/magbox-frontend
@@ -29,19 +29,55 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN  }}
 
-      - name: Build image
+      # ----------------Build Images----------------
+      - name: Build Frontend Image
         uses: docker/build-push-action@v2
         with:
           context: ./frontend/
-          tags: ${{ steps.docker_meta.outputs.tags }}
+          tags: ${{ steps.docker_meta_frontend.outputs.tags }}
           file: ./frontend/Dockerfile
 
-      - name: Push image
+      - name: Docker Backend meta
+        id: docker_meta_backend
+        uses: crazy-max/ghaction-docker-meta@v1
+        with:
+          images: ghcr.io/TimHi/magbox-backend
+          tag-sha: true
+          tag-edge: false
+          tag-latest: true
+
+      - name: Build Backend Image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./backend/
+          tags: ${{ steps.docker_meta_backend.outputs.tags }}
+          file: ./backend/Dockerfile
+
+        # ----------------Push Images----------------
+      - name: Push Backend Image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./backend/
+          push: true
+          tags: ${{ steps.docker_meta_backend.outputs.tags }}
+          file: ./backend/Dockerfile
+
+      - name: Push Frontend Image
         uses: docker/build-push-action@v2
         with:
           context: ./frontend/
           push: true
-          tags: ${{ steps.docker_meta.outputs.tags }}
+          tags: ${{ steps.docker_meta_frontend.outputs.tags }}
           file: ./frontend/Dockerfile
-    outputs:
-      image_tag: ${{ steps.docker_meta.outputs.tags }}
+
+          # ----------------Deploy Images----------------
+      - name: Pull container and restart compose
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.HOST }}
+          key: ${{ secrets.SSH_KEY }}
+          username: ${{ secrets.USERNAME }}
+          script: |
+            docker pull ghcr.io/timhi/magbox-backend:master
+            docker pull ghcr.io/timhi/magbox-frontend:master
+            docker compose up -d
