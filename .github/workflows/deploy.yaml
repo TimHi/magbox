@@ -22,7 +22,7 @@ jobs:
         with:
           ref: master
           check-name: 'Build Backend Container'
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          repo-token: ${{ secrets.PAT_WAIT }}
           wait-interval: 20
 
       - name: Pull container and restart compose
