@@ -27,7 +27,6 @@ async function submit() {
 
 async function getPreview(url: string) {
     if (validateURL(url)) {
-        console.log("Prev");
         return await pb.GetPreview(url);
     }
     return undefined;
