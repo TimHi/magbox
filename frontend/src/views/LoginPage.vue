@@ -11,7 +11,7 @@ function login() {
         pb.Logout();
     } else {
         try {
-            pb.SignInUsingOAuth2().then(() => router.push('/')).catch(() => console.error("Login Error"));
+            pb.SignInUsingOAuth2().catch(() => console.error("Login Error"));
         } catch (err) { console.error(err) }
     }
 }

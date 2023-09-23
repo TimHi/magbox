@@ -32,13 +32,19 @@ router.beforeEach(async (to, _, next) => {
   }
 });
 
-const user = useUserStore();
+const userStore = useUserStore();
 const linkStore = useLinkStore();
+userStore.$subscribe((_, state) => {
+  if (!state.user.isLoggedIn) {
+    router.push('/login');
+  } else {
+    linkStore.getLinksFromBackend();
+    router.push('/');
+  }
+});
+
 const pb = new PocketBaseService();
-user.setLoginStats(pb.IsUserLoggedIn());
-if (user.user.isLoggedIn) {
-  linkStore.getLinksFromBackend();
-}
+userStore.setLoginStats(pb.IsUserLoggedIn());
 
 app.use(router);
 app.mount('#app');
