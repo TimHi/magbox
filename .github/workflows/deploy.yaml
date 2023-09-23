@@ -14,7 +14,7 @@ jobs:
       - name: Wait for frontend to succeed
         uses: lewagon/wait-on-check-action@master
         with:
-          ref: master
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           check-name: frontend-container
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           wait-interval: 20
@@ -22,7 +22,7 @@ jobs:
       - name: Wait for backend to succeed
         uses: lewagon/wait-on-check-action@master
         with:
-          ref: master
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           check-name: backend-container
           repo-token: ${{ secrets.PAT_WAIT }}
           wait-interval: 20
