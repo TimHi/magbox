@@ -20,7 +20,7 @@ function login() {
 <template>
     <div class="topAppBar">
         <div>
-            <h1>Magbox</h1>
+            <h1>Magbox 📮</h1>
         </div>
         <div v-if="user.user.isLoggedIn">
             <el-button type="primary" @click="login">

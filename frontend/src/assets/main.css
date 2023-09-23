@@ -1,18 +1,15 @@
 @import './base.css';
 
-
-h1{
-    font-size: 46px;
-    color: var(--color-heading);
-    
+h1 {
+  font-size: 46px;
+  color: var(--color-magbox-blue);
 }
 
 h2 {
-    font-size: 40px;
-    color: var(--color-heading);
-    
+  font-size: 40px;
+  color: var(--color-heading);
 }
 
 .text {
-    color: var(--color-text);
+  color: var(--color-text);
 }

@@ -24,7 +24,7 @@ function login() {
         <h2>Keep track of stuff you want to read later 📔✍️</h2>
         <h2>Sort, categorize and filter (WIP)📑</h2>
         <h2>Export to Obsidian (WIP) 📤💎</h2>
-        <h2>Send links directly to your Magbox using the browser extension (WIP) 📬</h2>
+        <h2>Send links directly to your</h2> <h2 class="mag">Magbox 📮</h2> <h2>using the browser extension (WIP) 📬</h2>
     </div>
     <div>
         <el-button type="primary" @click="login">
@@ -39,5 +39,8 @@ function login() {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+.mag{
+    color: var(--color-magbox-blue);
 }
 </style>
