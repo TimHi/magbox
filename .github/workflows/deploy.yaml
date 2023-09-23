@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Wait for frontend to succeed
-        uses: lewagon/wait-on-check-action@v1.3.1
+        uses: lewagon/wait-on-check-action@master
         with:
           ref: ${{ github.ref }}
           check-name: 'Build frontend Container'
@@ -18,7 +18,7 @@ jobs:
           wait-interval: 20
 
       - name: Wait for backend to succeed
-        uses: lewagon/wait-on-check-action@v1.3.1
+        uses: lewagon/wait-on-check-action@master
         with:
           ref: master
           check-name: 'Build Backend Container'
