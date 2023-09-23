@@ -1,37 +1,35 @@
-name: deploy new magbox container
+name: Publish
 
 on:
-  workflow_run:
-    workflows: ['Build frontend Container', 'Build Backend Container']
-    types:
-      - completed
+  push:
+    branches: [master]
 
 jobs:
-  deploy:
-    name: Deploy
+  publish:
+    name: Publish the package
     runs-on: ubuntu-latest
     steps:
-      - name: Wait for Frontend and Backend Builds
-        id: wait-for-builds
-        uses: actions/wait-for-workflow@v2
+      - name: Wait for frontend to succeed
+        uses: lewagon/wait-on-check-action@v1.3.1
         with:
-          workflow: 'Build frontend Container,Build Backend Container'
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Check Deployment Triggers
-        run: |
-          if [[ "${{ steps.wait-for-builds.outputs.conclusion }}" == "success" ]]; then
-            echo "Frontend and Backend build workflows completed successfully."
-            # Deployment steps
-            - name: executing remote ssh commands using keys
-              uses: appleboy/ssh-action@v1.0.0
-              with:
-                host: ${{ secrets.HOST }}
-                key: ${{ secrets.SSH_KEY }}
-                username: ${{ secrets.USERNAME }}
-                script: |
-                  docker pull ghcr.io/timhi/magbox-backend:master
-                  docker pull ghcr.io/timhi/magbox-frontend:master
-                  docker compose up -d
-          else
-            echo "One or more of the build workflows failed, not deploying."
+          ref: ${{ github.ref }}
+          check-name: 'Build frontend Container'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          wait-interval: 20
+      - name: Wait for tests to succeed
+        uses: lewagon/wait-on-check-action@v1.3.1
+        with:
+          ref: master
+          check-name: 'Build Backend Container'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          wait-interval: 20
+      - name: executing remote ssh commands using keys
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.HOST }}
+          key: ${{ secrets.SSH_KEY }}
+          username: ${{ secrets.USERNAME }}
+          script: |
+            docker pull ghcr.io/timhi/magbox-backend:master
+            docker pull ghcr.io/timhi/magbox-frontend:master
+            docker compose up -d
