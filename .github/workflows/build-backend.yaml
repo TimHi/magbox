@@ -1,4 +1,4 @@
-name: Build Backend Container
+name: backend-container
 
 on:
   push:
