@@ -12,7 +12,6 @@ export class PocketBaseService {
     }
     async SignInUsingOAuth2(): Promise<void> {
         const user = useUserStore();
-        const linkStore = useLinkStore();
         return this.pocketBase.collection('users').authWithOAuth2({ provider: 'discord' }).then(() => {
             if (
                 this.pocketBase.authStore.isValid &&
@@ -20,7 +19,7 @@ export class PocketBaseService {
                 this.pocketBase.authStore.model
             ) {
                 user.setLoginStats(true);
-                linkStore.fetchLinks();
+
             } else {
                 user.setLoginStats(false);
             }
@@ -31,19 +30,16 @@ export class PocketBaseService {
         return this.pocketBase.authStore.isValid;
     }
 
-    async GetLinks(): Promise<LinkModel[]> {
+    async GetLinks() {
         try {
-            const links: LinkModel[] = await this.pocketBase.collection('links').getFullList();
-            if (links === undefined) { return [] as LinkModel[]; } else {
-                return links;
-            }
+            return await this.pocketBase.collection('links').getFullList();
         } catch (err: unknown) {
             if (err instanceof ClientResponseError) {
                 this.handleAuthError(err);
             } else {
                 console.error(err);
             }
-            return [] as LinkModel[];
+            return [];
         }
     }
 
@@ -82,7 +78,7 @@ export class PocketBaseService {
 
     async DeleteLinkEntry(id: string): Promise<boolean> {
         try {
-            return await this.pocketBase.collection('links').delete(id);
+            return this.pocketBase.collection('links').delete(id);
         } catch (err: unknown) {
             console.error(err);
             if (err instanceof ClientResponseError) {
@@ -93,10 +89,8 @@ export class PocketBaseService {
     }
 
     Logout() {
-        const links = useLinkStore();
         const user = useUserStore();
         user.setLoginStats(false);
-        links.clearLinks();
         this.pocketBase.authStore.clear();
     }
 

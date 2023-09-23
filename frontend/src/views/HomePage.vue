@@ -12,8 +12,8 @@ import TopAppBar from "../components/TopAppBar.vue";
                 <TopAppBar />
             </el-header>
             <el-main>
-                <LinkDataGrid />
                 <el-button><router-link to="/add">Add Link</router-link></el-button>
+                <LinkDataGrid />
             </el-main>
         </el-container>
     </div>

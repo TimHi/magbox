@@ -10,6 +10,9 @@ import { useUserStore } from './stores/user'
 import router from './router'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import { PocketBaseService } from './service/pocketBaseService'
+import { useLinkStore } from './stores/links'
+import type { LinkModel } from './model/linkModel'
+
 
 const app = createApp(App);
 
@@ -34,8 +37,12 @@ router.beforeEach(async (to, from, next) => {
 })
 
 const user = useUserStore();
+const linkStore = useLinkStore();
 const pb = new PocketBaseService();
 user.setLoginStats(pb.IsUserLoggedIn());
+if (user.user.isLoggedIn) {
+    await linkStore.getLinksFromBackend();
+}
 
 app.use(router);
 app.mount('#app');
