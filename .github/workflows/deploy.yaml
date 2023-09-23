@@ -11,4 +11,7 @@ jobs:
           host: ${{ secrets.HOST }}
           key: ${{ secrets.SSH_KEY }}
           username: ${{ secrets.USERNAME }}
-          script: docker compose down
+          script: |
+            docker pull ghcr.io/timhi/magbox-backend:master
+            docker pull ghcr.io/timhi/magbox-frontend:master
+            docker compose up -d
