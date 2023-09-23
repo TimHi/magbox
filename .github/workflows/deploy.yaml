@@ -11,4 +11,4 @@ jobs:
           host: ${{ secrets.HOST }}
           key: ${{ secrets.SSH_KEY }}
           username: ${{ secrets.USERNAME }}
-          script: whoami
+          script: docker compose down
