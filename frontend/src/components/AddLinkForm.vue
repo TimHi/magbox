@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { PocketBaseService } from '../service/pocketBaseService';
 import router from '../router';
-
-const pb = new PocketBaseService();
+import { useLinkStore } from '../stores/links';
+import { PocketBaseService } from '../service/pocketBaseService';
+const linkStore = useLinkStore();
 const link = ref('');
 const validUrl = ref(false);
-
+const pb = new PocketBaseService();
 function validateURL(url: string) {
     try {
         new URL(url);
@@ -20,13 +20,14 @@ function validateURL(url: string) {
 
 async function submit() {
     const preview = await getPreview(link.value);
-    pb.CreateLink(link.value, preview, false).then(() => {
+    linkStore.addLink(link.value, preview, false).then(() => {
         router.push('/');
     }).catch(() => console.log("Error creating link"));
 }
 
 async function getPreview(url: string) {
     if (validateURL(url)) {
+        console.log("Prev");
         return await pb.GetPreview(url);
     }
     return undefined;

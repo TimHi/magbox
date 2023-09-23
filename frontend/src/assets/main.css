@@ -4,6 +4,13 @@
 h1{
     font-size: 46px;
     color: var(--color-heading);
+    
+}
+
+h2 {
+    font-size: 40px;
+    color: var(--color-heading);
+    
 }
 
 .text {

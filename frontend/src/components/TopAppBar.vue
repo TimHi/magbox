@@ -19,20 +19,24 @@ function login() {
 
 <template>
     <div class="topAppBar">
-        <h1>Magbox</h1>
-    </div>
-    <div>
-        <el-button type="primary" @click="login">
-            <p v-if="user.user.isLoggedIn">Logout</p>
-            <p v-else>Login</p>
-        </el-button>
+        <div>
+            <h1>Magbox</h1>
+        </div>
+        <div>
+            <el-button type="primary" @click="login">
+                <p v-if="user.user.isLoggedIn">Logout</p>
+                <p v-else>Login</p>
+            </el-button>
+        </div>
     </div>
 </template>
 
 <style scoped>
 .topAppBar {
+    align-items: center;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    margin: 12px;
 }
 </style>

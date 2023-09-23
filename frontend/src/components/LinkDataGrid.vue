@@ -1,21 +1,13 @@
 <script lang="ts" setup >
-
-
 import { ref } from 'vue';
 import type { LinkModel } from '../model/linkModel';
-import { useLinkStore } from '../stores/links';
-import { useUserStore } from '../stores/user';
 import LinkDataCard from './LinkDataCard.vue';
-
+import { useLinkStore } from '../stores/links';
 const linkStore = useLinkStore();
-let linksInStore = ref<Array<LinkModel>>([]);
-const isUserLoggedIn = useUserStore().user.isLoggedIn;
-if (isUserLoggedIn) {
-    linkStore.fetchLinks().then(() => {
-        linksInStore.value = linkStore.links;
-    });
-}
-
+let linksInStore = ref<Array<LinkModel>>(linkStore.getAllLinks);
+linkStore.$subscribe((_, state) => {
+    linksInStore.value = state.links;
+})
 </script>
 
 <template>
@@ -32,3 +24,5 @@ if (isUserLoggedIn) {
     flex-direction: row;
 }
 </style>
+
+

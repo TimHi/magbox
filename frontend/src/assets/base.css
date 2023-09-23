@@ -71,6 +71,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 html {
-  background: rgb(238, 174, 202);
-  background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
+  background: rgb(246, 197, 218);
+  background: radial-gradient(circle, rgb(234, 187, 207) 0%, rgba(148, 187, 233, 1) 100%);
 }
