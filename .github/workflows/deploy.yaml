@@ -6,7 +6,7 @@ on:
 
 jobs:
   publish:
-    name: Publish the package
+    name: Deploy the new container
     runs-on: ubuntu-latest
     steps:
       - name: Wait for frontend to succeed
@@ -16,14 +16,16 @@ jobs:
           check-name: 'Build frontend Container'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           wait-interval: 20
-      - name: Wait for tests to succeed
+
+      - name: Wait for backend to succeed
         uses: lewagon/wait-on-check-action@v1.3.1
         with:
           ref: master
           check-name: 'Build Backend Container'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           wait-interval: 20
-      - name: executing remote ssh commands using keys
+
+      - name: Pull container and restart compose
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.HOST }}
