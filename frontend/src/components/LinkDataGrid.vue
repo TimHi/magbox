@@ -11,6 +11,10 @@ linkStore.$subscribe((_, state) => {
 </script>
 
 <template>
+    <div>
+        <span class="text readSection">Show unread only</span>
+        <el-switch class="ml-2 readSection" style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949" />
+    </div>
     <div class="container">
         <div v-for="(link) in linksInStore" :key="link.id">
             <LinkDataCard :linkModel="link" />

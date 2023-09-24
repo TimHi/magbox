@@ -9,11 +9,19 @@ import { useLinkStore } from '../stores/links';
 const props = defineProps({
     linkModel: Object as PropType<LinkModel>,
 });
-const read = ref(props.linkModel?.read)
+const read = ref(props.linkModel?.read ?? false)
 const linkStore = useLinkStore();
 function deleteItem() {
     if (props.linkModel?.id) {
         linkStore.removeLink(props.linkModel.id);
+    }
+}
+
+function markLinkAsRead() {
+    if (props.linkModel) {
+        const link = props.linkModel;
+        link.read = read.value;
+        linkStore.updateLink(link);
     }
 }
 
@@ -38,7 +46,7 @@ function deleteItem() {
             <div>
                 <span v-if="read" class="text readSection">Mark as unread</span>
                 <span v-if="!read" class="text readSection">Mark as read</span>
-                <el-switch v-model="read" class="ml-2 readSection"
+                <el-switch v-model="read" @click="markLinkAsRead" class="ml-2 readSection"
                     style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949" />
             </div>
             <el-icon color="white" @click="deleteItem">

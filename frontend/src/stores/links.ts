@@ -25,6 +25,18 @@ export const useLinkStore = defineStore('linkStore', {
       if (result) {
         this.links = this.links.filter((v) => v.id !== id);
       }
+    },
+    async updateLink(link: LinkModel) {
+      const result = await pbService.UpdateLink(link);
+      if (result) {
+        this.links.map((v) => {
+          if (v.id === result.id) {
+            return result;
+          } else {
+            return v;
+          }
+        });
+      }
     }
   },
   getters: {
