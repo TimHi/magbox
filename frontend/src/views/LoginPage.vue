@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import TopAppBar from '../components/TopAppBar.vue';
-import router from '../router';
 import { PocketBaseService } from '../service/pocketBaseService';
 import { useUserStore } from '../stores/user';
 const user = useUserStore();
@@ -21,16 +20,18 @@ function login() {
     <TopAppBar />
     <div class="descBox">
         <div>
-        <h2>Keep track of stuff you want to read later 📔✍️</h2>
-        <h2>Sort, categorize and filter (WIP)📑</h2>
-        <h2>Export to Obsidian (WIP) 📤💎</h2>
-        <h2>Send links directly to your</h2> <h2 class="mag">Magbox 📮</h2> <h2>using the browser extension (WIP) 📬</h2>
-    </div>
-    <div>
-        <el-button type="primary" @click="login">
-            <p v-if="!user.user.isLoggedIn">Login</p>
-        </el-button>
-    </div>
+            <h2>Keep track of stuff you want to read later 📔✍️</h2>
+            <h2>Sort, categorize and filter (WIP)📑</h2>
+            <h2>Export to Obsidian (WIP) 📤💎</h2>
+            <h2>Send links directly to your</h2>
+            <h2 class="mag">Magbox 📮</h2>
+            <h2>using the browser extension (WIP) 📬</h2>
+        </div>
+        <div>
+            <el-button data-testid="login-button" type="primary" @click="login">
+                <p v-if="!user.user.isLoggedIn">Login</p>
+            </el-button>
+        </div>
     </div>
 </template>
 
@@ -40,7 +41,8 @@ function login() {
     flex-direction: column;
     align-items: center;
 }
-.mag{
+
+.mag {
     color: var(--color-magbox-blue);
 }
 </style>
