@@ -1,7 +1,7 @@
 name: Run tests and linting
 
 on: [pull_request]
-
+#TODO: Add npm run test:unit
 jobs:
   unit_test-lint:
     runs-on: ubuntu-latest
