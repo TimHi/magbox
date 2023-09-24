@@ -80,6 +80,11 @@ export class PocketBaseService {
     }
   }
 
+  async UpdateLink(link: LinkModel) {
+    const record = await this.pocketBase.collection('links').update(link.id, link);
+    return record;
+  }
+
   async DeleteLinkEntry(id: string): Promise<boolean> {
     try {
       return this.pocketBase.collection('links').delete(id);

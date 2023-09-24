@@ -1,8 +1,10 @@
 import { test, expect } from '@playwright/test';
 
-// See here how to get started:
-// https://playwright.dev/docs/intro
 test('visits the app root url', async ({ page }) => {
   await page.goto('/');
-  await expect(page.locator('div.greetings > h1')).toHaveText('You did it!');
-})
+  const headerText = await page.locator('div.topAppBar h1').textContent();
+  expect(headerText).toBe('Magbox');
+
+  const LoginButtonText = await page.getByRole('button').textContent();
+  expect(LoginButtonText).toBe('Login');
+});
