@@ -12,9 +12,17 @@ import TopAppBar from "../components/TopAppBar.vue";
                 <TopAppBar />
             </el-header>
             <el-main>
-                <el-button><router-link to="/add">Add Link</router-link></el-button>
-                <LinkDataGrid />
+                <div class="mainContent">
+                    <el-button><router-link to="/add">Add Link</router-link></el-button>
+                    <LinkDataGrid />
+                </div>
             </el-main>
         </el-container>
     </div>
 </template>
+
+<style>
+.mainContent {
+    margin: 12px;
+}
+</style>

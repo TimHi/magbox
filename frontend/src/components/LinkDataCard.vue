@@ -78,6 +78,6 @@ function markLinkAsRead() {
     min-width: 100px;
     max-width: 375px;
     background-color: var(--color-background-soft);
-    margin: 4px;
+    margin-right: 4px;
 }
 </style>
