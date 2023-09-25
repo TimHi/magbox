@@ -12,6 +12,7 @@
     "test-dev": "vite --mode test",
     "format": "prettier --write src/",
     "preview": "vite preview",
+    "preview:test": "vite preview --port 5173 --mode test",
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false"
   },
   "dependencies": {
