@@ -81,7 +81,11 @@ export class PocketBaseService {
   }
 
   async UpdateLink(link: LinkModel) {
+    console.log("To update:");
+    console.log(link);
     const record = await this.pocketBase.collection('links').update(link.id, link);
+    console.log("Updated record:")
+    console.log(record);
     return record;
   }
 
