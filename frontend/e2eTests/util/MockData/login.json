@@ -1,0 +1,44 @@
+{
+    "meta": {
+        "id": "1",
+        "name": "TestUser#0",
+        "username": "TestUser",
+        "email": "TestUser@test.de",
+        "avatarUrl": "url",
+        "rawUser": {
+            "accent_color": 22780,
+            "avatar": "123",
+            "avatar_decoration_data": null,
+            "banner": null,
+            "banner_color": "#0058fc",
+            "discriminator": "0",
+            "email": "TestUser@test.de",
+            "flags": 128,
+            "global_name": "TestUser",
+            "id": "184372370486591489",
+            "locale": "en-US",
+            "mfa_enabled": false,
+            "premium_type": 0,
+            "public_flags": 128,
+            "username": "TestUser",
+            "verified": true
+        },
+        "accessToken": "at",
+        "refreshToken": "rt",
+        "isNew": false
+    },
+    "record": {
+        "avatar": "",
+        "collectionId": "_pb_users_auth_",
+        "collectionName": "users",
+        "created": "2023-09-01 08:25:21.973Z",
+        "email": "TestUser@test.de",
+        "emailVisibility": false,
+        "id": "123",
+        "name": "",
+        "updated": "2023-09-01 08:25:21.973Z",
+        "username": "TestUser",
+        "verified": true
+    },
+    "token": "token"
+}
