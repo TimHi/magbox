@@ -3,12 +3,13 @@ import { test as base, expect } from "@playwright/test";
 export * from "@playwright/test";
 import logindata from "../MockData/login.json"
 
-base.beforeAll(async ({ page }) => {
+
+base.beforeEach(async ({ page }) => {
+
     await page.route('*/**/api/collections/users/auth-methods', async (route) => {
         await route.fulfill({ body: JSON.stringify(logindata), contentType: 'application/json' });
     });
 });
-
 
 export const test = base.extend({
     page: async ({ page }, use) => {
