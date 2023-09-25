@@ -1,4 +1,4 @@
-name: Run tests and linting
+name: build and lint
 
 on: [pull_request]
 #TODO: Add npm run test:unit
