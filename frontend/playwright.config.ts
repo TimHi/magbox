@@ -11,7 +11,8 @@ import { devices } from '@playwright/test'
  * See https://playwright.dev/docs/test-configuration.
  */
 const config: PlaywrightTestConfig = {
-  testDir: './e2e/**',
+  testDir: './e2e/',
+  testMatch: /.*\.ts/,
   /* Maximum time one test can run for. */
   timeout: 30 * 1000,
   expect: {
@@ -108,5 +109,6 @@ const config: PlaywrightTestConfig = {
     reuseExistingServer: !process.env.CI
   }
 }
+
 
 export default config
