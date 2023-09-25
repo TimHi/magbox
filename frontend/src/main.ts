@@ -11,7 +11,7 @@ import router from './router';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue';
 import { PocketBaseService } from './service/pocketBaseService';
 import { useLinkStore } from './stores/links';
-
+import Vue from 'vue';
 const app = createApp(App);
 
 app.component('PButton', Button);
@@ -30,6 +30,10 @@ router.beforeEach(async (to, _, next) => {
   } else {
     next();
   }
+});
+
+router.afterEach((to, _) => {
+  document.title = to.name?.toString() ?? "MagBox";
 });
 
 const userStore = useUserStore();
