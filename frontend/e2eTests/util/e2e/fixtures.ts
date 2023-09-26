@@ -9,17 +9,18 @@ base.beforeEach(async ({ page }) => {
   });
 });
 
-// export const test = base.extend({
-//     page: async ({ page }, use) => {
-//         const messages: any[] = [];
-//         page.on("console", (msg) => {
-//             if (msg.type() === "error")
-//                 messages.push(
-//                     `\n/**************************************/\n       Browser console error #${messages.length + 1
-//                     }:\n/**************************************/\n${msg.text()}`
-//                 );
-//         });
-//         await use(page);
-//         expect(messages).toStrictEqual([]);
-//     }
-// });
+export const test = base.extend({
+  page: async ({ page }, use) => {
+    const messages: any[] = [];
+    page.on('console', (msg) => {
+      if (msg.type() === 'error')
+        messages.push(
+          `\n/**************************************/\n       Browser console error #${
+            messages.length + 1
+          }:\n/**************************************/\n${msg.text()}`
+        );
+    });
+    await use(page);
+    expect(messages).toStrictEqual([]);
+  }
+});
