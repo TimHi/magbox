@@ -11,7 +11,9 @@ export class PocketBaseService {
   async SignInUsingOAuth2(): Promise<void> {
     const user = useUserStore();
     //TODO: Figure out if Pinia handles this better
-    if (import.meta.env.MODE === "test") {
+    console.log(import.meta.env);
+    if (import.meta.env.MODE === 'test') {
+      console.log('RUNNING IN TEST MODE');
       user.setLoginStats(true);
     } else {
       return this.pocketBase
@@ -86,10 +88,10 @@ export class PocketBaseService {
   }
 
   async UpdateLink(link: LinkModel) {
-    console.log("To update:");
+    console.log('To update:');
     console.log(link);
     const record = await this.pocketBase.collection('links').update(link.id, link);
-    console.log("Updated record:")
+    console.log('Updated record:');
     console.log(record);
     return record;
   }
