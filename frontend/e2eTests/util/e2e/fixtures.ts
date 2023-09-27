@@ -7,6 +7,12 @@ base.beforeEach(async ({ page }) => {
   await page.route('*/**/api/collections/users/auth-methods', async (route) => {
     await route.fulfill({ body: JSON.stringify(logindata), contentType: 'application/json' });
   });
+  await page.route(
+    '*/**/api/collections/links/records?page=1&perPage=500&skipTotal=1',
+    async (route) => {
+      await route.fulfill({ body: JSON.stringify({}), contentType: 'application/json' });
+    }
+  );
 });
 
 export const test = base.extend({
