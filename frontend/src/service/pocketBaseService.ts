@@ -10,20 +10,27 @@ export class PocketBaseService {
   }
   async SignInUsingOAuth2(): Promise<void> {
     const user = useUserStore();
-    return this.pocketBase
-      .collection('users')
-      .authWithOAuth2({ provider: 'discord' })
-      .then(() => {
-        if (
-          this.pocketBase.authStore.isValid &&
-          this.pocketBase.authStore.token !== undefined &&
-          this.pocketBase.authStore.model
-        ) {
-          user.setLoginStats(true);
-        } else {
-          user.setLoginStats(false);
-        }
-      });
+    //TODO: Figure out if Pinia handles this better
+    console.log(import.meta.env);
+    if (import.meta.env.MODE === 'test') {
+      console.log('RUNNING IN TEST MODE');
+      user.setLoginStats(true);
+    } else {
+      return this.pocketBase
+        .collection('users')
+        .authWithOAuth2({ provider: 'discord' })
+        .then(() => {
+          if (
+            this.pocketBase.authStore.isValid &&
+            this.pocketBase.authStore.token !== undefined &&
+            this.pocketBase.authStore.model
+          ) {
+            user.setLoginStats(true);
+          } else {
+            user.setLoginStats(false);
+          }
+        });
+    }
   }
 
   IsUserLoggedIn(): boolean {
@@ -81,7 +88,11 @@ export class PocketBaseService {
   }
 
   async UpdateLink(link: LinkModel) {
+    console.log('To update:');
+    console.log(link);
     const record = await this.pocketBase.collection('links').update(link.id, link);
+    console.log('Updated record:');
+    console.log(record);
     return record;
   }
 

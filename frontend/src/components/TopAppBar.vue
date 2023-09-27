@@ -23,7 +23,7 @@ function login() {
             <h1>Magbox 📮</h1>
         </div>
         <div v-if="user.user.isLoggedIn">
-            <el-button type="primary" @click="login">
+            <el-button data-testid="btn-logout" type="primary" @click="login">
                 <p>Logout</p>
             </el-button>
         </div>
