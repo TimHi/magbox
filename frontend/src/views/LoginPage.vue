@@ -6,7 +6,6 @@ const user = useUserStore();
 const pb = new PocketBaseService();
 
 function login() {
-    console.log("AAL");
     if (user.user.isLoggedIn) {
         pb.Logout();
     } else {

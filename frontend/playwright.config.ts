@@ -72,7 +72,7 @@ const config: PlaywrightTestConfig = {
      */
     command: process.env.CI ? 'vite preview --port 5173 --mode test' : 'npm run preview:test',
     port: 5173,
-    reuseExistingServer: false, //cant reuse due to login fake
+    reuseExistingServer: true, //cant reuse due to login fake
     stdout: 'ignore',
     stderr: 'pipe'
   }
