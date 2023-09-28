@@ -10,6 +10,11 @@ h2 {
   color: var(--color-heading);
 }
 
+h6 {
+  font-size: 20px;
+  color: var(--color-heading);
+}
+
 .text {
   color: var(--color-text);
 }

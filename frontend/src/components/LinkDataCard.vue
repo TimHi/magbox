@@ -24,7 +24,7 @@ function markLinkAsRead() {
         linkStore.updateLink(link);
     }
 }
-
+console.log(props.linkModel?.title);
 </script>
 
 <template>
@@ -32,12 +32,17 @@ function markLinkAsRead() {
         <el-link class="text" :href="props.linkModel?.link" target=”_blank”>
             <div>
                 <div v-if="linkModel?.image !== ''" class="image-slot">
-                    <el-image :src="props.linkModel?.image" fit="scale-down"></el-image>
+                    <el-image style="width: 300px; height: 100px" :src="props.linkModel?.image" fit="contain"></el-image>
+                </div>
+                <div v-else>
+                    <el-image style="width: 100px; height: 100px" src="/Placeholder_view_vector.svg.png"
+                        fit="contain"></el-image>
                 </div>
                 <div class="header-slot">
-                    <h2>{{ linkModel?.title ?? "No Title found" }}</h2>
+                    <h6 v-if="linkModel !== undefined" class="text header">{{ linkModel.title === "" ? linkModel.link :
+                        linkModel.title }}</h6>
                     <el-divider v-if="linkModel?.description !== ''" />
-                    <span class="text">{{ linkModel?.description ?? "No Description found" }}</span>
+                    <span class="text description">{{ linkModel?.description }}</span>
                 </div>
             </div>
         </el-link>
@@ -59,8 +64,27 @@ function markLinkAsRead() {
 <style>
 @import "../assets/main.css";
 
+.header {
+    max-height: 60px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+
+.description {
+    max-height: 50px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
 .readSection {
     margin-right: 4px;
+    overflow: hidden;
 }
 
 .footer {
