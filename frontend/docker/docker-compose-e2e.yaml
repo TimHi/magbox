@@ -1,14 +1,25 @@
 version: '3'
 
 services:
+  # Frontend build in Testmode
+  frontend:
+    hostname: magbox-frontend-e2e
+    container_name: magbox-frontend-e2e
+    image: magbox-frontend-e2e
+    build:
+      dockerfile: Dockerfile.frontend
+    networks:
+      - e2e_net
+
   # Dummy backend with test data
   backend:
     hostname: magbox-backend-e2e
     container_name: magbox-backend-e2e
     image: magbox-backend-e2e
     build:
-      dockerfile: ../backend/Dockerfile
-    tty: true
-    stdin_open: true
-    ipc: host
-    privileged: true
+      dockerfile: ../../backend/Dockerfile
+    networks:
+      - e2e_net
+
+networks:
+  e2e_net:
