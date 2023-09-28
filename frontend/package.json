@@ -6,6 +6,7 @@
     "build": "run-p type-check build-only",
     "test:unit": "vitest",
     "test:e2e": "playwright test",
+    "test:e2e-docker": "./docker/run_e2e_tests.sh",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "build-only": "vite build",
     "build:test": "vite build --mode test",
