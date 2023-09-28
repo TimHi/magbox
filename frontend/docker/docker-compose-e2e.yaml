@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  # Dummy backend with test data
+  backend:
+    hostname: magbox-backend-e2e
+    container_name: magbox-backend-e2e
+    image: magbox-backend-e2e
+    build:
+      dockerfile: ../backend/Dockerfile
+    tty: true
+    stdin_open: true
+    ipc: host
+    privileged: true
