@@ -28,8 +28,8 @@ console.log(props.linkModel?.title);
 </script>
 
 <template>
-    <el-card class="box-card">
-        <el-link class="text" :href="props.linkModel?.link" target=”_blank”>
+    <el-card class="box-card" data-testid="link-card">
+        <el-link class="text" :href="props.linkModel?.link" target=”_blank” :data-testid=props.linkModel?.link>
             <div>
                 <div v-if="linkModel?.image !== ''" class="image-slot">
                     <el-image style="width: 300px; height: 100px" :src="props.linkModel?.image" fit="contain"></el-image>

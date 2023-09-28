@@ -10,10 +10,7 @@ export class PocketBaseService {
   }
   async SignInUsingOAuth2(): Promise<void> {
     const user = useUserStore();
-    //TODO: Figure out if Pinia handles this better
-    console.log(import.meta.env);
     if (import.meta.env.MODE === 'test') {
-      console.log('RUNNING IN TEST MODE');
       user.setLoginStats(true);
     } else {
       return this.pocketBase
@@ -26,6 +23,7 @@ export class PocketBaseService {
             this.pocketBase.authStore.model
           ) {
             user.setLoginStats(true);
+
           } else {
             user.setLoginStats(false);
           }
