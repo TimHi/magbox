@@ -18,7 +18,7 @@ base.beforeEach(async ({ page }) => {
   );
 
   await page.route(
-    '*/**/api/curl_preview/https://github.com/',
+    '*/**/api/url_preview/https://github.com/',
     async (route) => {
       await route.fulfill({ body: JSON.stringify(githubPreviewData), contentType: 'application/json' });
     }
