@@ -48,13 +48,14 @@ async function getPreview(url: string) {
     <div class="form">
         <h1>Add new Link</h1>
         <el-text class="darkText" tag="h2">Link</el-text>
-        <el-input v-model="link" placeholder="https://de.wikipedia.org/wiki/Aale" @input="validateURL" />
+        <el-input v-model="link" placeholder="https://de.wikipedia.org/wiki/Aale" @input="validateURL"
+            data-testid="input-link" />
         <el-text class="darkText" tag="h2">Title</el-text>
-        <el-input v-model="title" />
+        <el-input v-model="title" data-testid="input-title" />
         <el-text class="darkText" tag="h2">Description</el-text>
-        <el-input v-model="description" />
+        <el-input v-model="description" data-testid="input-desc" />
         <el-divider />
-        <el-button v-if="validUrl" @click="submit">Submit</el-button>
+        <el-button v-if="validUrl" @click="submit" data-testid="btn-submit-link">Submit</el-button>
         <el-button class="button"><router-link to="/">Back</router-link> </el-button>
 
     </div>

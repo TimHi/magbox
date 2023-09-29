@@ -1,5 +1,6 @@
 import { test, expect } from "../../util/e2e/fixtures";
 import { loginUser } from "../../util/e2e/login";
+import { hasText } from "../../util/e2e/matcher";
 
 test('Links are displayed in a grid', async ({ page }) => {
     await loginUser(page);
@@ -14,9 +15,7 @@ test('Links have a title', async ({ page }) => {
     const cards = await page.getByTestId("link-card");
     for (const card of await cards.all()) {
         const cardTitle = await card.getByRole('heading').innerText();
-        expect(cardTitle).not.toBeNull();
-        expect(cardTitle).not.toBeUndefined();
-        expect(cardTitle).not.toBe("");
+        hasText(cardTitle);
     }
 });
 
