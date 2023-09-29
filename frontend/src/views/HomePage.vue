@@ -10,7 +10,7 @@ import TopAppBar from "../components/TopAppBar.vue";
             </el-header>
             <el-main>
                 <div class="mainContent">
-                    <el-button><router-link to="/add">Add Link</router-link></el-button>
+                    <el-button data-testid="btn-add-link"><router-link to="/add">Add Link</router-link></el-button>
                     <LinkDataGrid />
                 </div>
             </el-main>

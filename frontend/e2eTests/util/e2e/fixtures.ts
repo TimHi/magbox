@@ -3,6 +3,9 @@ import { test as base, expect } from '@playwright/test';
 export * from '@playwright/test';
 import logindata from '../MockData/login.json';
 import linkData from '../MockData/linkData.json';
+import postNewLink from '../MockData/postNewLink.json';
+import githubPreviewData from '../MockData/githubPreview.json';
+
 base.beforeEach(async ({ page }) => {
   await page.route('*/**/api/collections/users/auth-methods', async (route) => {
     await route.fulfill({ body: JSON.stringify(logindata), contentType: 'application/json' });
@@ -11,6 +14,20 @@ base.beforeEach(async ({ page }) => {
     '*/**/api/collections/links/records?page=1&perPage=500&skipTotal=1',
     async (route) => {
       await route.fulfill({ body: JSON.stringify(linkData), contentType: 'application/json' });
+    }
+  );
+
+  await page.route(
+    '*/**/api/curl_preview/https://github.com/',
+    async (route) => {
+      await route.fulfill({ body: JSON.stringify(githubPreviewData), contentType: 'application/json' });
+    }
+  );
+
+  await page.route(
+    '*/**/api/collections/links/records',
+    async (route) => {
+      await route.fulfill({ body: JSON.stringify(postNewLink), contentType: 'application/json' });
     }
   );
 });
