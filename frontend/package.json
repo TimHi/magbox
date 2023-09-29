@@ -6,14 +6,15 @@
     "build": "run-p type-check build-only",
     "test:unit": "vitest",
     "test:e2e": "playwright test",
+    "test:docker-e2e": "sh e2eTests/docker.sh",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "build-only": "vite build",
     "build:test": "vite build --mode test",
     "dev": "vite",
-    "test-dev": "vite --mode test",
+    "dev:test": "vite --port 4173 --mode test",
     "format": "prettier --write src/",
     "preview": "vite preview",
-    "preview:test": "vite preview --port 5173 --mode=test",
+    "preview:test": "vite preview --mode=test",
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false"
   },
   "dependencies": {

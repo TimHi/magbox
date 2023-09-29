@@ -1,0 +1,1 @@
+docker build . -f Dockerfile.e2e -t magbox-e2e-playwright && docker run --rm magbox-e2e-playwright
