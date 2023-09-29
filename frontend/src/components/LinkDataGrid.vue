@@ -9,7 +9,6 @@ let linksInStore = ref<Array<LinkModel>>(linkStore.getAllLinks);
 
 linkStore.$subscribe((_, state) => {
     linksInStore.value = state.links;
-    console.log("Updated items");
 });
 
 const filteredLinks = computed(() => {
