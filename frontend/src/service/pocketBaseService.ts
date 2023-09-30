@@ -3,6 +3,7 @@ import { useUserStore } from '../stores/user';
 import type { LinkModel } from '../model/linkModel';
 import type { DocumentPreview } from '../model/previewModel';
 export class PocketBaseService {
+
   private pocketBase: PocketBase;
 
   constructor() {
@@ -39,11 +40,18 @@ export class PocketBaseService {
     try {
       return await this.pocketBase.collection('links').getFullList();
     } catch (err: unknown) {
-      if (err instanceof ClientResponseError) {
-        this.handleAuthError(err);
-      } else {
-        console.error(err);
-      }
+      this.handleAuthError();
+      console.error(err);
+      return [];
+    }
+  }
+
+  async GetTags() {
+    try {
+      return await this.pocketBase.collection('categories').getFullList();
+    } catch (err: unknown) {
+      this.handleAuthError();
+      console.error(err);
       return [];
     }
   }
@@ -78,19 +86,13 @@ export class PocketBaseService {
     try {
       return await this.pocketBase.collection('links').create(data);
     } catch (err: unknown) {
+      this.handleAuthError();
       console.error(err);
-      if (err instanceof ClientResponseError) {
-        this.handleAuthError(err);
-      }
     }
   }
 
   async UpdateLink(link: LinkModel) {
-    console.log('To update:');
-    console.log(link);
     const record = await this.pocketBase.collection('links').update(link.id, link);
-    console.log('Updated record:');
-    console.log(record);
     return record;
   }
 
@@ -98,10 +100,8 @@ export class PocketBaseService {
     try {
       return this.pocketBase.collection('links').delete(id);
     } catch (err: unknown) {
+      this.handleAuthError();
       console.error(err);
-      if (err instanceof ClientResponseError) {
-        this.handleAuthError(err);
-      }
       return false;
     }
   }
@@ -112,8 +112,7 @@ export class PocketBaseService {
     this.pocketBase.authStore.clear();
   }
 
-  handleAuthError(err: ClientResponseError) {
+  handleAuthError() {
     this.Logout();
-    throw err;
   }
 }

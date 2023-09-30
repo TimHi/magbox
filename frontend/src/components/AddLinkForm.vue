@@ -54,6 +54,9 @@ async function getPreview(url: string) {
         <el-input v-model="title" data-testid="input-title" />
         <el-text class="darkText" tag="h2">Description</el-text>
         <el-input v-model="description" data-testid="input-desc" />
+        <div>
+            <span>Tags...</span>
+        </div>
         <el-divider />
         <el-button v-if="validUrl" @click="submit" data-testid="btn-submit-link">Submit</el-button>
         <el-button class="button"><router-link to="/">Back</router-link> </el-button>

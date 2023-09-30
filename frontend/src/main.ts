@@ -12,6 +12,7 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue';
 import { PocketBaseService } from './service/pocketBaseService';
 import { useLinkStore } from './stores/links';
 import Vue from 'vue';
+import { useTagStore } from './stores/tags';
 const app = createApp(App);
 
 app.component('PButton', Button);
@@ -38,11 +39,13 @@ router.afterEach((to, _) => {
 
 const userStore = useUserStore();
 const linkStore = useLinkStore();
+const tagStore = useTagStore();
 userStore.$subscribe((_, state) => {
   if (!state.user.isLoggedIn) {
     router.push('/login');
   } else {
     linkStore.getLinksFromBackend();
+    tagStore.getTagsFromBackend();
     router.push('/');
   }
 });
