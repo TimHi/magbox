@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ElText } from 'element-plus';
-const appVersion = APP_VERSION;
+const appVersion: string = APP_VERSION;
 </script>
 <template>
     <ElText>Version </ElText>
