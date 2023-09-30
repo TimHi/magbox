@@ -24,7 +24,6 @@ function markLinkAsRead() {
         linkStore.updateLink(link);
     }
 }
-console.log(props.linkModel?.title);
 </script>
 
 <template>
