@@ -11,7 +11,6 @@ import router from './router';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue';
 import { PocketBaseService } from './service/pocketBaseService';
 import { useLinkStore } from './stores/links';
-import Vue from 'vue';
 import { useTagStore } from './stores/tags';
 const app = createApp(App);
 
