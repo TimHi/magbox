@@ -1,16 +1,18 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import router from '../router';
 import { useLinkStore } from '../stores/links';
 import { PocketBaseService } from '../service/pocketBaseService';
 import { DocumentPreview } from '../model/previewModel';
 import { useTagStore } from '../stores/tags';
 import { TagModel } from '../model/TagModel';
+import { getRandomInt } from 'element-plus/es/utils/rand';
 const linkStore = useLinkStore();
 const link = ref('');
 const validUrl = ref(false);
 const title = ref('');
 const description = ref('');
+const tag = ref('');
 let preview: DocumentPreview = new DocumentPreview("", "", "", "", [], "");
 const pb = new PocketBaseService();
 const tagStore = useTagStore();
@@ -20,6 +22,7 @@ const pickedTags = ref([] as TagModel[]);
 tagStore.$subscribe((_, state) => {
     tagsInStore.value = state.tags;
 });
+
 async function validateURL(url: string) {
     try {
         new URL(url);
@@ -61,6 +64,38 @@ function addToPicked(picked: TagModel) {
     if (isInList === undefined)
         pickedTags.value.push(picked);
 }
+
+async function addNewTag() {
+    if (tagStore.doesTagExist(tag.value)) {
+        const tagFromList = tagsInStore.value.find((t) => t.name.toLowerCase() === tag.value.toLowerCase());
+        if (tagFromList === undefined) throw new Error("Tag is in store but not found in list");
+        addToPicked(tagFromList);
+    } else {
+        const newTag = await tagStore.addTag(tag.value);
+        if (newTag) pickedTags.value.push(newTag);
+    }
+    tag.value = '';
+}
+
+function getPickedTags() { return pickedTags.value; }
+
+const filteredTags = computed(() => {
+    const pickedTags = getPickedTags().map((t) => t.id);
+
+    return tagsInStore.value.filter((t) => !pickedTags.includes(t.id));
+});
+
+function getRandomType() {
+    const type = getRandomInt(4);
+    switch (type) {
+        case 0: return "";
+        case 1: return "success";
+        case 2: return "info";
+        case 3: return "warning";
+        case 4: return "danger";
+        default: return "danger";
+    }
+}
 </script>
 
 <template>
@@ -74,18 +109,24 @@ function addToPicked(picked: TagModel) {
         <el-text class="darkText" tag="h2">Description</el-text>
         <el-input v-model="description" data-testid="input-desc" />
         <el-text class="darkText" tag="h2">Picked Tags</el-text>
-        <div v-for="(tag) in pickedTags" :key="tag.id + '_picked'">
-            <el-tag class="ml-2" type="success" @click="removeFromPicked(tag)">{{ tag.name }}</el-tag>
+        <div class="tag-list">
+            <div class="tag" v-for="(tag) in pickedTags" :key="tag.id + '_picked'">
+                <el-tag class="ml-2" theme="dark" :type="getRandomType()" @click="removeFromPicked(tag)">{{ tag.name
+                }}</el-tag>
+            </div>
         </div>
         <el-divider />
         <el-text class="darkText" tag="h2">Your Tags</el-text>
-        <div v-for="(tag) in tagsInStore" :key="tag.id + '_available'">
-            <el-tag class="ml-2" type="success" @click="addToPicked(tag)">{{ tag.name }}</el-tag>
+        <div class="tag-list">
+            <div class="tag" v-for="(tag) in filteredTags" :key="tag.id + '_available'">
+                <el-tag class="ml-2" theme="dark" :type="getRandomType()" @click="addToPicked(tag)">{{ tag.name }}</el-tag>
+            </div>
         </div>
+        <el-text class="darkText" tag="h2">Add tags</el-text>
+        <el-input v-model="tag" data-testid="input-tag" v-on:keyup.enter="addNewTag" />
         <el-divider />
         <el-button v-if="validUrl" @click="submit" data-testid="btn-submit-link">Submit</el-button>
         <el-button class="button"><router-link to="/">Back</router-link> </el-button>
-
     </div>
 </template>
 
@@ -100,5 +141,13 @@ function addToPicked(picked: TagModel) {
     width: 50%;
 }
 
-.button {}
+.tag-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.tag {
+    margin: 2px;
+}
 </style>
