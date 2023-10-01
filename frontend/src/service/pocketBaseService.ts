@@ -2,7 +2,7 @@ import PocketBase from 'pocketbase';
 import { useUserStore } from '../stores/user';
 import type { LinkModel } from '../model/linkModel';
 import type { DocumentPreview } from '../model/previewModel';
-import { TagModel } from '../model/TagModel';
+import type { TagModel } from '../model/TagModel';
 export class PocketBaseService {
 
   private pocketBase: PocketBase;

@@ -5,7 +5,7 @@ import { useLinkStore } from '../stores/links';
 import { PocketBaseService } from '../service/pocketBaseService';
 import { DocumentPreview } from '../model/previewModel';
 import { useTagStore } from '../stores/tags';
-import { TagModel } from '../model/TagModel';
+import type { TagModel } from '../model/TagModel';
 import { getRandomInt } from 'element-plus/es/utils/rand';
 const linkStore = useLinkStore();
 const link = ref('');

@@ -1,4 +1,3 @@
-import exp from "constants";
 import { test, expect, Page } from "../../util/e2e/fixtures";
 import { loginUser } from "../../util/e2e/login";
 import PrefilledTags from "../../util/MockData/prefilledTags.json";
