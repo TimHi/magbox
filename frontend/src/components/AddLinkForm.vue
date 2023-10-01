@@ -81,7 +81,6 @@ function getPickedTags() { return pickedTags.value; }
 
 const filteredTags = computed(() => {
     const pickedTags = getPickedTags().map((t) => t.id);
-
     return tagsInStore.value.filter((t) => !pickedTags.includes(t.id));
 });
 
@@ -109,7 +108,7 @@ function getRandomType() {
         <el-text class="darkText" tag="h2">Description</el-text>
         <el-input v-model="description" data-testid="input-desc" />
         <el-text class="darkText" tag="h2">Picked Tags</el-text>
-        <div class="tag-list">
+        <div class="tag-list" data-testid="li-picked-tags">
             <div class="tag" v-for="(tag) in pickedTags" :key="tag.id + '_picked'">
                 <el-tag class="ml-2" theme="dark" :type="getRandomType()" @click="removeFromPicked(tag)">{{ tag.name
                 }}</el-tag>
@@ -117,7 +116,7 @@ function getRandomType() {
         </div>
         <el-divider />
         <el-text class="darkText" tag="h2">Your Tags</el-text>
-        <div class="tag-list">
+        <div class="tag-list" data-testid="li-tags">
             <div class="tag" v-for="(tag) in filteredTags" :key="tag.id + '_available'">
                 <el-tag class="ml-2" theme="dark" :type="getRandomType()" @click="addToPicked(tag)">{{ tag.name }}</el-tag>
             </div>
