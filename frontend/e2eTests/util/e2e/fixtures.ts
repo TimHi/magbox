@@ -44,7 +44,6 @@ base.beforeEach(async ({ page }) => {
   await page.route(
     '*/**/api/collections/categories/records',
     async (route) => {
-      console.log("abgeaalt");
       await route.fulfill({ body: JSON.stringify(postTag), contentType: 'application/json' });
     }
   );
