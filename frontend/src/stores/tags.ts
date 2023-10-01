@@ -13,10 +13,21 @@ export const useTagStore = defineStore('tagStore', {
         async getTagsFromBackend() {
             this.tags = (await pbService.GetTags()) as TagModel[];
         },
+        async addTag(tagName: string) {
+            const result = await pbService.CreateTag(tagName);
+            if (result) {
+                this.tags.push(result);
+            }
+            return result;
+        },
+        doesTagExist(tagName: string) {
+            const doesTagExist = this.tags.find((t) => t.name.toLowerCase() === tagName.toLowerCase()) !== undefined;
+            return doesTagExist;
+        },
     },
     getters: {
         getAllTags(): TagModel[] {
             return this.tags;
-        }
+        },
     }
 });
