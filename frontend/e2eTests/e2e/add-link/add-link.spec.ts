@@ -1,5 +1,7 @@
+import exp from "constants";
 import { test, expect, Page } from "../../util/e2e/fixtures";
 import { loginUser } from "../../util/e2e/login";
+import PrefilledTags from "../../util/MockData/prefilledTags.json";
 
 async function navigateToAddLinkPage(page: Page) {
     await loginUser(page);
@@ -18,25 +20,52 @@ test('Navigation to add link page', async ({ page }) => {
 });
 
 test.describe("Tags", () => {
-
     test('tags are added', async ({ page }) => {
         await navigateToAddLinkPage(page);
         const linkField = await page.getByTestId("input-link");
         await linkField.fill(githubUrl);
         const tagField = await page.getByTestId("input-tag");
+        const pickedTagList = await page.getByTestId("li-picked-tags");
+        const pickedTags = await pickedTagList.locator(".tag");
+        await expect(await pickedTags.count()).toBe(0);
         await tagField.fill('C#');
-        page.keyboard.press("Enter");
+        await page.keyboard.press("Enter");
+        await expect(pickedTags).toBeVisible();
+        await expect(await pickedTags.count()).toBe(1);
+        const submitBtn = await page.getByTestId("btn-submit-link");
+        await expect(submitBtn).toBeVisible();
+    });
+
+    test('duplicate tags are handled', async ({ page }) => {
+        await navigateToAddLinkPage(page);
+        const pickedTagList = await page.getByTestId("li-picked-tags");
+        const pickedTags = await pickedTagList.locator(".tag");
+        const tagField = await page.getByTestId("input-tag");
+        await expect(await pickedTags.count()).toBe(0);
+        await tagField.fill('C#');
+        await page.keyboard.press("Enter");
+        await expect(pickedTags).toBeVisible();
+        await expect(await pickedTags.count()).toBe(1);
+        await tagField.fill('C#');
+        await page.keyboard.press("Enter");
+        await expect(await pickedTags.count()).toBe(1);
     });
 });
 
 test.describe("Existing Tags", () => {
     test.beforeEach(async ({ page }) => {
         await page.route(
-            '*/**/api/collections/links/records',
+            '*/**/api/collections/categories/records?page=1&perPage=500&skipTotal=1',
             async (route) => {
-                await route.fulfill({ body: JSON.stringify(postNewLink), contentType: 'application/json' });
+                await route.fulfill({ body: JSON.stringify(PrefilledTags), contentType: 'application/json' });
             }
         );
+    });
+    test('existing tags are rendered', async ({ page }) => {
+        await navigateToAddLinkPage(page);
+        const availableTags = await page.getByTestId("li-tags");
+        const tags = await availableTags.locator(".tag");
+        await expect(await tags.count()).toBe(3);
     });
 })
 
