@@ -14,8 +14,8 @@ export const useLinkStore = defineStore('linkStore', {
     async getLinksFromBackend() {
       this.links = (await pbService.GetLinks()) as LinkModel[];
     },
-    async addLink(link: string, preview: DocumentPreview | undefined, read = false) {
-      const result = await pbService.CreateLink(link, preview, read);
+    async addLink(link: string, preview: DocumentPreview | undefined, categorieIds: string[], read = false) {
+      const result = await pbService.CreateLink(link, preview, categorieIds, read);
       if (result) {
         this.links.push(result);
       }

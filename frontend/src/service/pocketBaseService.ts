@@ -1,4 +1,4 @@
-import PocketBase, { ClientResponseError } from 'pocketbase';
+import PocketBase from 'pocketbase';
 import { useUserStore } from '../stores/user';
 import type { LinkModel } from '../model/linkModel';
 import type { DocumentPreview } from '../model/previewModel';
@@ -70,6 +70,7 @@ export class PocketBaseService {
   async CreateLink(
     link: string,
     preview: DocumentPreview | undefined,
+    categories: string[],
     read = false
   ): Promise<LinkModel | undefined> {
     const data = {
@@ -78,7 +79,7 @@ export class PocketBaseService {
       tagsFK: [],
       userFK: this.pocketBase.authStore.model?.id,
       read: read,
-      categorie: [],
+      categorie: categories,
       title: preview?.Title ?? '',
       image: (preview?.Images.length ?? 0) > 0 ? preview?.Images[0] : ''
     };
