@@ -17,27 +17,51 @@ test('Navigation to add link page', async ({ page }) => {
     await navigateToAddLinkPage(page);
 });
 
-test('Preview is filled for valid link', async ({ page }) => {
-    await navigateToAddLinkPage(page);
-    const linkField = await page.getByTestId("input-link");
-    await linkField.fill(githubUrl);
+test.describe("Tags", () => {
 
-    const titleField = await page.getByTestId("input-title");
-    const descField = await page.getByTestId("input-desc");
-    await expect(titleField).toHaveValue(githubPageTitle, { timeout: 20000 });
-    await expect(descField).toHaveValue(githubPageDescription, { timeout: 20000 });
+    test('tags are added', async ({ page }) => {
+        await navigateToAddLinkPage(page);
+        const linkField = await page.getByTestId("input-link");
+        await linkField.fill(githubUrl);
+        const tagField = await page.getByTestId("input-tag");
+        await tagField.fill('C#');
+        page.keyboard.press("Enter");
+    });
 });
 
-test('Preview is not filled for invalid links', async ({ page }) => {
-    await navigateToAddLinkPage(page);
-    const linkField = await page.getByTestId("input-link");
-    await linkField.fill("Not a link");
-    const titleField = await page.getByTestId("input-title");
-    const descField = await page.getByTestId("input-desc");
-    await expect(titleField).toHaveValue('', { timeout: 20000 });
-    await expect(descField).toHaveValue('', { timeout: 20000 });
-});
+test.describe("Existing Tags", () => {
+    test.beforeEach(async ({ page }) => {
+        await page.route(
+            '*/**/api/collections/links/records',
+            async (route) => {
+                await route.fulfill({ body: JSON.stringify(postNewLink), contentType: 'application/json' });
+            }
+        );
+    });
+})
 
+test.describe('preview is filled', () => {
+    test('for valid link', async ({ page }) => {
+        await navigateToAddLinkPage(page);
+        const linkField = await page.getByTestId("input-link");
+        await linkField.fill(githubUrl);
+
+        const titleField = await page.getByTestId("input-title");
+        const descField = await page.getByTestId("input-desc");
+        await expect(titleField).toHaveValue(githubPageTitle, { timeout: 20000 });
+        await expect(descField).toHaveValue(githubPageDescription, { timeout: 20000 });
+    });
+
+    test('not filled for invalid links', async ({ page }) => {
+        await navigateToAddLinkPage(page);
+        const linkField = await page.getByTestId("input-link");
+        await linkField.fill("Not a link");
+        const titleField = await page.getByTestId("input-title");
+        const descField = await page.getByTestId("input-desc");
+        await expect(titleField).toHaveValue('', { timeout: 20000 });
+        await expect(descField).toHaveValue('', { timeout: 20000 });
+    });
+});
 test('Submit button is only displayed for valid links', async ({ page }) => {
     await navigateToAddLinkPage(page);
     const linkField = await page.getByTestId("input-link");
