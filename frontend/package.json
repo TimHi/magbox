@@ -20,7 +20,7 @@
   "dependencies": {
     "@element-plus/icons-vue": "^2.1.0",
     "dayjs": "^1.11.10",
-    "element-plus": "^2.3.12",
+    "element-plus": "^2.3.14",
     "pinia": "^2.1.6",
     "pocketbase": "^0.18.0",
     "primevue": "^3.34.1",
