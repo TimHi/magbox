@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, nextTick, ref } from 'vue';
 import router from '../router';
 import { useLinkStore } from '../stores/links';
 import { PocketBaseService } from '../service/pocketBaseService';
@@ -7,12 +7,15 @@ import { DocumentPreview } from '../model/previewModel';
 import { useTagStore } from '../stores/tags';
 import type { TagModel } from '../model/TagModel';
 import { getRandomInt } from 'element-plus/es/utils/rand';
+import { ElInput } from 'element-plus';
 const linkStore = useLinkStore();
 const link = ref('');
 const validUrl = ref(false);
 const title = ref('');
 const description = ref('');
 const tag = ref('');
+const inputVisible = ref(false);
+const InputRef = ref<InstanceType<typeof ElInput>>();
 let preview: DocumentPreview = new DocumentPreview("", "", "", "", [], "");
 const pb = new PocketBaseService();
 const tagStore = useTagStore();
@@ -22,6 +25,22 @@ const pickedTags = ref([] as TagModel[]);
 tagStore.$subscribe((_, state) => {
     tagsInStore.value = state.tags;
 });
+
+
+const showInput = () => {
+    inputVisible.value = true
+    nextTick(() => {
+        InputRef.value!.input!.focus()
+    })
+}
+
+const handleInputConfirm = async () => {
+    if (tag.value) {
+        await addNewTag();
+    }
+    inputVisible.value = false
+    tag.value = ''
+}
 
 async function validateURL(url: string) {
     try {
@@ -110,19 +129,23 @@ function getRandomType() {
         <el-text class="darkText" tag="h2">Picked Tags</el-text>
         <div class="tag-list" data-testid="li-picked-tags">
             <div class="tag" v-for="(tag) in pickedTags" :key="tag.id + '_picked'">
-                <el-tag class="ml-2" theme="dark" :type="getRandomType()" @click="removeFromPicked(tag)">{{ tag.name
+                <el-tag class="ml-2" closable theme="dark" :type="getRandomType()" @close="removeFromPicked(tag)">{{
+                    tag.name
                 }}</el-tag>
             </div>
         </div>
         <el-divider />
-        <el-text class="darkText" tag="h2">Your Tags</el-text>
+        <el-text class="darkText" tag="h2">Available Tags</el-text>
         <div class="tag-list" data-testid="li-tags">
             <div class="tag" v-for="(tag) in filteredTags" :key="tag.id + '_available'">
-                <el-tag class="ml-2" theme="dark" :type="getRandomType()" @click="addToPicked(tag)">{{ tag.name }}</el-tag>
+                <el-tag class="mx-1" theme="dark" :type="getRandomType()" @click="addToPicked(tag)">{{ tag.name }}</el-tag>
             </div>
+            <el-input v-if="inputVisible" ref="InputRef" v-model="tag" class="ml-1 w-20" size="small"
+                @keyup.enter="handleInputConfirm" @blur="handleInputConfirm" />
+            <el-button v-else class="button-new-tag ml-1" size="small" @click="showInput" data-testid="btn-new-tag">
+                + New Tag
+            </el-button>
         </div>
-        <el-text class="darkText" tag="h2">Add tags</el-text>
-        <el-input v-model="tag" data-testid="input-tag" v-on:keyup.enter="addNewTag" />
         <el-divider />
         <el-button v-if="validUrl" @click="submit" data-testid="btn-submit-link">Submit</el-button>
         <el-button class="button"><router-link to="/">Back</router-link> </el-button>
@@ -144,6 +167,7 @@ function getRandomType() {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    align-items: center;
 }
 
 .tag {
