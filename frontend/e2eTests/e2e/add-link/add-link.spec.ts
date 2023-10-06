@@ -23,10 +23,13 @@ test.describe("Tags", () => {
         await navigateToAddLinkPage(page);
         const linkField = await page.getByTestId("input-link");
         await linkField.fill(githubUrl);
+        const tagBtn = await page.getByTestId("btn-new-tag");
         const tagField = await page.getByTestId("input-tag");
         const pickedTagList = await page.getByTestId("li-picked-tags");
         const pickedTags = await pickedTagList.locator(".tag");
         await expect(await pickedTags.count()).toBe(0);
+        await tagBtn.click();
+        await expect(tagField).toBeVisible();
         await tagField.fill('C#');
         await page.keyboard.press("Enter");
         await expect(pickedTags).toBeVisible();
@@ -41,10 +44,14 @@ test.describe("Tags", () => {
         const pickedTags = await pickedTagList.locator(".tag");
         const tagField = await page.getByTestId("input-tag");
         await expect(await pickedTags.count()).toBe(0);
+        const tagBtn = await page.getByTestId("btn-new-tag");
+        await tagBtn.click();
         await tagField.fill('C#');
         await page.keyboard.press("Enter");
         await expect(pickedTags).toBeVisible();
         await expect(await pickedTags.count()).toBe(1);
+        await tagBtn.click();
+        await expect(pickedTags).toBeVisible();
         await tagField.fill('C#');
         await page.keyboard.press("Enter");
         await expect(await pickedTags.count()).toBe(1);
