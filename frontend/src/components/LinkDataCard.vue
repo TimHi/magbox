@@ -5,17 +5,16 @@ import type {
 } from 'vue';
 import type { LinkModel } from '../model/linkModel';
 import { useLinkStore } from '../stores/links';
+import EditButtons from './EditButtons.vue';
+
 
 const props = defineProps({
     linkModel: Object as PropType<LinkModel>,
 });
-const read = ref(props.linkModel?.read ?? false)
+const read = ref(props.linkModel?.read ?? false);
+
 const linkStore = useLinkStore();
-function deleteItem() {
-    if (props.linkModel?.id) {
-        linkStore.removeLink(props.linkModel.id);
-    }
-}
+
 
 function markLinkAsRead() {
     if (props.linkModel) {
@@ -24,6 +23,8 @@ function markLinkAsRead() {
         linkStore.updateLink(link);
     }
 }
+
+
 </script>
 
 <template>
@@ -53,9 +54,7 @@ function markLinkAsRead() {
                 <el-switch v-model="read" @click="markLinkAsRead" class="ml-2 readSection"
                     style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949" />
             </div>
-            <el-icon color="white" @click="deleteItem">
-                <Delete />
-            </el-icon>
+            <EditButtons :linkModel="props.linkModel" />
         </div>
     </el-card>
 </template>
