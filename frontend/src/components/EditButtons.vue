@@ -1,31 +1,24 @@
 <script setup lang="ts">
-import { PropType, ref } from 'vue';
+import { PropType } from 'vue';
 import { LinkModel } from '../model/linkModel';
-import { useLinkStore } from '../stores/links';
 
-const props = defineProps({
+
+defineProps({
     linkModel: Object as PropType<LinkModel>,
+    isEditMode: Boolean,
+    saveChanges: Function,
+    cancelEditing: Function,
+    deleteItem: Function,
+    editItem: Function
 });
 
-const isEditMode = ref(false);
-const linkStore = useLinkStore();
-
-function saveChanges() {
-    isEditMode.value = false;
-}
-
-function deleteItem() {
-    if (props.linkModel?.id) {
-        linkStore.removeLink(props.linkModel.id);
-    }
-}
 </script>
 <template>
     <div class="edit-save-buttons">
-        <el-icon v-if="!isEditMode" style="margin: 4px;" color="white" @click="() => { isEditMode = true; }">
+        <el-icon v-if="!isEditMode" style="margin: 4px;" color="white" @click="editItem">
             <Edit />
         </el-icon>
-        <el-icon v-if="isEditMode" style="margin: 4px;" color="white" @click="() => { isEditMode = false; }">
+        <el-icon v-if="isEditMode" style="margin: 4px;" color="white" @click="cancelEditing">
             <Close />
         </el-icon>
         <el-icon v-if="isEditMode" style="margin: 4px;" color="white" @click="saveChanges">

@@ -12,9 +12,10 @@ const props = defineProps({
     linkModel: Object as PropType<LinkModel>,
 });
 const read = ref(props.linkModel?.read ?? false);
+const isEditMode = ref(false);
 
 const linkStore = useLinkStore();
-
+console.log(props.linkModel);
 
 function markLinkAsRead() {
     if (props.linkModel) {
@@ -23,7 +24,22 @@ function markLinkAsRead() {
         linkStore.updateLink(link);
     }
 }
+function saveChanges() {
+    isEditMode.value = false;
+}
 
+function editItem() {
+    isEditMode.value = true;
+}
+
+function cancelEditing() {
+    isEditMode.value = false;
+}
+function deleteItem() {
+    if (props.linkModel?.id) {
+        linkStore.removeLink(props.linkModel.id);
+    }
+}
 
 </script>
 
@@ -47,6 +63,7 @@ function markLinkAsRead() {
             </div>
         </el-link>
         <el-divider />
+
         <div class="footer">
             <div>
                 <span v-if="read" class="text readSection">Mark as unread</span>
@@ -54,7 +71,8 @@ function markLinkAsRead() {
                 <el-switch v-model="read" @click="markLinkAsRead" class="ml-2 readSection"
                     style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949" />
             </div>
-            <EditButtons :linkModel="props.linkModel" />
+            <EditButtons :linkModel="props.linkModel" :isEditMode="isEditMode" :saveChanges="saveChanges"
+                :deleteItem="deleteItem" :cancelEditing="cancelEditing" :editItem="editItem" />
         </div>
     </el-card>
 </template>
