@@ -15,7 +15,8 @@ const read = ref(props.linkModel?.read ?? false);
 const isEditMode = ref(false);
 
 const linkStore = useLinkStore();
-console.log(props.linkModel);
+const title = ref(props.linkModel?.title ?? "");
+const description = ref(props.linkModel?.description ?? "");
 
 function markLinkAsRead() {
     if (props.linkModel) {
@@ -33,6 +34,8 @@ function editItem() {
 }
 
 function cancelEditing() {
+    title.value = props.linkModel?.title ?? "";
+    description.value = props.linkModel?.description ?? "";
     isEditMode.value = false;
 }
 function deleteItem() {
@@ -44,7 +47,7 @@ function deleteItem() {
 </script>
 
 <template>
-    <el-card class="box-card" data-testid="link-card">
+    <el-card v-if="!isEditMode" class="box-card" data-testid="link-card">
         <el-link class="text" :href="props.linkModel?.link" target=”_blank” :data-testid=props.linkModel?.link>
             <div>
                 <div v-if="linkModel?.image !== ''" class="image-slot">
@@ -55,13 +58,42 @@ function deleteItem() {
                         fit="contain"></el-image>
                 </div>
                 <div class="header-slot">
-                    <h6 v-if="linkModel !== undefined" class="text header">{{ linkModel.title === "" ? linkModel.link :
-                        linkModel.title }}</h6>
+                    <h6 class="text header">{{ linkModel?.title === "" ? linkModel.link :
+                        linkModel?.title }}</h6>
                     <el-divider v-if="linkModel?.description !== ''" />
                     <span class="text description">{{ linkModel?.description }}</span>
                 </div>
             </div>
         </el-link>
+        <el-divider />
+
+        <div class="footer">
+            <div>
+                <span v-if="read" class="text readSection">Mark as unread</span>
+                <span v-if="!read" class="text readSection">Mark as read</span>
+                <el-switch v-model="read" @click="markLinkAsRead" class="ml-2 readSection"
+                    style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949" />
+            </div>
+            <EditButtons :linkModel="props.linkModel" :isEditMode="isEditMode" :saveChanges="saveChanges"
+                :deleteItem="deleteItem" :cancelEditing="cancelEditing" :editItem="editItem" />
+        </div>
+    </el-card>
+
+    <el-card v-else class="box-card" data-testid="link-card-edit-mode">
+        <div>
+            <div v-if="linkModel?.image !== ''" class="image-slot">
+                <el-image style="width: 300px; height: 100px" :src="props.linkModel?.image" fit="contain"></el-image>
+            </div>
+            <div v-else>
+                <el-image style="width: 100px; height: 100px" src="/Placeholder_view_vector.svg.png"
+                    fit="contain"></el-image>
+            </div>
+            <div class="header-slot">
+                <el-input v-model="title" data-testid="input-desc" />
+                <el-divider v-if="linkModel?.description !== ''" />
+                <el-input v-model="description" data-testid="input-desc" />
+            </div>
+        </div>
         <el-divider />
 
         <div class="footer">
