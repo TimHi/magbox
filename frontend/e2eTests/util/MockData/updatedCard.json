@@ -1,0 +1,15 @@
+{
+    "categorie": [],
+    "collectionId": "o42x9jog0lxrae9",
+    "collectionName": "links",
+    "created": "2023-09-18 14:00:26.607Z",
+    "description": "Have you seen this legendary SQL iceberg meme? Let's talk about it while wearing our PostgreSQL hat!",
+    "id": "tlxr9dhwks1oe0m",
+    "image": "https://avestura.dev/static/images/posts/postgres-meme/postgres-meme.jpg",
+    "link": "https://www.avestura.dev/blog/explaining-the-postgres-meme",
+    "read": false,
+    "tagsFK": [],
+    "title": "Updated from Test!",
+    "updated": "2023-09-18 14:00:26.607Z",
+    "userFK": "l8ntgpohc5gsocm"
+}

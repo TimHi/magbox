@@ -7,6 +7,7 @@ import postNewLink from '../MockData/postNewLink.json';
 import githubPreviewData from '../MockData/githubPreview.json';
 import postTag from '../MockData/addNewTagData.json';
 import emptyTags from "../MockData/emptyTags.json";
+import updatedCard from "../MockData/updatedCard.json";
 
 base.beforeEach(async ({ page }) => {
 
@@ -47,7 +48,15 @@ base.beforeEach(async ({ page }) => {
       await route.fulfill({ body: JSON.stringify(postTag), contentType: 'application/json' });
     }
   );
+
+  await page.route(
+    '*/**/api/collections/links/records/tlxr9dhwks1oe0m',
+    async (route) => {
+      await route.fulfill({ body: JSON.stringify(updatedCard), contentType: 'application/json' });
+    }
+  );
 });
+
 
 export const test = base.extend({
   page: async ({ page }, use) => {
