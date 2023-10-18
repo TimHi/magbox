@@ -19,3 +19,40 @@ test('Links have a title', async ({ page }) => {
     }
 });
 
+test.describe("Edit mode", () => {
+    test('Changes in the title are saved', async ({ page }) => {
+        const updatedTitle = "Updated from Test!";
+        await loginUser(page);
+        await expect.poll(async () => await page.title(), { timeout: 15000 }).toBe("MagBox | Home");
+        const firstCard = await page.getByTestId("link-card").nth(0);
+        const editButton = await firstCard.getByTestId("btn-edit-item");
+        await editButton.click();
+        const titleInput = await page.getByTestId("input-title");
+        await expect(titleInput).toBeVisible();
+        await titleInput.clear();
+        await titleInput.fill(updatedTitle);
+        const saveButton = await page.getByTestId("btn-save-changes");
+        await saveButton.click();
+        await expect(saveButton).toBeHidden();
+        const title = await firstCard.getByRole('heading').innerText();
+        await expect(title).toBe(updatedTitle);
+    });
+
+    test('No changes when canceling', async ({ page }) => {
+        await loginUser(page);
+        await expect.poll(async () => await page.title(), { timeout: 15000 }).toBe("MagBox | Home");
+        const firstCard = await page.getByTestId("link-card").nth(0);
+        const oldTitle = await firstCard.getByRole('heading').innerText();
+        const editButton = await firstCard.getByTestId("btn-edit-item");
+        await editButton.click();
+        const titleInput = await page.getByTestId("input-title");
+        await expect(titleInput).toBeVisible();
+        await titleInput.clear();
+        await titleInput.fill("Updated Title...");
+        const cancelButton = await page.getByTestId("btn-cancel-edit");
+        await cancelButton.click();
+        await expect(cancelButton).toBeHidden();
+        const title = await firstCard.getByRole('heading').innerText();
+        await expect(title).toBe(oldTitle);
+    });
+});

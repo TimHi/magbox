@@ -95,7 +95,7 @@ function deleteItem() {
                     fit="contain"></el-image>
             </div>
             <div class="header-slot">
-                <el-input v-model="title" data-testid="input-desc" />
+                <el-input v-model="title" data-testid="input-title" />
                 <el-divider v-if="linkModel?.description !== ''" />
                 <el-input v-model="description" data-testid="input-desc" />
             </div>
