@@ -32,7 +32,7 @@ router.beforeEach(async (to, _, next) => {
   }
 });
 
-router.afterEach((to, _) => {
+router.afterEach((to) => {
   document.title = to.name?.toString() ?? "MagBox";
 });
 
