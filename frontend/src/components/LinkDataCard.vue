@@ -27,6 +27,12 @@ function markLinkAsRead() {
 }
 function saveChanges() {
     isEditMode.value = false;
+    if (props.linkModel) {
+        const link = props.linkModel;
+        link.title = title.value;
+        link.description = description.value;
+        linkStore.updateLink(link);
+    }
 }
 
 function editItem() {

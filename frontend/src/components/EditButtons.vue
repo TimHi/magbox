@@ -15,21 +15,26 @@ defineProps({
 </script>
 <template>
     <div class="edit-save-buttons">
-        <el-icon v-if="!isEditMode" style="margin: 4px;" color="white" @click="editItem">
+        <el-icon v-if="!isEditMode" class="icon" color="white" @click="editItem">
             <Edit />
         </el-icon>
-        <el-icon v-if="isEditMode" style="margin: 4px;" color="white" @click="cancelEditing">
+        <el-icon v-if="isEditMode" class="icon" color="white" @click="cancelEditing">
             <Close />
         </el-icon>
-        <el-icon v-if="isEditMode" style="margin: 4px;" color="white" @click="saveChanges">
+        <el-icon v-if="isEditMode" class="icon" color="white" @click="saveChanges">
             <Check />
         </el-icon>
-        <el-icon color="white" style="margin: 4px;" @click="deleteItem">
+        <el-icon color="white" class="icon" @click="deleteItem">
             <Delete />
         </el-icon>
     </div>
 </template>
 <style>
+.icon {
+    cursor: pointer;
+    margin: 4px;
+}
+
 .edit-save-buttons {
     display: flex;
     flex-direction: row;
