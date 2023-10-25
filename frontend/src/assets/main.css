@@ -18,3 +18,16 @@ h6 {
 .text {
   color: var(--color-text);
 }
+
+#app {
+  height: 100vh;
+}
+
+#footer {
+  position: fixed;
+  height: 50px;
+  bottom: 0px;
+  left: 12px;
+  right: 0px;
+  margin-bottom: 0px;
+}
