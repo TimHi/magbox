@@ -54,69 +54,89 @@ function deleteItem() {
 
 <template>
     <el-card v-if="!isEditMode" class="box-card" data-testid="link-card">
-        <el-link class="text" :href="props.linkModel?.link" target=”_blank” :data-testid=props.linkModel?.link>
-            <div>
-                <div v-if="linkModel?.image !== ''" class="image-slot">
-                    <el-image style="width: 300px; height: 100px" :src="props.linkModel?.image" fit="contain"></el-image>
-                </div>
-                <div v-else>
-                    <el-image style="width: 100px; height: 100px" src="/Placeholder_view_vector.svg.png"
-                        fit="contain"></el-image>
-                </div>
-                <div class="header-slot">
-                    <h6 class="text header">{{ linkModel?.title === "" ? linkModel.link :
-                        linkModel?.title }}</h6>
-                    <el-divider v-if="linkModel?.description !== ''" />
-                    <span class="text description">{{ linkModel?.description }}</span>
-                </div>
+        <div class="flex-column">
+            <div class="cardHeader">
+                <el-link class="text" :href="props.linkModel?.link" target=”_blank” :data-testid=props.linkModel?.link>
+                    <div v-if="linkModel?.image !== ''" class="image-slot">
+                        <el-image style="width: 64px; height: 64px" :src="props.linkModel?.image" fit="contain"></el-image>
+                    </div>
+                    <div v-else class="image-slot">
+                        <el-image style="width: 64px; height: 64px" src="/Placeholder_view_vector.svg.png"
+                            fit="contain"></el-image>
+                    </div>
+                    <div class="header-slot">
+                        <h6 class="text header">{{ linkModel?.title === "" ? linkModel.link :
+                            linkModel?.title }}</h6>
+                    </div>
+                </el-link>
             </div>
-        </el-link>
-        <el-divider />
 
-        <div class="footer">
-            <div>
-                <span v-if="read" class="text readSection">Mark as unread</span>
-                <span v-if="!read" class="text readSection">Mark as read</span>
-                <el-switch v-model="read" @click="markLinkAsRead" class="ml-2 readSection"
-                    style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949" />
+            <div class="footer">
+                <div>
+                    <span v-if="read" class="text readSection">Mark as unread</span>
+                    <span v-if="!read" class="text readSection">Mark as read</span>
+                    <el-switch v-model="read" @click="markLinkAsRead" class="ml-2 readSection"
+                        style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949" />
+                </div>
+                <EditButtons :linkModel="props.linkModel" :isEditMode="isEditMode" :saveChanges="saveChanges"
+                    :deleteItem="deleteItem" :cancelEditing="cancelEditing" :editItem="editItem" />
             </div>
-            <EditButtons :linkModel="props.linkModel" :isEditMode="isEditMode" :saveChanges="saveChanges"
-                :deleteItem="deleteItem" :cancelEditing="cancelEditing" :editItem="editItem" />
         </div>
     </el-card>
 
     <el-card v-else class="box-card" data-testid="link-card-edit-mode">
-        <div>
-            <div v-if="linkModel?.image !== ''" class="image-slot">
-                <el-image style="width: 300px; height: 100px" :src="props.linkModel?.image" fit="contain"></el-image>
-            </div>
-            <div v-else>
-                <el-image style="width: 100px; height: 100px" src="/Placeholder_view_vector.svg.png"
-                    fit="contain"></el-image>
-            </div>
-            <div class="header-slot">
+        <div class="flex-column">
+            <div class="cardHeader">
+                <div v-if="linkModel?.image !== ''" class="image-slot">
+                    <el-image style="width: 64px; height: 64px" :src="props.linkModel?.image" fit="contain"></el-image>
+                </div>
+                <div v-else class="image-slot">
+                    <el-image style="width: 64px; height: 64px" src="/Placeholder_view_vector.svg.png"
+                        fit="contain"></el-image>
+                </div>
+                //TODO: goes down a line
                 <el-input v-model="title" data-testid="input-title" />
-                <el-divider v-if="linkModel?.description !== ''" />
-                <el-input v-model="description" data-testid="input-desc" />
             </div>
-        </div>
-        <el-divider />
 
+        </div>
         <div class="footer">
-            <div>
+            <div class="flex-column">
                 <span v-if="read" class="text readSection">Mark as unread</span>
                 <span v-if="!read" class="text readSection">Mark as read</span>
                 <el-switch v-model="read" @click="markLinkAsRead" class="ml-2 readSection"
                     style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949" />
             </div>
-            <EditButtons :linkModel="props.linkModel" :isEditMode="isEditMode" :saveChanges="saveChanges"
-                :deleteItem="deleteItem" :cancelEditing="cancelEditing" :editItem="editItem" />
+            <div class="margins">
+                <EditButtons :linkModel="props.linkModel" :isEditMode="isEditMode" :saveChanges="saveChanges"
+                    :deleteItem="deleteItem" :cancelEditing="cancelEditing" :editItem="editItem" />
+            </div>
         </div>
+
     </el-card>
 </template>
 
 <style>
 @import "../assets/main.css";
+
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 169px;
+    width: 344px;
+}
+
+.image-slot {
+    margin-right: 6px;
+}
+
+.cardHeader {
+    flex-direction: row;
+    justify-content: space-between;
+    justify-items: flex-start;
+    flex-wrap: nowrap;
+}
 
 .header {
     max-height: 60px;
@@ -145,7 +165,7 @@ function deleteItem() {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    margin-right: 6px;
 }
 
 .icon {
@@ -153,9 +173,10 @@ function deleteItem() {
 }
 
 .box-card {
-    min-width: 100px;
-    max-width: 375px;
+    --el-main-padding: 6px !important;
+    --el-card-padding: 6px !important;
+    height: 175px;
+    width: 350px;
     background-color: var(--color-background-soft);
-    margin-right: 4px;
 }
 </style>
