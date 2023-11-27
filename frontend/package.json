@@ -18,7 +18,7 @@
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false"
   },
   "dependencies": {
-    "@element-plus/icons-vue": "^2.1.0",
+    "@element-plus/icons-vue": "^2.3.1",
     "dayjs": "^1.11.10",
     "element-plus": "^2.4.2",
     "pinia": "^2.1.7",
