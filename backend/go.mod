@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/badoux/goscraper v0.0.0-20190827161153-36995ce6b19f
-	github.com/charmbracelet/log v0.3.0
+	github.com/charmbracelet/log v0.3.1
 	github.com/pocketbase/pocketbase v0.19.4
 )
 
