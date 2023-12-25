@@ -23,7 +23,7 @@
     "element-plus": "^2.4.3",
     "pinia": "^2.1.7",
     "pocketbase": "^0.20.1",
-    "primevue": "^3.44.0",
+    "primevue": "^3.45.0",
     "vue": "^3.3.4",
     "vue-router": "^4.2.5"
   },
