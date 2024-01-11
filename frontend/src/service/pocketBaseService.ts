@@ -4,7 +4,6 @@ import type { LinkModel } from '../model/linkModel';
 import type { DocumentPreview } from '../model/previewModel';
 import type { TagModel } from '../model/TagModel';
 export class PocketBaseService {
-
   private pocketBase: PocketBase;
 
   constructor() {
@@ -25,7 +24,6 @@ export class PocketBaseService {
             this.pocketBase.authStore.model
           ) {
             user.setLoginStats(true);
-
           } else {
             user.setLoginStats(false);
           }
@@ -93,12 +91,10 @@ export class PocketBaseService {
     }
   }
 
-  async CreateTag(
-    name: string
-  ): Promise<TagModel | undefined> {
+  async CreateTag(name: string): Promise<TagModel | undefined> {
     const data = {
       name: name,
-      userFK: this.pocketBase.authStore.model?.id,
+      userFK: this.pocketBase.authStore.model?.id
     };
     try {
       return await this.pocketBase.collection('categories').create(data);
@@ -107,7 +103,6 @@ export class PocketBaseService {
       console.error(err);
     }
   }
-
 
   async UpdateLink(link: LinkModel) {
     const record = await this.pocketBase.collection('links').update(link.id, link);
