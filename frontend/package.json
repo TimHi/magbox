@@ -22,7 +22,7 @@
     "dayjs": "^1.11.10",
     "element-plus": "^2.5.2",
     "pinia": "^2.1.7",
-    "pocketbase": "^0.20.1",
+    "pocketbase": "^0.20.3",
     "primevue": "^3.45.0",
     "vue": "^3.3.4",
     "vue-router": "^4.2.5"
