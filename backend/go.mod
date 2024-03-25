@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/badoux/goscraper v0.0.0-20190827161153-36995ce6b19f
-	github.com/charmbracelet/log v0.3.1
+	github.com/charmbracelet/log v0.4.0
 	github.com/pocketbase/pocketbase v0.19.4
 )
 
@@ -34,7 +34,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/sts v1.23.2 // indirect
 	github.com/aws/smithy-go v1.15.0 // indirect
 	github.com/aymanbagabas/go-osc52/v2 v2.0.1 // indirect
-	github.com/charmbracelet/lipgloss v0.9.1 // indirect
+	github.com/charmbracelet/lipgloss v0.10.0 // indirect
 	github.com/disintegration/imaging v1.6.2 // indirect
 	github.com/domodwyer/mailyak/v3 v3.6.2 // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
@@ -63,7 +63,7 @@ require (
 	github.com/muesli/termenv v0.15.2 // indirect
 	github.com/pocketbase/dbx v1.10.1 // indirect
 	github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec // indirect
-	github.com/rivo/uniseg v0.2.0 // indirect
+	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/spf13/cast v1.5.1 // indirect
 	github.com/spf13/cobra v1.7.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
