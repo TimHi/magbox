@@ -24,7 +24,7 @@
     "pinia": "^2.1.7",
     "pocketbase": "^0.21.3",
     "primevue": "^4.0.0",
-    "vue": "^3.4.31",
+    "vue": "^3.4.33",
     "vue-router": "^4.4.0"
   },
   "devDependencies": {
