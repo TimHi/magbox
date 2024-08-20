@@ -11,10 +11,16 @@ export const useLinkStore = defineStore('linkStore', {
     links: [] as LinkModel[]
   }),
   actions: {
+    //TODO_THL: tagFKs are not fetched
     async getLinksFromBackend() {
       this.links = (await pbService.GetLinks()) as LinkModel[];
     },
-    async addLink(link: string, preview: DocumentPreview | undefined, categorieIds: string[], read = false) {
+    async addLink(
+      link: string,
+      preview: DocumentPreview | undefined,
+      categorieIds: string[],
+      read = false
+    ) {
       const result = await pbService.CreateLink(link, preview, categorieIds, read);
       if (result) {
         this.links.push(result);
