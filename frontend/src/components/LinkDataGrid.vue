@@ -1,11 +1,22 @@
-<script lang="ts" setup >
+<script lang="ts" setup>
 import { computed, ref } from 'vue';
 import type { LinkModel } from '../model/linkModel';
+import type { TagModel } from '../model/TagModel';
 import LinkDataCard from './LinkDataCard.vue';
 import { useLinkStore } from '../stores/links';
+import { useTagStore } from '../stores/tags';
+
 const linkStore = useLinkStore();
+const tagStore = useTagStore();
+
 const useReadFilter = ref("Hide read links");
 let linksInStore = ref<Array<LinkModel>>(linkStore.getAllLinks);
+let tagsInStore = ref<Array<TagModel>>(tagStore.getAllTags);
+let selectedTag = ref<string[]>();
+
+tagStore.$subscribe((_, state) => {
+    tagsInStore.value = state.tags;
+});
 
 linkStore.$subscribe((_, state) => {
     linksInStore.value = state.links;
@@ -13,7 +24,9 @@ linkStore.$subscribe((_, state) => {
 
 const filteredLinks = computed(() => {
     if (useReadFilter.value === "Hide read links") {
-        return linksInStore.value.filter(link => !link.read);
+        const unreadLinks = linksInStore.value.filter(link => !link.read);
+        if (selectedTag.value?.length === 0) return unreadLinks;
+        else return unreadLinks.filter((link) => link.tagsFK.some((tagFk) => selectedTag.value?.includes(tagFk)));
     } else {
         return linksInStore.value;
     }
@@ -22,7 +35,10 @@ const filteredLinks = computed(() => {
 
 <template>
     <div class="filterContainer">
-        <el-radio-group v-model="useReadFilter" size="large">
+        <el-select v-model="selectedTag" multiple placeholder="Select" style="width: 200px;" size="large">
+            <el-option v-for="item in tagsInStore" :key="item.id" :label="item.name" :value="item.id" />
+        </el-select>
+        <el-radio-group v-model="useReadFilter" size="large" style="margin: 4px;">
             <el-radio-button label="Show all links" />
             <el-radio-button label="Hide read links" />
         </el-radio-group>
@@ -41,9 +57,10 @@ const filteredLinks = computed(() => {
 }
 
 .filterContainer {
+    display: flex;
+
+    align-items: center;
     margin-top: 6px;
     margin-bottom: 6px;
 }
 </style>
-
-
