@@ -52,25 +52,12 @@ function deleteItem() {
   <el-card v-if="!isEditMode" class="box-card" data-testid="link-card">
     <div class="flex-column">
       <div class="cardHeader">
-        <el-link
-          class="text"
-          :href="props.linkModel?.link"
-          target="”_blank”"
-          :data-testid="props.linkModel?.link"
-        >
+        <el-link class="text" :href="props.linkModel?.link" target="”_blank”" :data-testid="props.linkModel?.link">
           <div v-if="linkModel?.image !== ''" class="image-slot">
-            <el-image
-              style="width: 64px; height: 64px"
-              :src="props.linkModel?.image"
-              fit="contain"
-            ></el-image>
+            <el-image style="width: 64px; height: 64px" :src="props.linkModel?.image" fit="contain"></el-image>
           </div>
           <div v-else class="image-slot">
-            <el-image
-              style="width: 64px; height: 64px"
-              src="/Placeholder_view_vector.svg.png"
-              fit="contain"
-            ></el-image>
+            <el-image style="width: 64px; height: 64px" src="/Placeholder_view_vector.svg.png" fit="contain"></el-image>
           </div>
           <div>
             <h6 class="text header">
@@ -84,21 +71,11 @@ function deleteItem() {
         <div>
           <span v-if="read" class="text readSection">Mark as unread</span>
           <span v-if="!read" class="text readSection">Mark as read</span>
-          <el-switch
-            v-model="read"
-            @click="markLinkAsRead"
-            class="ml-2 readSection"
-            style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
-          />
+          <el-switch v-model="read" @click="markLinkAsRead" class="ml-2 readSection"
+            style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949" />
         </div>
-        <EditButtons
-          :linkModel="props.linkModel"
-          :isEditMode="isEditMode"
-          :saveChanges="saveChanges"
-          :deleteItem="deleteItem"
-          :cancelEditing="cancelEditing"
-          :editItem="editItem"
-        />
+        <EditButtons :linkModel="props.linkModel" :isEditMode="isEditMode" :saveChanges="saveChanges"
+          :deleteItem="deleteItem" :cancelEditing="cancelEditing" :editItem="editItem" />
       </div>
     </div>
   </el-card>
@@ -107,46 +84,18 @@ function deleteItem() {
     <div class="flex-column">
       <div class="cardHeader">
         <div v-if="linkModel?.image !== ''" class="image-slot">
-          <el-image
-            style="width: 64px; height: 64px"
-            :src="props.linkModel?.image"
-            fit="contain"
-          ></el-image>
+          <el-image style="width: 64px; height: 64px" :src="props.linkModel?.image" fit="contain"></el-image>
         </div>
         <div v-else class="image-slot">
-          <el-image
-            style="width: 64px; height: 64px"
-            src="/Placeholder_view_vector.svg.png"
-            fit="contain"
-          ></el-image>
+          <el-image style="width: 64px; height: 64px" src="/Placeholder_view_vector.svg.png" fit="contain"></el-image>
         </div>
-        <el-input
-          style="display: flex; max-height: 55px"
-          v-model="title"
-          data-testid="input-title"
-        />
+        <el-input style="display: flex; max-height: 55px" v-model="title" data-testid="input-title" />
       </div>
     </div>
     <div class="footer">
-      <div class="flex-row">
-        <span v-if="read" class="text readSection">Mark as unread</span>
-        <span v-if="!read" class="text readSection">Mark as read</span>
-        <el-switch
-          v-model="read"
-          @click="markLinkAsRead"
-          class="ml-2 readSection"
-          style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
-        />
-      </div>
-      <div class="margins">
-        <EditButtons
-          :linkModel="props.linkModel"
-          :isEditMode="isEditMode"
-          :saveChanges="saveChanges"
-          :deleteItem="deleteItem"
-          :cancelEditing="cancelEditing"
-          :editItem="editItem"
-        />
+      <div class="edit-mode">
+        <EditButtons :linkModel="props.linkModel" :isEditMode="isEditMode" :saveChanges="saveChanges"
+          :deleteItem="deleteItem" :cancelEditing="cancelEditing" :editItem="editItem" />
       </div>
     </div>
   </el-card>
@@ -154,6 +103,14 @@ function deleteItem() {
 
 <style>
 @import '../assets/main.css';
+
+.edit-mode {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-self: start;
+}
 
 .flex-column {
   display: flex;
