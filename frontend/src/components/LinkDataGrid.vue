@@ -23,8 +23,6 @@ linkStore.$subscribe((_, state) => {
 });
 
 const filteredLinks = computed(() => {
-  console.log(linksInStore.value);
-
   if (useReadFilter.value === 'Hide read links') {
     const unreadLinks = linksInStore.value.filter((link) => !link.read);
     if (selectedTag.value?.length === 0) return unreadLinks;
@@ -73,7 +71,6 @@ const filteredLinks = computed(() => {
 
 .filterContainer {
   display: flex;
-
   align-items: center;
   margin-top: 6px;
   margin-bottom: 6px;
