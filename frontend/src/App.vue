@@ -14,13 +14,21 @@ import FooterBar from './components/FooterBar.vue';
   </div>
 </template>
 
-<style>
+<style scoped>
 .content {
+  display: flex;
+  flex-direction: column;
   padding-bottom: 24px;
 }
 
 .margins {
   margin-left: 100px;
   margin-bottom: 4px;
+}
+
+.footer {
+  display: flex;
+  position: relative;
+  margin-top: auto;
 }
 </style>
