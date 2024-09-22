@@ -28,7 +28,6 @@ export const useTagStore = defineStore('tagStore', {
   },
   getters: {
     getAllTags(): TagModel[] {
-      console.log('Get all tags');
       return this.tags;
     }
   }
