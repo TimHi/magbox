@@ -1,7 +1,14 @@
 {
-    "page": 1,
-    "perPage": 500,
-    "totalItems": -1,
-    "totalPages": -1,
-    "items": []
+  "page": 1,
+  "perPage": 500,
+  "totalItems": -1,
+  "totalPages": -1,
+  "items": [
+    {
+      "id": "123",
+      "collectionId": "123",
+      "collectionName": "tags",
+      "name": "Test Category"
+    }
+  ]
 }

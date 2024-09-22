@@ -43,6 +43,7 @@ const filteredLinks = computed(() => {
 <template>
   <div class="filterContainer">
     <el-select
+      id="categoryfilter"
       v-model="selectedTag"
       multiple
       placeholder="Select"
