@@ -12,7 +12,7 @@ const tagStore = useTagStore();
 const useReadFilter = ref('Hide read links');
 let linksInStore = ref<Array<LinkModel>>(linkStore.getAllLinks);
 let tagsInStore = ref<Array<TagModel>>(tagStore.getAllTags);
-let selectedTag = ref<string[]>();
+let selectedTag = ref<string[]>([]);
 
 tagStore.$subscribe((_, state) => {
   tagsInStore.value = state.tags;
