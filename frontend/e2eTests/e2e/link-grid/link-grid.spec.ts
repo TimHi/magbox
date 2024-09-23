@@ -11,6 +11,9 @@ test('Category filter', async ({ page }) => {
   const filter = page.getByText('Select');
   await expect(filter).toBeVisible();
   await filter.click();
+  const filterItem = page.getByText('Test Category');
+  await expect(filterItem).toBeVisible();
+  await filterItem.click();
   expect(await cards.count()).toBe(1);
 });
 
