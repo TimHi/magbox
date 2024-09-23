@@ -6,11 +6,10 @@ import linkData from '../MockData/linkData.json';
 import postNewLink from '../MockData/postNewLink.json';
 import githubPreviewData from '../MockData/githubPreview.json';
 import postTag from '../MockData/addNewTagData.json';
-import emptyTags from "../MockData/emptyTags.json";
-import updatedCard from "../MockData/updatedCard.json";
+import emptyTags from '../MockData/emptyTags.json';
+import updatedCard from '../MockData/updatedCard.json';
 
 base.beforeEach(async ({ page }) => {
-
   await page.route('*/**/api/collections/users/auth-methods', async (route) => {
     await route.fulfill({ body: JSON.stringify(logindata), contentType: 'application/json' });
   });
@@ -21,19 +20,16 @@ base.beforeEach(async ({ page }) => {
     }
   );
 
-  await page.route(
-    '*/**/api/url_preview/https://github.com/',
-    async (route) => {
-      await route.fulfill({ body: JSON.stringify(githubPreviewData), contentType: 'application/json' });
-    }
-  );
+  await page.route('*/**/api/url_preview/https://github.com/', async (route) => {
+    await route.fulfill({
+      body: JSON.stringify(githubPreviewData),
+      contentType: 'application/json'
+    });
+  });
 
-  await page.route(
-    '*/**/api/collections/links/records',
-    async (route) => {
-      await route.fulfill({ body: JSON.stringify(postNewLink), contentType: 'application/json' });
-    }
-  );
+  await page.route('*/**/api/collections/links/records', async (route) => {
+    await route.fulfill({ body: JSON.stringify(postNewLink), contentType: 'application/json' });
+  });
 
   await page.route(
     '*/**/api/collections/categories/records?page=1&perPage=500&skipTotal=1',
@@ -42,21 +38,14 @@ base.beforeEach(async ({ page }) => {
     }
   );
 
-  await page.route(
-    '*/**/api/collections/categories/records',
-    async (route) => {
-      await route.fulfill({ body: JSON.stringify(postTag), contentType: 'application/json' });
-    }
-  );
+  await page.route('*/**/api/collections/categories/records', async (route) => {
+    await route.fulfill({ body: JSON.stringify(postTag), contentType: 'application/json' });
+  });
 
-  await page.route(
-    '*/**/api/collections/links/records/tlxr9dhwks1oe0m',
-    async (route) => {
-      await route.fulfill({ body: JSON.stringify(updatedCard), contentType: 'application/json' });
-    }
-  );
+  await page.route('*/**/api/collections/links/records/tlxr9dhwks1oe0m', async (route) => {
+    await route.fulfill({ body: JSON.stringify(updatedCard), contentType: 'application/json' });
+  });
 });
-
 
 export const test = base.extend({
   page: async ({ page }, use) => {
@@ -64,7 +53,8 @@ export const test = base.extend({
     page.on('console', (msg) => {
       if (msg.type() === 'error')
         messages.push(
-          `\n/**************************************/\n       Browser console error #${messages.length + 1
+          `\n/**************************************/\n       Browser console error #${
+            messages.length + 1
           }:\n/**************************************/\n${msg.text()}`
         );
     });
