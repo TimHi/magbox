@@ -21,7 +21,7 @@
     "@element-plus/icons-vue": "^2.3.1",
     "dayjs": "^1.11.13",
     "element-plus": "^2.8.6",
-    "pinia": "^2.2.4",
+    "pinia": "^2.2.6",
     "pocketbase": "^0.21.5",
     "primevue": "^4.1.1",
     "vue": "^3.5.12",
