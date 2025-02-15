@@ -8,8 +8,6 @@ require (
 	github.com/pocketbase/pocketbase v0.25.1
 )
 
-require github.com/labstack/echo/v5 v5.0.0-20230722203903-ec5b858dab61
-
 require (
 	github.com/asaskevich/govalidator v0.0.0-20230301143203-a9d515a09cc2 // indirect
 	github.com/aws/aws-sdk-go-v2 v1.35.0 // indirect
