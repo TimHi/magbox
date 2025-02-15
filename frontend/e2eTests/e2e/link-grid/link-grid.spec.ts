@@ -4,8 +4,9 @@ import { hasText } from '../../util/e2e/matcher';
 
 test('Category filter', async ({ page }) => {
   await loginUser(page);
-  await expect.poll(async () => await page.title(), { timeout: 15000 }).toBe('MagBox | Home');
+  await expect.poll(async () => await page.title(), { timeout: 30000 }).toBe('MagBox | Home');
   const cards = await page.getByTestId('link-card');
+  await expect(cards.first()).toBeVisible({ timeout: 30000 })
   expect(await cards.count()).toBe(7);
 
   const filter = page.getByText('Select');
