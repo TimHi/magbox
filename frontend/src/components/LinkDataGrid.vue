@@ -53,8 +53,8 @@ const filteredLinks = computed(() => {
       <el-option v-for="item in tagsInStore" :key="item.id" :label="item.name" :value="item.id" />
     </el-select>
     <el-radio-group v-model="useReadFilter" size="large" style="margin: 4px">
-      <el-radio-button label="Show all links" />
-      <el-radio-button label="Hide read links" />
+      <el-radio-button value="Show all links">Show all links</el-radio-button>
+      <el-radio-button value="Hide read links">Hide read links</el-radio-button>
     </el-radio-group>
   </div>
   <div class="container">

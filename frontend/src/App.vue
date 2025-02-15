@@ -9,7 +9,7 @@ import FooterBar from './components/FooterBar.vue';
     </div>
 
     <div id="footer">
-      <FooterBar class="margins" />
+      <!-- <FooterBar class="margins" /> -->
     </div>
   </div>
 </template>

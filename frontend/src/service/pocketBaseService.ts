@@ -56,7 +56,11 @@ export class PocketBaseService {
   }
 
   GetPreview(url: string): Promise<DocumentPreview | undefined> {
-    return fetch(import.meta.env.VITE_PB_BACKEND + 'api/url_preview/' + url)
+    const encodedUrl = encodeURIComponent(encodeURIComponent(url));
+    const requestUrl = new URL(import.meta.env.VITE_PB_BACKEND + 'api/url_preview/' + encodedUrl);
+    // Log: http://localhost:9000/url_preview/https%3A%2F%2Fwww.strava.com%2Fdashboard
+    console.log(requestUrl)
+    return fetch(requestUrl)
       .then((res) => res.json())
       .then((res) => {
         if (res === 'Error Scraping') {
@@ -76,7 +80,7 @@ export class PocketBaseService {
       link: link,
       description: preview?.Description ?? '',
       tagsFK: [],
-      userFK: this.pocketBase.authStore.model?.id,
+      userFK: this.pocketBase.authStore.record?.id,
       read: read,
       categorie: categories,
       title: preview?.Title ?? '',
