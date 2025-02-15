@@ -20,7 +20,7 @@ base.beforeEach(async ({ page }) => {
     }
   );
 
-  await page.route('*/**/api/url_preview/https://github.com/', async (route) => {
+  await page.route('*/**/api/url_preview/https%253A%252F%252Fgithub.com%252F', async (route) => {
     await route.fulfill({
       body: JSON.stringify(githubPreviewData),
       contentType: 'application/json'
@@ -53,8 +53,7 @@ export const test = base.extend({
     page.on('console', (msg) => {
       if (msg.type() === 'error')
         messages.push(
-          `\n/**************************************/\n       Browser console error #${
-            messages.length + 1
+          `\n/**************************************/\n       Browser console error #${messages.length + 1
           }:\n/**************************************/\n${msg.text()}`
         );
     });
