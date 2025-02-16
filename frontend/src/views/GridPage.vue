@@ -7,7 +7,7 @@ import HomePage from './HomePage.vue';
 <template>
     <h1>AAL</h1>
     <div class="card flex justify-center">
-        <PButton label="Verify" />
+        <Button label="Verify" />
     </div>
 </template>
 

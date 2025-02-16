@@ -8,6 +8,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AddLinkForm: typeof import('./src/components/AddLinkForm.vue')['default']
+    Button: typeof import('primevue/button')['default']
     EditButtons: typeof import('./src/components/EditButtons.vue')['default']
     FooterBar: typeof import('./src/components/FooterBar.vue')['default']
     LinkDataCard: typeof import('./src/components/LinkDataCard.vue')['default']

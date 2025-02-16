@@ -26,9 +26,7 @@ function login() {
             <h2>Send links directly to your using the browser extension (WIP) 📬</h2>
         </div>
         <div>
-            <el-button data-testid="login-button" type="primary" @click="login">
-                <p v-if="!user.user.isLoggedIn">Login</p>
-            </el-button>
+            <Button v-if="!user.user.isLoggedIn" data-testid="login-button" @click="login" severity="primary" label="Login" />
         </div>
     </div>
 </template>

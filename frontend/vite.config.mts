@@ -6,7 +6,11 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 import tailwindcss from '@tailwindcss/vite'
 import Components from 'unplugin-vue-components/vite';
 import {PrimeVueResolver} from '@primevue/auto-import-resolver';
+import type { PrimeVueResolverOptions } from '@primevue/auto-import-resolver'
 
+const resolverOptions = {
+  prefix: 'P'
+}
 // https://vitejs.dev/config/
 export default defineConfig({
   base: './',
@@ -17,7 +21,7 @@ export default defineConfig({
     Components({
 
       resolvers: [
-        PrimeVueResolver({components: "P", directives: "P"})
+        PrimeVueResolver({prefix: 'P'})
       ]
     })
   ],
