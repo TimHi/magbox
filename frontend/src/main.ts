@@ -12,10 +12,20 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue';
 import { PocketBaseService } from './service/pocketBaseService';
 import { useLinkStore } from './stores/links';
 import { useTagStore } from './stores/tags';
+import PrimeVue from 'primevue/config';
+import Aura from '@primevue/themes/aura';
+
 const app = createApp(App);
 
-app.component('PButton', Button);
 app.use(ElementPlus);
+app.use(PrimeVue, {
+  theme: {
+    preset: Aura,
+    options: {
+      prefix: 'P'
+    }
+  }
+});
 app.use(createPinia());
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component);

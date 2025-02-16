@@ -12,8 +12,8 @@ const read = ref(props.linkModel?.read ?? false);
 const isEditMode = ref(false);
 
 const linkStore = useLinkStore();
-const title = ref(props.linkModel?.title ?? '');
-const description = ref(props.linkModel?.description ?? '');
+const title = ref(props.linkModel?.title ?? 'Not Found');
+const description = ref(props.linkModel?.description ?? 'No description');
 
 function markLinkAsRead() {
   if (props.linkModel) {
@@ -83,7 +83,7 @@ function deleteItem() {
   <el-card v-else class="box-card" data-testid="link-card-edit-mode">
     <div class="flex-column">
       <div class="cardHeader">
-        <div v-if="linkModel?.image !== ''" class="image-slot">
+        <div v-if="linkModel!== undefined && linkModel.image !== ''" class="image-slot">
           <el-image style="width: 64px; height: 64px" :src="props.linkModel?.image" fit="contain"></el-image>
         </div>
         <div v-else class="image-slot">

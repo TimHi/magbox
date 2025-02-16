@@ -15,10 +15,12 @@
     "format": "prettier --write src/",
     "preview": "vite preview",
     "preview:test": "vite preview --port 5173 --mode=test",
-    "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false"
+    "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
+    "backend": "cd ../backend && go run .\\main.go serve --http=\"localhost:9000\""
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.1",
+    "@tailwindcss/vite": "^4.0.6",
     "dayjs": "^1.11.13",
     "element-plus": "^2.9.1",
     "pinia": "^2.3.0",

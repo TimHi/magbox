@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@primevue/themes": "^4.2.5",
+    "primevue": "^4.2.5"
+  },
+  "devDependencies": {
+    "@primevue/auto-import-resolver": "^4.2.5",
+    "unplugin-vue-components": "^28.1.0"
+  }
+}

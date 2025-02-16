@@ -3,6 +3,9 @@ import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
+import tailwindcss from '@tailwindcss/vite'
+import Components from 'unplugin-vue-components/vite';
+import {PrimeVueResolver} from '@primevue/auto-import-resolver';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -10,6 +13,13 @@ export default defineConfig({
   plugins: [
     vue(),
     vueJsx(),
+    tailwindcss(),
+    Components({
+
+      resolvers: [
+        PrimeVueResolver({components: "P", directives: "P"})
+      ]
+    })
   ],
   define: {
     APP_VERSION: JSON.stringify(process.env.npm_package_version),
