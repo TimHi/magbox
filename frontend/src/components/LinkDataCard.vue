@@ -102,7 +102,7 @@ function deleteItem() {
 </template>
 
 <style>
-@import '../assets/main.css';
+
 
 .edit-mode {
   display: flex;

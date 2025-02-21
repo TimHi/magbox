@@ -19,12 +19,15 @@ function login() {
 <template>
     <TopAppBar />
     <div class="descBox">
-        <div>
+        <Card>
+          <template #title>Why choose MagBox?</template>
+          <template #content>
             <h2>Keep track of stuff you want to read later 📔✍️</h2>
             <h2>Sort, categorize and filter (WIP)📑</h2>
             <h2>Export to Obsidian (WIP) 📤💎</h2>
             <h2>Send links directly to your using the browser extension (WIP) 📬</h2>
-        </div>
+          </template>
+        </Card>
         <div>
             <Button v-if="!user.user.isLoggedIn" data-testid="login-button" @click="login" severity="primary" label="Login" />
         </div>

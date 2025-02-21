@@ -5,9 +5,12 @@ import HomePage from './HomePage.vue';
 </script>
 
 <template>
-    <h1>AAL</h1>
+  <div class="bg-black">
+    <h1 class="bg-green ">AAL</h1>
+    <h1 class="gold">Gold</h1>
+  </div>
     <div class="card flex justify-center">
-        <Button label="Verify" />
+        <Button class="bg-red"  label="Verify" />
     </div>
 </template>
 

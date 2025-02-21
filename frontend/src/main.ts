@@ -1,11 +1,8 @@
-import './assets/main.css';
-
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css';
 import App from './App.vue';
-import Button from 'primevue/button';
 import { useUserStore } from './stores/user';
 import router from './router';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue';
@@ -13,17 +10,14 @@ import { PocketBaseService } from './service/pocketBaseService';
 import { useLinkStore } from './stores/links';
 import { useTagStore } from './stores/tags';
 import PrimeVue from 'primevue/config';
-import Aura from '@primevue/themes/aura';
-
+import Lara from '@primevue/themes/lara';
+import './style.css'
 const app = createApp(App);
 
 app.use(ElementPlus);
 app.use(PrimeVue, {
   theme: {
-    preset: Aura,
-    options: {
-      prefix: 'P'
-    }
+    preset: Lara
   }
 });
 app.use(createPinia());
