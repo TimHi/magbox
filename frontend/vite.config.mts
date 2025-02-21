@@ -19,7 +19,7 @@ export default defineConfig({
     Components({
 
       resolvers: [
-        PrimeVueResolver()
+        PrimeVueResolver({components: {prefix: 'P'}})
       ]
     })
   ],

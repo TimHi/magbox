@@ -1,5 +1,7 @@
 @import "tailwindcss";
-
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 @theme {
     --color-gold: #efbf04;
     --color-silver: #c4c4c4;

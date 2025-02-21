@@ -14,6 +14,8 @@ declare module 'vue' {
     FooterBar: typeof import('./src/components/FooterBar.vue')['default']
     LinkDataCard: typeof import('./src/components/LinkDataCard.vue')['default']
     LinkDataGrid: typeof import('./src/components/LinkDataGrid.vue')['default']
+    PButton: typeof import('primevue/button')['default']
+    PCard: typeof import('primevue/card')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TopAppBar: typeof import('./src/components/TopAppBar.vue')['default']
