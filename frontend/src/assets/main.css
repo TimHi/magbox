@@ -1,5 +1,6 @@
 @import './base.css';
-
+@import 'tailwindcss';
+@import 'tailwindcss-primeui';
 h1 {
   font-size: 46px;
   color: var(--color-magbox-blue);
