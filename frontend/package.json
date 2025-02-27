@@ -2,6 +2,7 @@
   "name": "magbox",
   "version": "1.0.5",
   "private": true,
+  "type": "module",
   "scripts": {
     "build": "run-p type-check build-only",
     "test:unit": "vitest",
@@ -19,18 +20,23 @@
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.1",
+    "@primeuix/themes": "^1.0.0",
+    "@tailwindcss/vite": "^4.0.9",
     "dayjs": "^1.11.13",
     "element-plus": "^2.9.1",
     "pinia": "^2.3.0",
     "pocketbase": "^0.25.1",
-    "primevue": "^4.2.5",
+    "primevue": "^4.3.1",
+    "tailwindcss-primeui": "^0.5.1",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.49.1",
+    "@primevue/auto-import-resolver": "^4.3.1",
     "@rushstack/eslint-patch": "^1.10.5",
     "@tsconfig/node18": "^18.2.4",
+    "@tsconfig/node22": "^22.0.0",
     "@types/jsdom": "^21.1.7",
     "@types/node": "^22.13.4",
     "@vitejs/plugin-vue": "^5.2.1",
@@ -46,8 +52,9 @@
     "npm-run-all": "^4.1.5",
     "postcss": "^8.5.2",
     "prettier": "^3.5.1",
-    "tailwindcss": "^4.0.8",
+    "tailwindcss": "^4.0.9",
     "typescript": "~5.6.3",
+    "unplugin-vue-components": "^28.4.1",
     "vite": "^6.1.0",
     "vitest": "^3.0.6",
     "vue-tsc": "^2.2.2"
