@@ -5,11 +5,11 @@ import FooterBar from './components/FooterBar.vue';
 <template>
   <div>
     <div class="content">
-      <router-view></router-view>
+      <RouterView />
     </div>
 
     <div id="footer">
-      <!-- <FooterBar class="margins" /> -->
+      <FooterBar class="margins" />
     </div>
   </div>
 </template>

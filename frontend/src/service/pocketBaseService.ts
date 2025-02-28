@@ -35,9 +35,21 @@ export class PocketBaseService {
     return this.pocketBase.authStore.isValid;
   }
 
-  async GetLinks() {
+  async GetLinks(): Promise<LinkModel[]> {
     try {
       return await this.pocketBase.collection('links').getFullList();
+    } catch (err: unknown) {
+      this.handleAuthError();
+      console.error(err);
+      return [];
+    }
+  }
+
+  async GetUnsortedLinks(): Promise<LinkModel[]> {
+    try {
+      return await this.pocketBase.collection('links').getFullList({
+        filter: "boxed = false"
+      });
     } catch (err: unknown) {
       this.handleAuthError();
       console.error(err);

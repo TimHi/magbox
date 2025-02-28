@@ -44,14 +44,11 @@ router.afterEach((to) => {
 });
 
 const userStore = useUserStore();
-const linkStore = useLinkStore();
-const tagStore = useTagStore();
+
 userStore.$subscribe((_, state) => {
   if (!state.user.isLoggedIn) {
     router.push('/login');
   } else {
-    linkStore.getLinksFromBackend();
-    tagStore.getTagsFromBackend();
     router.push('/');
   }
 });
