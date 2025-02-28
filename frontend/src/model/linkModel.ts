@@ -9,6 +9,7 @@ export interface LinkModel {
     id: string;
     link: string;
     read: boolean;
+    boxed: boolean;
     tagsFK: string[];
     updated: string;
     userFK: string;

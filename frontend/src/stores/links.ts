@@ -7,14 +7,16 @@ import type { DocumentPreview } from '../model/previewModel';
 
 const pbService = new PocketBaseService();
 export const useLinkStore = defineStore('linkStore', {
+
   state: () => ({
     links: [] as LinkModel[]
   }),
   actions: {
     //TODO_THL: tagFKs are not fetched
     async getLinksFromBackend() {
-      this.links = (await pbService.GetLinks()) as LinkModel[];
+      this.links = await pbService.GetLinks();
     },
+
     async addLink(
       link: string,
       preview: DocumentPreview | undefined,
@@ -43,11 +45,14 @@ export const useLinkStore = defineStore('linkStore', {
           }
         });
       }
-    }
+    },
+    async getUnsortedLinks(): Promise<LinkModel[]> {
+      return await pbService.GetUnsortedLinks();
+    },
   },
   getters: {
     getAllLinks(): LinkModel[] {
       return this.links;
-    }
+    },
   }
 });
