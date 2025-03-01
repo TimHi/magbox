@@ -49,10 +49,8 @@ export const useLinkStore = defineStore('linkStore', {
     async getUnsortedLinks(): Promise<LinkModel[]> {
       return await pbService.GetUnsortedLinks();
     },
+    async getAllLinks(): Promise<LinkModel[]> {
+      return await pbService.GetLinks();
+    }
   },
-  getters: {
-    getAllLinks(): LinkModel[] {
-      return this.links;
-    },
-  }
 });

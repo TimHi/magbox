@@ -10,17 +10,20 @@ import { useUserStore } from './stores/user';
 import router from './router';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue';
 import { PocketBaseService } from './service/pocketBaseService';
-import { useLinkStore } from './stores/links';
-import { useTagStore } from './stores/tags';
 import PrimeVue from 'primevue/config';
 import Aura from '@primeuix/themes/aura';
 
 const app = createApp(App);
+
 app.use(PrimeVue, {
   theme: {
-    preset: Aura
-  }
+    preset: Aura,
+    options: {
+      darkModeSelector: false || 'none',
+    },
+  },
 });
+
 app.component('PButton', Button);
 app.use(ElementPlus);
 app.use(createPinia());
