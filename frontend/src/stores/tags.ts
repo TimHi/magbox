@@ -24,11 +24,10 @@ export const useTagStore = defineStore('tagStore', {
       const doesTagExist =
         this.tags.find((t) => t.name.toLowerCase() === tagName.toLowerCase()) !== undefined;
       return doesTagExist;
+    },
+    async getAllTags(): Promise<TagModel[]> {
+      return await pbService.GetTags();
     }
   },
-  getters: {
-    getAllTags(): TagModel[] {
-      return this.tags;
-    }
-  }
+
 });

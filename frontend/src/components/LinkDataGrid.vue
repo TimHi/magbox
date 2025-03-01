@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import type { LinkModel } from '../model/linkModel';
 import type { TagModel } from '../model/TagModel';
 import LinkDataCard from './LinkDataCard.vue';
@@ -10,16 +10,13 @@ const linkStore = useLinkStore();
 const tagStore = useTagStore();
 
 const useReadFilter = ref('Hide read links');
-let linksInStore = ref<Array<LinkModel>>(linkStore.getAllLinks);
-let tagsInStore = ref<Array<TagModel>>(tagStore.getAllTags);
+let linksInStore = ref<Array<LinkModel>>([]);
+let tagsInStore = ref<Array<TagModel>>([]);
 let selectedTag = ref<string[]>([]);
 
-tagStore.$subscribe((_, state) => {
-  tagsInStore.value = state.tags;
-});
-
-linkStore.$subscribe((_, state) => {
-  linksInStore.value = state.links;
+onMounted(async () => {
+  linksInStore.value = await linkStore.getAllLinks();
+  tagsInStore.value = await tagStore.getAllTags();
 });
 
 const filteredLinks = computed(() => {

@@ -9,7 +9,7 @@ export const routes = [
   {
     path: '/',
     name: "MagBox | Home",
-    component: BoxView
+    component: HomePage
   },
   {
     path: '/add',

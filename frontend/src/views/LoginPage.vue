@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import TopAppBar from '../components/TopAppBar.vue';
 import { PocketBaseService } from '../service/pocketBaseService';
 import { useUserStore } from '../stores/user';
 const user = useUserStore();

@@ -9,6 +9,11 @@ export class PocketBaseService {
   constructor() {
     this.pocketBase = new PocketBase(import.meta.env.VITE_PB_BACKEND);
   }
+
+  getAuthRecord() {
+    return this.pocketBase.authStore.record;
+  }
+
   async SignInUsingOAuth2(): Promise<void> {
     const user = useUserStore();
     if (import.meta.env.MODE === 'test') {
@@ -21,7 +26,7 @@ export class PocketBaseService {
           if (
             this.pocketBase.authStore.isValid &&
             this.pocketBase.authStore.token !== undefined &&
-            this.pocketBase.authStore.model
+            this.pocketBase.authStore.record
           ) {
             user.setLoginStats(true);
           } else {
@@ -57,7 +62,7 @@ export class PocketBaseService {
     }
   }
 
-  async GetTags() {
+  async GetTags(): Promise<TagModel[]> {
     try {
       return await this.pocketBase.collection('categories').getFullList();
     } catch (err: unknown) {
