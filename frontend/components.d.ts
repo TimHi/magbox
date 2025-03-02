@@ -13,7 +13,9 @@ declare module 'vue' {
     AvatarButton: typeof import('./src/components/AvatarButton.vue')['default']
     Button: typeof import('primevue/button')['default']
     Card: typeof import('primevue/card')['default']
+    Chip: typeof import('primevue/chip')['default']
     Divider: typeof import('primevue/divider')['default']
+    DynamicDialog: typeof import('primevue/dynamicdialog')['default']
     EditButtons: typeof import('./src/components/EditButtons.vue')['default']
     FooterBar: typeof import('./src/components/FooterBar.vue')['default']
     LinkCard: typeof import('./src/components/LinkCard.vue')['default']
@@ -23,6 +25,7 @@ declare module 'vue' {
     Popover: typeof import('primevue/popover')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Textarea: typeof import('primevue/textarea')['default']
     TopAppBar: typeof import('./src/components/TopAppBar.vue')['default']
   }
 }

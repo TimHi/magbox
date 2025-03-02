@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { computed, nextTick, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import router from '../router';
 import { useLinkStore } from '../stores/links';
 import { PocketBaseService } from '../service/pocketBaseService';
 import { DocumentPreview } from '../model/previewModel';
 import { useTagStore } from '../stores/tags';
 import type { TagModel } from '../model/TagModel';
-import { ElInput } from 'element-plus';
 const linkStore = useLinkStore();
 const link = ref('');
 const validUrl = ref(false);
@@ -14,22 +13,18 @@ const title = ref('');
 const description = ref('');
 const tag = ref('');
 const inputVisible = ref(false);
-const InputRef = ref<InstanceType<typeof ElInput>>();
 let preview: DocumentPreview = new DocumentPreview('', '', '', '', [], '');
 const pb = new PocketBaseService();
 const tagStore = useTagStore();
-const tagsInStore = ref(tagStore.getAllTags);
+const tagsInStore = ref<TagModel[]>([]);
 const pickedTags = ref([] as TagModel[]);
 
-tagStore.$subscribe((_, state) => {
-  tagsInStore.value = state.tags;
+onMounted(async () => {
+  tagsInStore.value = await tagStore.getAllTags();
 });
 
 const showInput = () => {
   inputVisible.value = true;
-  nextTick(() => {
-    InputRef.value!.input!.focus();
-  });
 };
 
 const handleInputConfirm = async () => {
@@ -118,71 +113,105 @@ const filteredTags = computed(() => {
 </script>
 
 <template>
-  <div class="form">
-    <h1>Add new Link</h1>
-    <el-text class="darkText" tag="h2">Link</el-text>
-    <el-input
+  <div class="flex flex-col justify-center">
+    <p class="pt-2">Link</p>
+    <Textarea
       v-model="link"
-      placeholder="https://de.wikipedia.org/wiki/Aale"
-      @input="validateURL"
       data-testid="input-link"
+      :fluid="true"
+      rows="1"
+      cols="30"
+      :draggable="false"
+      placeholder="https://de.wikipedia.org/wiki/Aale"
+      @value-change="validateURL"
+      style="resize: none"
     />
-    <el-text class="darkText" tag="h2">Title</el-text>
-    <el-input v-model="title" data-testid="input-title" />
-    <el-text class="darkText" tag="h2">Description</el-text>
-    <el-input v-model="description" data-testid="input-desc" />
-    <el-text class="darkText" tag="h2">Picked Tags</el-text>
-    <div class="tag-list" data-testid="li-picked-tags">
+    <p class="text-l pt-2">Title</p>
+    <Textarea
+      v-model="title"
+      data-testid="input-title"
+      :fluid="true"
+      rows="1"
+      cols="30"
+      :draggable="false"
+      style="resize: none"
+    />
+    <p class="text-l pt-2">Description</p>
+    <Textarea
+      v-model="description"
+      data-testid="input-desc"
+      :fluid="true"
+      rows="1"
+      cols="30"
+      :draggable="false"
+      style="resize: none"
+    />
+    <p class="text-l pt-2">Picked Tags</p>
+    <div class="tag-list pt-2" data-testid="li-picked-tags">
       <div class="tag" v-for="tag in pickedTags" :key="tag.id + '_picked'">
-        <el-tag class="ml-2" closable theme="dark" @close="removeFromPicked(tag)">{{
-          tag.name
-        }}</el-tag>
+        <Chip :label="tag.name" @click="removeFromPicked(tag)" />
+      </div>
+      <div v-if="pickedTags.length === 0" class="pt-2">
+        <p class="font-thin text-sm">No Tags selected</p>
       </div>
     </div>
     <el-divider />
-    <el-text class="darkText" tag="h2">Available Tags</el-text>
-    <div style="display: flex; flex-direction: column">
-      <div class="tag-list" data-testid="li-tags">
+
+    <p class="text-l">Available Tags</p>
+    <div class="flex flex-col">
+      <div class="tag-list pt-2" data-testid="li-tags">
         <div class="tag" v-for="tag in filteredTags" :key="tag.id + '_available'">
-          <el-tag class="mx-1" theme="dark" @click="addToPicked(tag)">{{ tag.name }}</el-tag>
+          <Chip :label="tag.name" @click="addToPicked(tag)" />
         </div>
       </div>
-      <el-input
-        v-if="inputVisible"
-        ref="InputRef"
-        v-model="tag"
-        class="ml-1 w-20 add-tag"
-        size="small"
-        @keyup.enter="handleInputConfirm"
-        @blur="handleInputConfirm"
-        data-testid="input-tag"
-      />
-      <el-button
-        v-else
-        class="button-new-tag ml-1 add-tag"
-        theme="dark"
-        size="small"
-        @click="showInput"
-        data-testid="btn-new-tag"
-      >
-        + New Tag
-      </el-button>
+      <div v-if="inputVisible">
+        <Textarea
+          v-model="tag"
+          data-testid="input-tag"
+          :fluid="true"
+          rows="1"
+          cols="30"
+          :draggable="false"
+          style="resize: none"
+          @blur="handleInputConfirm"
+        />
+      </div>
+
+      <div v-else class="pt-2">
+        <Button
+          icon="pi pi-plus"
+          data-testid="btn-new-tag"
+          label="New Tag"
+          @click="showInput"
+          size="small"
+          variant="outlined"
+        />
+      </div>
     </div>
-    <el-divider />
-    <el-button v-if="validUrl" @click="submit" data-testid="btn-submit-link">Submit</el-button>
-    <el-button class="button"><router-link to="/">Back</router-link> </el-button>
+    <Divider />
+    <Button
+      v-if="validUrl"
+      icon="pi pi-check"
+      data-testid="btn-submit-link"
+      label="Submit"
+      @click="submit"
+      size="small"
+      variant="outlined"
+    />
+    <Button
+      label="Back"
+      @click="() => router.back()"
+      size="small"
+      variant="outlined"
+      :fluid="false"
+      :pt="{ root: '!max-w-24' }"
+    />
   </div>
 </template>
 
 <style>
 .darkText {
   color: var(--color-heading);
-}
-
-.form {
-  width: 400px;
-  margin: auto;
-  width: 50%;
 }
 
 .tag-list {

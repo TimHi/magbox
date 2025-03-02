@@ -14,6 +14,7 @@ import PrimeVue from 'primevue/config';
 import Aura from '@primeuix/themes/aura';
 import mdiVue from 'mdi-vue/v3'
 import * as mdijs from '@mdi/js'
+import { DialogService } from 'primevue';
 
 const app = createApp(App);
 
@@ -28,6 +29,7 @@ app.use(PrimeVue, {
 
 app.component('PButton', Button);
 app.use(ElementPlus);
+app.use(DialogService);
 app.use(createPinia());
 app.use(mdiVue, {
   icons: mdijs
