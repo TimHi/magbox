@@ -3,6 +3,7 @@ import { useUserStore } from '../stores/user';
 import type { LinkModel } from '../model/linkModel';
 import type { DocumentPreview } from '../model/previewModel';
 import type { TagModel } from '../model/TagModel';
+import type { UserModel } from '@/model/userModel';
 export class PocketBaseService {
   private pocketBase: PocketBase;
 
@@ -69,6 +70,14 @@ export class PocketBaseService {
       this.handleAuthError();
       console.error(err);
       return [];
+    }
+  }
+
+  async getUserDetail(): Promise<UserModel | undefined> {
+    console.log(this.pocketBase.authStore.record?.id);
+    if (this.pocketBase.authStore.record?.id === undefined) { return undefined; }
+    else {
+      return await this.pocketBase.collection('users').getOne(this.pocketBase.authStore.record.id);
     }
   }
 

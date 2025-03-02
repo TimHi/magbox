@@ -14,7 +14,7 @@ onMounted(async () => {
 <template>
   <h1 class="text-bold">Your Boxd Links</h1>
   <p>Sort the stuff</p>
-  <div class="flex flex-wrap gap-4">
+  <div class="flex flex-wrap gap-2">
     <div v-for="link in unsortedLinks" :key="link.id">
       <LinkCard :link="link" :key="link.id" />
     </div>

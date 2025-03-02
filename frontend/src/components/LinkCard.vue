@@ -25,6 +25,10 @@ defineProps<{
         {{ link.description }}
       </p>
     </template>
-    <template #footer></template>
+    <template #footer>
+      <div v-if="!link.boxed">
+        <Button label="Aal"></Button>
+      </div>
+    </template>
   </Card>
 </template>
