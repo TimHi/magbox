@@ -2,7 +2,7 @@
 import { computed, onMounted, ref } from 'vue';
 import type { LinkModel } from '../model/linkModel';
 import type { TagModel } from '../model/TagModel';
-import LinkDataCard from './LinkDataCard.vue';
+import LinkCard from './LinkCard.vue';
 import { useLinkStore } from '../stores/links';
 import { useTagStore } from '../stores/tags';
 
@@ -38,7 +38,7 @@ const filteredLinks = computed(() => {
 </script>
 
 <template>
-  <div class="filterContainer">
+  <div>
     <el-select
       id="categoryfilter"
       v-model="selectedTag"
@@ -49,28 +49,14 @@ const filteredLinks = computed(() => {
     >
       <el-option v-for="item in tagsInStore" :key="item.id" :label="item.name" :value="item.id" />
     </el-select>
-    <el-radio-group v-model="useReadFilter" size="large" style="margin: 4px">
+    <el-radio-group v-model="useReadFilter" size="large">
       <el-radio-button value="Show all links">Show all links</el-radio-button>
       <el-radio-button value="Hide read links">Hide read links</el-radio-button>
     </el-radio-group>
   </div>
-  <div class="container">
+  <div class="flex flex-row flex-wrap gap-1">
     <div v-for="link in filteredLinks" :key="link.id">
-      <LinkDataCard :linkModel="link" />
+      <LinkCard :link="link" />
     </div>
   </div>
 </template>
-<style>
-.container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-
-.filterContainer {
-  display: flex;
-  align-items: center;
-  margin-top: 6px;
-  margin-bottom: 6px;
-}
-</style>

@@ -1,23 +1,11 @@
 <script setup lang="ts">
+import { useRouter } from 'vue-router';
 import LinkDataGrid from '../components/LinkDataGrid.vue';
+const router = useRouter();
 </script>
 <template>
-  <div class="common-layout">
-    <el-container>
-      <el-main>
-        <div class="mainContent">
-          <el-button data-testid="btn-add-link">
-            <router-link to="/add">Add Link</router-link></el-button
-          >
-          <LinkDataGrid />
-        </div>
-      </el-main>
-    </el-container>
+  <div>
+    <Button data-testid="btn-add-link" label="Add" @click="router.push('/add')" />
+    <LinkDataGrid />
   </div>
 </template>
-
-<style>
-.mainContent {
-  margin: 12px;
-}
-</style>

@@ -12,6 +12,8 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue';
 import { PocketBaseService } from './service/pocketBaseService';
 import PrimeVue from 'primevue/config';
 import Aura from '@primeuix/themes/aura';
+import mdiVue from 'mdi-vue/v3'
+import * as mdijs from '@mdi/js'
 
 const app = createApp(App);
 
@@ -27,6 +29,9 @@ app.use(PrimeVue, {
 app.component('PButton', Button);
 app.use(ElementPlus);
 app.use(createPinia());
+app.use(mdiVue, {
+  icons: mdijs
+});
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component);
 }

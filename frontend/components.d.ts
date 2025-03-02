@@ -10,6 +10,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     AddLinkForm: typeof import('./src/components/AddLinkForm.vue')['default']
     Avatar: typeof import('primevue/avatar')['default']
+    AvatarButton: typeof import('./src/components/AvatarButton.vue')['default']
     Button: typeof import('primevue/button')['default']
     Card: typeof import('primevue/card')['default']
     Divider: typeof import('primevue/divider')['default']
