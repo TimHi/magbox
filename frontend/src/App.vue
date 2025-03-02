@@ -4,11 +4,13 @@ import FooterBar from './components/FooterBar.vue';
 import { onMounted, ref } from 'vue';
 import { useUserStore } from './stores/user';
 import { type UserModel } from './model/userModel';
+import { useDialog } from 'primevue';
+import AddLinkForm from './components/AddLinkForm.vue';
 const router = useRouter();
 
 const userStore = useUserStore();
 const user = ref<UserModel | undefined>(userStore.user);
-
+const dialog = useDialog();
 onMounted(async () => {
   const userV = await userStore.getUserDetails();
   user.value = userV;
@@ -28,6 +30,25 @@ const items = ref([
     command: () => {
       router.push('/box');
     }
+  },
+  {
+    label: 'Add New',
+    icon: 'pi pi-plus',
+    command: () => {
+      dialog.open(AddLinkForm, {
+        props: {
+          header: 'Add Link',
+          style: {
+            width: '50vw'
+          },
+          breakpoints: {
+            '960px': '75vw',
+            '640px': '90vw'
+          },
+          modal: true
+        }
+      });
+    }
   }
 ]);
 </script>
@@ -38,6 +59,7 @@ const items = ref([
       <template #end> <AvatarButton :user="user" /> </template
     ></Menubar>
     <div class="content">
+      <DynamicDialog />
       <RouterView />
     </div>
 
