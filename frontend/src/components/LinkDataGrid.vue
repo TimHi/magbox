@@ -2,7 +2,7 @@
 import { computed, onMounted, ref } from 'vue';
 import type { LinkModel } from '../model/linkModel';
 import type { TagModel } from '../model/TagModel';
-import LinkCard from './LinkCard.vue';
+import LinkTable from './LinkTable.vue';
 import { useLinkStore } from '../stores/links';
 import { useTagStore } from '../stores/tags';
 
@@ -54,9 +54,5 @@ const filteredLinks = computed(() => {
       <el-radio-button value="Hide read links">Hide read links</el-radio-button>
     </el-radio-group>
   </div>
-  <div class="flex flex-row flex-wrap gap-1">
-    <div v-for="link in filteredLinks" :key="link.id">
-      <LinkCard :link="link" />
-    </div>
-  </div>
+  <LinkTable :links="filteredLinks" />
 </template>

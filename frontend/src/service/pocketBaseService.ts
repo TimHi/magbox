@@ -43,7 +43,15 @@ export class PocketBaseService {
 
   async GetLinks(): Promise<LinkModel[]> {
     try {
-      return await this.pocketBase.collection('links').getFullList();
+      const aal = await this.pocketBase.collection('links').getFullList({
+        filter: "boxed = true",
+        expand: 'categorie',
+      });
+      console.log(aal);
+      return await this.pocketBase.collection('links').getFullList({
+        filter: "boxed = true",
+        expand: 'categorie',
+      });
     } catch (err: unknown) {
       this.handleAuthError();
       console.error(err);
