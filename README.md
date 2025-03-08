@@ -20,7 +20,3 @@ npm run dev
 ```
 
 Visit [http://localhost:5173/](http://localhost:5173/)
-
-## E2E
-
-Currently the e2e setup is beyond subpar. After making changes you need to run `npm run build:test`.

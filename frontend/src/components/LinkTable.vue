@@ -20,7 +20,7 @@ function randomColor() {
     tableStyle="min-width: 50rem"
     :stripedRows="true"
     paginator
-    :rows="5"
+    :rows="15"
     :rowsPerPageOptions="[15, 20, 25, 50]"
     size="small"
     :pt="{
@@ -36,7 +36,9 @@ function randomColor() {
     </Column>
     <Column header="Title">
       <template #body="slotProps">
-        <p>{{ slotProps.data.title }}</p>
+        <a class="underline decoration-green-400" :href="slotProps.data.link"
+          >{{ slotProps.data.title }}
+        </a>
       </template>
     </Column>
     <Column header="Category" class="h-12">
