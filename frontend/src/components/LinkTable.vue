@@ -23,6 +23,11 @@ function randomColor() {
     :rows="5"
     :rowsPerPageOptions="[15, 20, 25, 50]"
     size="small"
+    :pt="{
+      root: {
+        'data-testid': 'link-table'
+      }
+    }"
   >
     <Column header="Preview" class="w-24 h-12">
       <template #body="slotProps">

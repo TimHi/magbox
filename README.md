@@ -4,7 +4,6 @@ Magbox is a website to store links you plan to read later or save for future ref
 
 [![build-and-deploy-container](https://github.com/TimHi/magbox/actions/workflows/build-container.yaml/badge.svg)](https://github.com/TimHi/magbox/actions/workflows/build-container.yaml)  
 [![build and lint](https://github.com/TimHi/magbox/actions/workflows/lint.yaml/badge.svg)](https://github.com/TimHi/magbox/actions/workflows/lint.yaml)  
-[![run e2e tests](https://github.com/TimHi/magbox/actions/workflows/playwright.yml/badge.svg)](https://github.com/TimHi/magbox/actions/workflows/playwright.yml)
 
 ## Development
 
