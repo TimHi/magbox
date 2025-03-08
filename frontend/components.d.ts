@@ -26,10 +26,8 @@ declare module 'vue' {
     LinkTable: typeof import('./src/components/LinkTable.vue')['default']
     Menubar: typeof import('primevue/menubar')['default']
     Popover: typeof import('primevue/popover')['default']
-    Rating: typeof import('primevue/rating')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    Tag: typeof import('primevue/tag')['default']
     Textarea: typeof import('primevue/textarea')['default']
     TopAppBar: typeof import('./src/components/TopAppBar.vue')['default']
   }
