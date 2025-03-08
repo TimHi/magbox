@@ -27,7 +27,7 @@ defineProps<{
     </template>
     <template #footer>
       <div v-if="!link.boxed">
-        <Button label="Aal"></Button>
+        <Button label="Box"></Button>
       </div>
     </template>
   </Card>

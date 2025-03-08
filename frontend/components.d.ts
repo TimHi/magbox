@@ -25,10 +25,12 @@ declare module 'vue' {
     LinkDataGrid: typeof import('./src/components/LinkDataGrid.vue')['default']
     LinkTable: typeof import('./src/components/LinkTable.vue')['default']
     Menubar: typeof import('primevue/menubar')['default']
+    MultiSelect: typeof import('primevue/multiselect')['default']
     Popover: typeof import('primevue/popover')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Textarea: typeof import('primevue/textarea')['default']
+    ToggleSwitch: typeof import('primevue/toggleswitch')['default']
     TopAppBar: typeof import('./src/components/TopAppBar.vue')['default']
   }
 }

@@ -17,11 +17,6 @@ export class PocketBaseService {
 
   async SignInUsingOAuth2(): Promise<void> {
     const user = useUserStore();
-    // if (import.meta.env.MODE === 'test') {
-    //   console.log("Test");
-    //   user.setLoginStats(true);
-    //   this.pocketBase.authStore.isValid = true;
-    // } else {
     return this.pocketBase
       .collection('users')
       .authWithOAuth2({ provider: 'discord' })
@@ -36,7 +31,6 @@ export class PocketBaseService {
           user.setLoginStats(false);
         }
       });
-    //}
   }
 
   IsUserLoggedIn(): boolean {
@@ -44,22 +38,16 @@ export class PocketBaseService {
   }
 
   async GetLinks(): Promise<LinkModel[]> {
-    try {
-      const aal = await this.pocketBase.collection('links').getFullList({
-        filter: "boxed = true",
-        expand: 'categorie',
-      });
-      console.log(aal);
-      return await this.pocketBase.collection('links').getFullList({
-        filter: "boxed = true",
-        expand: 'categorie',
-      });
-    } catch (err: unknown) {
-      this.handleAuthError();
-      console.error(err);
-      return [];
-    }
+    return await this.pocketBase.collection('links').getFullList({
+      filter: "boxed = true",
+      expand: 'categorie',
+    });
+  } catch(err: unknown) {
+    this.handleAuthError();
+    console.error(err);
+    return [];
   }
+
 
   async GetUnsortedLinks(): Promise<LinkModel[]> {
     try {
