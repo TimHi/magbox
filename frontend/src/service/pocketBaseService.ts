@@ -17,24 +17,26 @@ export class PocketBaseService {
 
   async SignInUsingOAuth2(): Promise<void> {
     const user = useUserStore();
-    if (import.meta.env.MODE === 'test') {
-      user.setLoginStats(true);
-    } else {
-      return this.pocketBase
-        .collection('users')
-        .authWithOAuth2({ provider: 'discord' })
-        .then(() => {
-          if (
-            this.pocketBase.authStore.isValid &&
-            this.pocketBase.authStore.token !== undefined &&
-            this.pocketBase.authStore.record
-          ) {
-            user.setLoginStats(true);
-          } else {
-            user.setLoginStats(false);
-          }
-        });
-    }
+    // if (import.meta.env.MODE === 'test') {
+    //   console.log("Test");
+    //   user.setLoginStats(true);
+    //   this.pocketBase.authStore.isValid = true;
+    // } else {
+    return this.pocketBase
+      .collection('users')
+      .authWithOAuth2({ provider: 'discord' })
+      .then(() => {
+        if (
+          this.pocketBase.authStore.isValid &&
+          this.pocketBase.authStore.token !== undefined &&
+          this.pocketBase.authStore.record
+        ) {
+          user.setLoginStats(true);
+        } else {
+          user.setLoginStats(false);
+        }
+      });
+    //}
   }
 
   IsUserLoggedIn(): boolean {
@@ -82,7 +84,6 @@ export class PocketBaseService {
   }
 
   async getUserDetail(): Promise<UserModel | undefined> {
-    console.log(this.pocketBase.authStore.record?.id);
     if (this.pocketBase.authStore.record?.id === undefined) { return undefined; }
     else {
       return await this.pocketBase.collection('users').getOne(this.pocketBase.authStore.record.id);

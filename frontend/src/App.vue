@@ -33,6 +33,7 @@ const items = ref([
   },
   {
     label: 'Add New',
+    'data-testid': 'btn-add-link',
     icon: 'pi pi-plus',
     command: () => {
       dialog.open(AddLinkForm, {
