@@ -26,8 +26,9 @@ export const useTagStore = defineStore('tagStore', {
       return doesTagExist;
     },
     async getAllTags(): Promise<TagModel[]> {
-      return await pbService.GetTags();
+      const tags = await pbService.GetTags() as TagModel[];
+      this.tags = tags;
+      return tags;
     }
   },
-
 });

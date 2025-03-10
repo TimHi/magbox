@@ -1,22 +1,31 @@
 <script setup lang="ts">
 import LinkCard from '@/components/LinkCard.vue';
-import type { LinkModel } from '@/model/linkModel';
+import type { TagModel } from '@/model/TagModel';
 import { useLinkStore } from '@/stores/links';
+import { useTagStore } from '@/stores/tags';
 
-import { onMounted, ref } from 'vue';
+import { onMounted, computed, ref } from 'vue';
+
+const tagStore = useTagStore();
 const linkStore = useLinkStore();
-const unsortedLinks = ref<LinkModel[]>([]);
+const tagsInStore = ref<Array<TagModel>>([]);
+
+const unsortedLinks = computed(() => linkStore.GetUnsortedLinks);
 
 onMounted(async () => {
-  unsortedLinks.value = await linkStore.getUnsortedLinks();
+  tagsInStore.value = await tagStore.getAllTags();
 });
 </script>
+
 <template>
-  <h1 class="text-bold">Boxd Links</h1>
-  <p class="font-light">Sort your links</p>
-  <div class="flex flex-wrap gap-2">
-    <div v-for="link in unsortedLinks" :key="link.id">
-      <LinkCard :link="link" :key="link.id" />
+  <div class="m-4">
+    <div class="pb-2">
+      <p class="font-light">Sort your links</p>
+    </div>
+    <div class="flex flex-wrap gap-2">
+      <div v-for="link in unsortedLinks" :key="link.id">
+        <LinkCard :link="link" :key="link.id" :tags="tagsInStore" />
+      </div>
     </div>
   </div>
 </template>

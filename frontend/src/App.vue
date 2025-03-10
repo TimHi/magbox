@@ -6,14 +6,20 @@ import { useUserStore } from './stores/user';
 import { type UserModel } from './model/userModel';
 import { useDialog } from 'primevue';
 import AddLinkForm from './components/AddLinkForm.vue';
+import { useLinkStore } from './stores/links';
+import { useTagStore } from './stores/tags';
 const router = useRouter();
 
 const userStore = useUserStore();
+const linkStore = useLinkStore();
+const tagStore = useTagStore();
 const user = ref<UserModel | undefined>(userStore.user);
 const dialog = useDialog();
 onMounted(async () => {
   const userV = await userStore.getUserDetails();
   user.value = userV;
+  await linkStore.fetchAllLinks();
+  await tagStore.getAllTags();
 });
 
 const items = ref([
@@ -25,7 +31,7 @@ const items = ref([
     }
   },
   {
-    label: 'Box',
+    label: `Box`,
     icon: 'pi pi-star',
     command: () => {
       router.push('/box');
@@ -65,7 +71,7 @@ const items = ref([
     </div>
 
     <div id="footer">
-      <FooterBar class="margins" />
+      <FooterBar />
     </div>
   </div>
 </template>
@@ -75,11 +81,6 @@ const items = ref([
   display: flex;
   flex-direction: column;
   padding-bottom: 24px;
-}
-
-.margins {
-  margin-left: 100px;
-  margin-bottom: 4px;
 }
 
 .footer {

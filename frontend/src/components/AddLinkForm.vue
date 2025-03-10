@@ -61,11 +61,11 @@ async function submit() {
   );
   const categorieIds = pickedTags.value.map((t) => t.id);
   linkStore
-    .addLink(link.value, previewData, categorieIds, false)
+    .createLink(link.value, previewData, categorieIds)
     .then(() => {
       router.push('/');
     })
-    .catch(() => console.log('Error creating link'));
+    .catch(() => console.error('Error creating link'));
 }
 
 async function getPreview(url: string) {
@@ -155,7 +155,7 @@ const filteredTags = computed(() => {
         <p class="font-thin text-sm">No Tags selected</p>
       </div>
     </div>
-    <el-divider />
+    <Divider />
 
     <p class="text-l">Available Tags</p>
     <div class="flex flex-col">
