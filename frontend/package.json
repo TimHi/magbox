@@ -1,6 +1,6 @@
 {
   "name": "magbox",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -21,7 +21,6 @@
     "@primeuix/themes": "^1.0.0",
     "@tailwindcss/vite": "^4.0.9",
     "dayjs": "^1.11.13",
-    "element-plus": "^2.9.1",
     "mdi-vue": "^3.0.13",
     "pinia": "^2.3.0",
     "pocketbase": "^0.25.1",
