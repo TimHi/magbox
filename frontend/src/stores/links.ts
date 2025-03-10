@@ -1,56 +1,44 @@
-// stores/linkStore.js
-
-import { defineStore } from 'pinia';
-import type { LinkModel } from '../model/linkModel';
-import { PocketBaseService } from '../service/pocketBaseService';
-import type { DocumentPreview } from '../model/previewModel';
+import type { LinkModel } from "@/model/linkModel";
+import type { DocumentPreview } from "@/model/previewModel";
+import { PocketBaseService } from "@/service/pocketBaseService";
+import { defineStore } from "pinia";
 
 const pbService = new PocketBaseService();
 export const useLinkStore = defineStore('linkStore', {
-
-  state: () => ({
-    links: [] as LinkModel[]
-  }),
-  actions: {
-    //TODO_THL: tagFKs are not fetched
-    async getLinksFromBackend() {
-      this.links = await pbService.GetLinks();
+    state: () => ({
+        links: [] as LinkModel[]
+    }),
+    actions: {
+        async fetchAllLinks() {
+            const result = await pbService.GetAllLinks();
+            if (result) {
+                this.links = result;
+            }
+        },
+        async updateLink(updatedLink: LinkModel) {
+            const result = await pbService.UpdateLink(updatedLink) as LinkModel;
+            if (result) {
+                const index = this.links.findIndex(link => link.id === updatedLink.id);
+                if (index !== -1) {
+                    this.links[index] = result;
+                }
+            }
+        },
+        async createLink(newLink: string,
+            preview: DocumentPreview | undefined,
+            categories: string[]) {
+            const result = await pbService.CreateLink(newLink, preview, categories);
+            if (result) {
+                this.links.push(result);
+            }
+        }
     },
-
-    async addLink(
-      link: string,
-      preview: DocumentPreview | undefined,
-      categorieIds: string[],
-      read = false
-    ) {
-      const result = await pbService.CreateLink(link, preview, categorieIds, read);
-      if (result) {
-        this.links.push(result);
-      }
-    },
-    async removeLink(id: string) {
-      const result = await pbService.DeleteLinkEntry(id);
-      if (result) {
-        this.links = this.links.filter((v) => v.id !== id);
-      }
-    },
-    async updateLink(link: LinkModel) {
-      const result = await pbService.UpdateLink(link);
-      if (result) {
-        this.links.map((v) => {
-          if (v.id === result.id) {
-            return result;
-          } else {
-            return v;
-          }
-        });
-      }
-    },
-    async getUnsortedLinks(): Promise<LinkModel[]> {
-      return await pbService.GetUnsortedLinks();
-    },
-    async getAllLinks(): Promise<LinkModel[]> {
-      return await pbService.GetLinks();
+    getters: {
+        GetBoxedLinks: (state) => {
+            return state.links.filter(link => link.boxed === true);
+        },
+        GetUnsortedLinks: (state) => {
+            return state.links.filter(link => link.boxed === false);
+        }
     }
-  },
 });
