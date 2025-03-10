@@ -37,17 +37,29 @@ export class PocketBaseService {
     return this.pocketBase.authStore.isValid;
   }
 
-  async GetLinks(): Promise<LinkModel[]> {
-    return await this.pocketBase.collection('links').getFullList({
-      filter: "boxed = true",
-      expand: 'categorie',
-    });
-  } catch(err: unknown) {
-    this.handleAuthError();
-    console.error(err);
-    return [];
+  async GetBoxedLinks(): Promise<LinkModel[]> {
+    try {
+      return await this.pocketBase.collection('links').getFullList({
+        filter: "boxed = true",
+        expand: 'categorie',
+      });
+
+    } catch (err: unknown) {
+      this.handleAuthError();
+      console.error(err);
+      return [];
+    }
   }
 
+  async GetAllLinks(): Promise<LinkModel[]> {
+    try {
+      return await this.pocketBase.collection('links').getFullList({ expand: 'categorie', });
+    } catch (err: unknown) {
+      this.handleAuthError();
+      console.error(err);
+      return [];
+    }
+  }
 
   async GetUnsortedLinks(): Promise<LinkModel[]> {
     try {

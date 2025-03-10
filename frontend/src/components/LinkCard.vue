@@ -1,9 +1,20 @@
 <script setup lang="ts">
 import type { LinkModel } from '@/model/linkModel';
+import type { TagModel } from '@/model/TagModel';
+import { useLinkStore } from '@/stores/links';
 
-defineProps<{
+import { ref } from 'vue';
+
+const props = defineProps<{
   link: LinkModel;
+  tags: TagModel[];
 }>();
+const linkStore = useLinkStore();
+const selectedTags = ref<string[]>([]);
+async function onSubmitTags() {
+  const newLink = { ...props.link, boxed: true, categorie: selectedTags.value };
+  linkStore.updateLink(newLink);
+}
 </script>
 <template>
   <Card
@@ -26,8 +37,26 @@ defineProps<{
       </p>
     </template>
     <template #footer>
-      <div v-if="!link.boxed">
-        <Button label="Box"></Button>
+      <div v-if="!link.boxed" class="flex flex-col gap-2">
+        <MultiSelect
+          v-model="selectedTags"
+          :options="tags"
+          optionLabel="name"
+          optionValue="id"
+          filter
+          placeholder="Select Tags"
+          class="w-full"
+        />
+        <Button
+          :severity="selectedTags.length === 0 ? 'secondary' : 'primary'"
+          size="small"
+          :label="selectedTags.length === 0 ? 'Skip' : 'Submit'"
+          @click="
+            async () => {
+              await onSubmitTags();
+            }
+          "
+        />
       </div>
     </template>
   </Card>

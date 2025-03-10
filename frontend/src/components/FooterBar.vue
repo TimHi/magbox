@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import { ElText } from 'element-plus';
 const appVersion: string = APP_VERSION;
 </script>
 <template>
-    <ElText>Version </ElText>
-    <ElText data-testid="lbl-version-number">{{ appVersion }}</ElText>
-    <ElText> - <a href="https://github.com/TimHi/magbox">Github</a>
-    </ElText>
+  <div class="flex flex-row gap-1">
+    <p class="font-thin">Version</p>
+    <p class="font-thin" data-testid="lbl-version-number">{{ appVersion }}</p>
+    <p class="font-thin"><a href="https://github.com/TimHi/magbox">Github</a></p>
+  </div>
 </template>
-
-<style></style>
