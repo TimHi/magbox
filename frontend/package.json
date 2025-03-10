@@ -22,7 +22,7 @@
     "@tailwindcss/vite": "^4.0.9",
     "dayjs": "^1.11.13",
     "mdi-vue": "^3.0.13",
-    "pinia": "^2.3.0",
+    "pinia": "^3.0.1",
     "pocketbase": "^0.25.1",
     "primeicons": "^7.0.0",
     "primevue": "^4.3.1",
