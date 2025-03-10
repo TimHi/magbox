@@ -16,7 +16,6 @@ export const useUserStore = defineStore('user', {
     async getUserDetails(): Promise<UserModel | undefined> {
 
       const refreshedUser = await this.pb.getUserDetail();
-      console.log(refreshedUser);
       if (refreshedUser !== undefined) {
         this.user = { username: refreshedUser.username, email: refreshedUser.email, isLoggedIn: this.pb.IsUserLoggedIn() };
         return this.user;
