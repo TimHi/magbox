@@ -2,8 +2,6 @@ import './assets/main.css';
 
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
-import ElementPlus from 'element-plus';
-import 'element-plus/dist/index.css';
 import App from './App.vue';
 import Button from 'primevue/button';
 import { useUserStore } from './stores/user';
@@ -28,7 +26,6 @@ app.use(PrimeVue, {
 });
 
 app.component('PButton', Button);
-app.use(ElementPlus);
 app.use(DialogService);
 app.use(createPinia());
 app.use(mdiVue, {
@@ -54,7 +51,6 @@ router.afterEach((to) => {
 });
 
 const userStore = useUserStore();
-
 userStore.$subscribe((_, state) => {
   if (!state.user.isLoggedIn) {
     router.push('/login');
