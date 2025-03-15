@@ -4,6 +4,7 @@ import type { LinkModel } from '../model/linkModel';
 import type { DocumentPreview } from '../model/previewModel';
 import type { TagModel } from '../model/TagModel';
 import type { UserModel } from '@/model/userModel';
+
 export class PocketBaseService {
   private pocketBase: PocketBase;
 
@@ -40,10 +41,9 @@ export class PocketBaseService {
   async GetBoxedLinks(): Promise<LinkModel[]> {
     try {
       return await this.pocketBase.collection('links').getFullList({
-        filter: "boxed = true",
-        expand: 'categorie',
+        filter: 'boxed = true',
+        expand: 'categorie'
       });
-
     } catch (err: unknown) {
       this.handleAuthError();
       console.error(err);
@@ -53,7 +53,7 @@ export class PocketBaseService {
 
   async GetAllLinks(): Promise<LinkModel[]> {
     try {
-      return await this.pocketBase.collection('links').getFullList({ expand: 'categorie', });
+      return await this.pocketBase.collection('links').getFullList({ expand: 'categorie' });
     } catch (err: unknown) {
       this.handleAuthError();
       console.error(err);
@@ -64,7 +64,7 @@ export class PocketBaseService {
   async GetUnsortedLinks(): Promise<LinkModel[]> {
     try {
       return await this.pocketBase.collection('links').getFullList({
-        filter: "boxed = false"
+        filter: 'boxed = false'
       });
     } catch (err: unknown) {
       this.handleAuthError();
@@ -84,8 +84,9 @@ export class PocketBaseService {
   }
 
   async getUserDetail(): Promise<UserModel | undefined> {
-    if (this.pocketBase.authStore.record?.id === undefined) { return undefined; }
-    else {
+    if (this.pocketBase.authStore.record?.id === undefined) {
+      return undefined;
+    } else {
       return await this.pocketBase.collection('users').getOne(this.pocketBase.authStore.record.id);
     }
   }
@@ -143,8 +144,7 @@ export class PocketBaseService {
   }
 
   async UpdateLink(link: LinkModel) {
-    const record = await this.pocketBase.collection('links').update(link.id, link);
-    return record;
+    return await this.pocketBase.collection('links').update(link.id, link);
   }
 
   async DeleteLinkEntry(id: string): Promise<boolean> {
@@ -165,5 +165,14 @@ export class PocketBaseService {
 
   handleAuthError() {
     this.Logout();
+  }
+
+  async setToken(token: string): Promise<void> {
+    if (this.pocketBase.authStore.isValid && this.pocketBase.authStore.record !== null) {
+      const currentUser = { ...this.pocketBase.authStore.record, exttoken: token };
+      await this.pocketBase
+        .collection('users')
+        .update(this.pocketBase.authStore.record.id, currentUser);
+    }
   }
 }

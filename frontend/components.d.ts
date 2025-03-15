@@ -19,6 +19,7 @@ declare module 'vue' {
     Divider: typeof import('primevue/divider')['default']
     DynamicDialog: typeof import('primevue/dynamicdialog')['default']
     FooterBar: typeof import('./src/components/FooterBar.vue')['default']
+    InputText: typeof import('primevue/inputtext')['default']
     LinkCard: typeof import('./src/components/LinkCard.vue')['default']
     LinkDataGrid: typeof import('./src/components/LinkDataGrid.vue')['default']
     LinkTable: typeof import('./src/components/LinkTable.vue')['default']
