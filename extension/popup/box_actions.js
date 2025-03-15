@@ -25,27 +25,36 @@ function listenForClicks() {
       localStorage.setItem("backendurl", link.value);
     }
 
+    //TODO_THL: Refactor
     function sendLink() {
       const backendUrl = localStorage.getItem("backendurl");
       const token = localStorage.getItem("token");
-      const pageUrl = encodeURIComponent(encodeURIComponent(document.URL));
-      const url = new URL(`${backendUrl}/api/collect_link/${token}/${pageUrl}`);
-      if (backendUrl !== null && token !== null) {
-        try {
-          fetch(url)
-            .then((res) => res.json())
-            .then((data) => {
-              if (data.status !== 200) {
-                throw new Error(`Response status: ${data.status}`);
-              }
-            });
-        } catch (error) {
-          console.error(error.message);
+      //Fetch the active tab and send it to the backend
+      browser.tabs.query({ active: true, currentWindow: true }).then((tabs) => {
+        const pageUrl = encodeURIComponent(tabs[0].url);
+        const url = new URL(
+          `${backendUrl}api/collect_link/${token}/${pageUrl}`,
+        );
+        console.log(url.toString());
+        if (backendUrl !== null && token !== null && pageUrl !== null) {
+          try {
+            console.info("Sending link");
+            fetch(url)
+              .then((res) => res.json())
+              .then((data) => {
+                console.info("Response", data);
+              });
+          } catch (error) {
+            console.error(error.message);
+          }
+        } else {
+          console.error("Required parameter is null");
         }
-      }
+      });
     }
 
     if (e.target.id === "send-link") {
+      sendLink();
     }
     if (e.target.id === "set-backend") {
       setLink();
