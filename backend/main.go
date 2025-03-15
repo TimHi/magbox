@@ -50,7 +50,22 @@ func main() {
 			}
 
 			log.Infof("Recceived URL: %s Token: %s", deocdedURL, tokenParameter)
+			log.Infof("Scrape URL: %s", deocdedURL)
+			s, err := goscraper.Scrape(deocdedURL, 3)
 
+			if err != nil {
+				log.Print(err)
+				return e.JSON(http.StatusInternalServerError, "Error Scraping")
+			}
+			log.Infof("Insert URL: %s", deocdedURL)
+
+			// _, err := app.FindCollectionByNameOrId("links")
+			// if err != nil {
+			// 	return e.JSON(http.StatusInternalServerError, "Error inserting link")
+			// }
+
+			record, err := app.FindFirstRecordByData("users", "exttoken", tokenParameter)
+			log.Info(record)
 			return e.JSON(http.StatusOK, "")
 		})
 		return se.Next()
