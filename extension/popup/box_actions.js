@@ -35,18 +35,9 @@ function listenForClicks() {
         const url = new URL(
           `${backendUrl}api/collect_link/${token}/${pageUrl}`,
         );
-        console.log(url.toString());
+
         if (backendUrl !== null && token !== null && pageUrl !== null) {
-          try {
-            console.info("Sending link");
-            fetch(url)
-              .then((res) => res.json())
-              .then((data) => {
-                console.info("Response", data);
-              });
-          } catch (error) {
-            console.error(error.message);
-          }
+          backendRequest(url);
         } else {
           console.error("Required parameter is null");
         }
@@ -63,6 +54,19 @@ function listenForClicks() {
       setToken();
     }
   });
+}
+
+function backendRequest(url) {
+  try {
+    console.info("Sending link");
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+        console.info("Response", data);
+      });
+  } catch (error) {
+    console.error(error.message);
+  }
 }
 
 /**
