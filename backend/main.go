@@ -40,6 +40,19 @@ func main() {
 			return e.JSON(http.StatusOK, s.Preview)
 		})
 
+		se.Router.GET("/api/collect_link/{token}/{url}", func(e *core.RequestEvent) error {
+			tokenParameter := e.Request.PathValue("token")
+			urlParamter := e.Request.PathValue("url")
+			deocdedURL, err := url.QueryUnescape(urlParamter)
+			if err != nil {
+				log.Error(err)
+				return e.JSON(http.StatusInternalServerError, "Error decoding URL")
+			}
+
+			log.Infof("Recceived URL: %s Token: %s", deocdedURL, tokenParameter)
+
+			return e.JSON(http.StatusOK, "")
+		})
 		return se.Next()
 	})
 
