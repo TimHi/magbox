@@ -6,6 +6,7 @@ import { PocketBaseService } from '../service/pocketBaseService';
 import { DocumentPreview } from '../model/previewModel';
 import { useTagStore } from '../stores/tags';
 import type { TagModel } from '../model/TagModel';
+
 const linkStore = useLinkStore();
 const link = ref('');
 const validUrl = ref(false);
@@ -69,14 +70,13 @@ async function submit() {
 }
 
 async function getPreview(url: string) {
-  const result = await pb.GetPreview(url).then((result) => {
+  return await pb.GetPreview(url).then((result) => {
     if (result !== undefined) {
       title.value = result.Title;
       description.value = result.Description;
     }
     return result;
   });
-  return result;
 }
 
 function removeFromPicked(picked: TagModel) {
