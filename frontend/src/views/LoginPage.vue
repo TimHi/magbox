@@ -22,12 +22,23 @@ function login() {
   <div class="descBox">
     <div>
       <h2>Keep track of stuff you want to read later 📔✍️</h2>
+      <h2>
+        Send links directly to your using the
+        <a class="text-green-500" href="https://github.com/TimHi/magbox/releases/tag/ff-ext"
+          >Firefox extension</a
+        >
+        📬
+      </h2>
       <h2>Sort, categorize and filter (WIP)📑</h2>
       <h2>Export to Obsidian (WIP) 📤💎</h2>
-      <h2>Send links directly to your using the browser extension (WIP) 📬</h2>
     </div>
     <div>
-      <Button data-testid="login-button" severity="primary" label="Login" @click="login"></Button>
+      <Button
+        data-testid="login-button"
+        severity="primary"
+        label="Login with Discord"
+        @click="login"
+      ></Button>
     </div>
   </div>
 </template>
