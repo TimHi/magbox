@@ -4,7 +4,6 @@ import type { LinkModel } from '@/model/linkModel';
 defineProps<{
   links: LinkModel[];
 }>();
-
 function randomColor() {
   const letters = '0123456789ABCDEF';
   let color = '#';
@@ -29,6 +28,9 @@ function randomColor() {
       }
     }"
   >
+    <template #empty>
+      <p class="text-xl">No links boxed yet</p>
+    </template>
     <Column header="Preview" class="w-24 h-12">
       <template #body="slotProps">
         <img :src="`${slotProps.data.image}`" class="w-12 rounded" />

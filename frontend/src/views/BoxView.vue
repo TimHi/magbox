@@ -22,7 +22,10 @@ onMounted(async () => {
     <div class="pb-2">
       <p class="font-light">Sort your links</p>
     </div>
-    <div class="flex flex-wrap gap-2">
+    <div v-if="unsortedLinks.length === 0">
+      <p class="text-xl">No unboxed links. Youre good to go!</p>
+    </div>
+    <div v-else class="flex flex-wrap gap-2">
       <div v-for="link in unsortedLinks" :key="link.id">
         <LinkCard :link="link" :key="link.id" :tags="tagsInStore" />
       </div>
