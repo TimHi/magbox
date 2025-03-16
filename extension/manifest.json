@@ -4,7 +4,7 @@
 	"version": "1.0",
 
 	"description": "This addon offers a 'send link' functionality to a MagBox instance. It stores the URL to the instance and your token. Learn more at https://github.com/TimHi/magbox.",
-	"homepage_url": "https://github.com/mdn/webextensions-examples/tree/main/beastify",
+	"homepage_url": "https://magbox.timhi.xyz/",
 	"icons": {
 		"48": "icons/magbox.ico"
 	},

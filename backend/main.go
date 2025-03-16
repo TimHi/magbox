@@ -50,22 +50,37 @@ func main() {
 			}
 
 			log.Infof("Recceived URL: %s Token: %s", deocdedURL, tokenParameter)
-			log.Infof("Scrape URL: %s", deocdedURL)
-			s, err := goscraper.Scrape(deocdedURL, 3)
-
-			if err != nil {
-				log.Print(err)
-				return e.JSON(http.StatusInternalServerError, "Error Scraping")
-			}
-			log.Infof("Insert URL: %s", deocdedURL)
-
-			// _, err := app.FindCollectionByNameOrId("links")
-			// if err != nil {
-			// 	return e.JSON(http.StatusInternalServerError, "Error inserting link")
-			// }
 
 			record, err := app.FindFirstRecordByData("users", "exttoken", tokenParameter)
-			log.Info(record)
+			if record == nil || err != nil {
+				return e.JSON(http.StatusInternalServerError, "User not found for provided Token")
+			}
+
+			log.Infof("Scrape URL: %s", deocdedURL)
+			s, err := goscraper.Scrape(deocdedURL, 3)
+			if err != nil {
+				log.Print(err)
+				return e.JSON(http.StatusInternalServerError, "Error Scraping link")
+			}
+
+			linkCollection, err := app.FindCollectionByNameOrId("links")
+			if err != nil {
+				return e.JSON(http.StatusInternalServerError, "Error getting links collection")
+			}
+
+			newRecord := core.NewRecord(linkCollection)
+			newRecord.Set("title", s.Preview.Name)
+			newRecord.Set("image", s.Preview.Icon)
+			newRecord.Set("link", deocdedURL)
+			newRecord.Set("description", s.Preview.Description)
+			newRecord.Set("userFK", record.Id)
+			log.Info("Saving new record")
+			err = app.Save(newRecord)
+			log.Info(newRecord)
+			log.Info("Saved new record")
+			if err != nil {
+				return e.JSON(http.StatusInternalServerError, "Error getting storing link")
+			}
 			return e.JSON(http.StatusOK, "")
 		})
 		return se.Next()
