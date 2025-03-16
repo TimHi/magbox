@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	log.Info("Start")
+	log.Info("Starting MagBox Backend...")
 	app := pocketbase.New()
 	// go run .\main.go serve --http="localhost:9000" --origins="*"
 	// go run main.go serve --http="localhost:9000"
@@ -34,7 +34,7 @@ func main() {
 			s, err := goscraper.Scrape(deocdedURL, 3)
 
 			if err != nil {
-				log.Print(err)
+				log.Error(err)
 				return e.JSON(http.StatusInternalServerError, "Error Scraping")
 			}
 			return e.JSON(http.StatusOK, s.Preview)
@@ -49,22 +49,21 @@ func main() {
 				return e.JSON(http.StatusInternalServerError, "Error decoding URL")
 			}
 
-			log.Infof("Recceived URL: %s Token: %s", deocdedURL, tokenParameter)
-
 			record, err := app.FindFirstRecordByData("users", "exttoken", tokenParameter)
 			if record == nil || err != nil {
+				log.Error(err)
 				return e.JSON(http.StatusInternalServerError, "User not found for provided Token")
 			}
 
-			log.Infof("Scrape URL: %s", deocdedURL)
 			s, err := goscraper.Scrape(deocdedURL, 3)
 			if err != nil {
-				log.Print(err)
+				log.Error(err)
 				return e.JSON(http.StatusInternalServerError, "Error Scraping link")
 			}
 
 			linkCollection, err := app.FindCollectionByNameOrId("links")
 			if err != nil {
+				log.Error(err)
 				return e.JSON(http.StatusInternalServerError, "Error getting links collection")
 			}
 
@@ -74,14 +73,14 @@ func main() {
 			newRecord.Set("link", deocdedURL)
 			newRecord.Set("description", s.Preview.Description)
 			newRecord.Set("userFK", record.Id)
-			log.Info("Saving new record")
+
 			err = app.Save(newRecord)
-			log.Info(newRecord)
-			log.Info("Saved new record")
+
 			if err != nil {
+				log.Error(err)
 				return e.JSON(http.StatusInternalServerError, "Error getting storing link")
 			}
-			return e.JSON(http.StatusOK, "")
+			return e.JSON(http.StatusOK, "Success!")
 		})
 		return se.Next()
 	})
