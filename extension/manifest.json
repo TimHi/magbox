@@ -1,18 +1,18 @@
 {
 	"manifest_version": 2,
 	"name": "MagBox",
-	"version": "1.0",
+	"version": "1.1",
 
 	"description": "This addon offers a 'send link' functionality to a MagBox instance. It stores the URL to the instance and your token. Learn more at https://github.com/TimHi/magbox.",
 	"homepage_url": "https://magbox.timhi.xyz/",
 	"icons": {
-		"48": "icons/magbox.ico"
+		"48": "icons/magbox-48.png"
 	},
 
 	"permissions": ["activeTab"],
 
 	"browser_action": {
-		"default_icon": "icons/magbox.ico",
+		"default_icon": "icons/magbox-32.png",
 		"default_title": "Magbox",
 		"default_popup": "popup/popup_menu.html"
 	}
