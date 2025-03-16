@@ -10,8 +10,8 @@ function setSettings() {
 }
 
 /**
- * Listen for clicks on the buttons, and send the appropriate message to
- * the content script in the page.
+ * Listen for clicks on the buttons.
+ * Checks which button is clicked and calls the relevant function
  */
 function listenForClicks() {
   document.addEventListener("click", (e) => {
@@ -25,7 +25,6 @@ function listenForClicks() {
       localStorage.setItem("backendurl", link.value);
     }
 
-    //TODO_THL: Refactor
     function sendLink() {
       const backendUrl = localStorage.getItem("backendurl");
       const token = localStorage.getItem("token");
@@ -58,7 +57,6 @@ function listenForClicks() {
 
 function backendRequest(url) {
   try {
-    console.info("Sending link");
     fetch(url)
       .then((res) => res.json())
       .then((data) => {
@@ -69,13 +67,7 @@ function backendRequest(url) {
   }
 }
 
-/**
- * There was an error executing the script.
- * Display the popup's error message, and hide the normal UI.
- */
 function reportExecuteScriptError(error) {
-  document.querySelector("#popup-content").classList.add("hidden");
-  document.querySelector("#error-content").classList.remove("hidden");
   console.error(`Failed to execute Magbox content script: ${error.message}`);
 }
 

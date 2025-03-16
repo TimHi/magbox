@@ -8,6 +8,7 @@ import { useDialog } from 'primevue';
 import AddLinkForm from './components/AddLinkForm.vue';
 import { useLinkStore } from './stores/links';
 import { useTagStore } from './stores/tags';
+import AvatarButton from '@/components/AvatarButton.vue';
 const router = useRouter();
 
 const userStore = useUserStore();
@@ -81,11 +82,5 @@ const items = ref([
   display: flex;
   flex-direction: column;
   padding-bottom: 24px;
-}
-
-.footer {
-  display: flex;
-  position: relative;
-  margin-top: auto;
 }
 </style>
