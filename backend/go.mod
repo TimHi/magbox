@@ -7,7 +7,7 @@ toolchain go1.24.1
 require (
 	github.com/badoux/goscraper v0.0.0-20190827161153-36995ce6b19f
 	github.com/charmbracelet/log v0.4.1
-	github.com/pocketbase/pocketbase v0.26.0
+	github.com/pocketbase/pocketbase v0.26.1
 )
 
 require (
