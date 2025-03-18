@@ -13,7 +13,7 @@ const linkStore = useLinkStore();
 const selectedTags = ref<string[]>([]);
 async function onSubmitTags() {
   const newLink = { ...props.link, boxed: true, categorie: selectedTags.value };
-  linkStore.updateLink(newLink);
+  await linkStore.updateLink(newLink);
 }
 </script>
 <template>

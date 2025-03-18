@@ -1,0 +1,14 @@
+version: '3'
+services:
+  magbox-frontend:
+    hostname: magbox-frontend
+    container_name: 'magbox-frontend'
+    image: 'magbox-frontend:latest'
+    ports:
+      - '1001:1001'
+    networks:
+      - magbox-network
+
+networks:
+  magbox-network:
+    driver: bridge
