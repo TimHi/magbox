@@ -3,7 +3,11 @@ services:
   magbox-frontend:
     hostname: magbox-frontend
     container_name: 'magbox-frontend'
-    image: 'magbox-frontend:latest'
+    build:
+      context: ../frontend
+      dockerfile: ../frontend/Dockerfile
+      args:
+        MODE: ${MODE}  # Pass MODE as a build argument
     ports:
       - '1001:1001'
     networks:
@@ -13,6 +17,9 @@ services:
     hostname: magbox-backend
     container_name: 'magbox-backend'
     image: 'magbox-backend:latest'
+    build:
+      context: ../backend
+      dockerfile: ../backend/Dockerfile
     ports:
       - '9000:9000'
     networks:
