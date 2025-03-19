@@ -22,9 +22,13 @@ npm run dev
 ## e2e
 
 From `docker` folder start backend and frontend containers, then run the playwright e2e tests.
-(Only tested on Windows so far)
+(Only tested on Windows so far):
 ```bash
 $env:MODE="development"; docker-compose up --build
+```
+
+From `e2e` folder start the tests locally using `npx playwright test` or:
+```bash
 docker run --rm --name playwright-tests --network magbox-network --env CI=true --entrypoint npx mcr.microsoft.com/playwright:latest playwright test
 
 ```
