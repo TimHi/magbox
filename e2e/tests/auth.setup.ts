@@ -1,4 +1,4 @@
-import { test as setup } from "@playwright/test";
+import { expect, test as setup } from "@playwright/test";
 
 const authFile = "playwright/.auth/user.json";
 /*
@@ -6,13 +6,13 @@ const authFile = "playwright/.auth/user.json";
   Email test@e2e.dev
   PW: 1234567890
  */
-setup("authenticate", async ({ request }) => {
-  // Send authentication request. Replace with your own.
-  await request.post("localhost:9000", {
-    form: {
-      user: "user",
-      password: "password",
-    },
-  });
-  await request.storageState({ path: authFile });
+setup("authenticate", async ({ page }) => {
+  await page.goto("/");
+  await page.getByPlaceholder("Email").fill("test@e2e.dev");
+  await page.getByPlaceholder("Password").fill("1234567890");
+  await page.getByRole("button", { name: "Login" }).click();
+
+  const linkTable = page.getByTestId("link-table");
+  await expect(linkTable).toBeVisible();
+  await page.context().storageState({ path: authFile });
 });

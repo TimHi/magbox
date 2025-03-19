@@ -16,6 +16,13 @@ export class PocketBaseService {
     return this.pocketBase.authStore.record;
   }
 
+  //Really just used in e2e Tests, idk about sending the pw in clear text
+  async SignInUsingEmail(email: string, password: string): Promise<void> {
+    const user = useUserStore();
+    await this.pocketBase.collection('users').authWithPassword(email, password);
+    user.setLoginStats(this.pocketBase.authStore.isValid);
+  }
+
   async SignInUsingOAuth2(): Promise<void> {
     const user = useUserStore();
     return this.pocketBase

@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { PocketBaseService } from '../service/pocketBaseService';
 import { useUserStore } from '../stores/user';
-import TopAppBar from '@/components/TopAppBar.vue';
 import { ref } from 'vue';
 const user = useUserStore();
 const pb = new PocketBaseService();
 
-const useEmail = ref(false);
+const useEmail = ref(import.meta.env.MODE !== 'production');
 const email = ref<string | undefined>(undefined);
 const password = ref<string | undefined>(undefined);
+
 function login() {
   if (user.user.isLoggedIn) {
     pb.Logout();
@@ -21,7 +21,11 @@ function login() {
   }
 }
 
-function loginWithEmail() {}
+async function loginWithEmail() {
+  if (email.value !== undefined && password.value !== undefined) {
+    await pb.SignInUsingEmail(email.value, password.value);
+  }
+}
 </script>
 <template>
   <div class="h-screen flex flex-col">
@@ -55,12 +59,6 @@ function loginWithEmail() {}
               severity="primary"
               @click="login"
             ></Button>
-            <Button
-              icon="pi pi-envelope"
-              data-testid="login-email-button"
-              severity="primary"
-              @click="() => (useEmail = true)"
-            ></Button>
           </div>
         </div>
         <div v-if="useEmail" class="flex flex-col gap-2 items-center pt-4">
@@ -72,7 +70,7 @@ function loginWithEmail() {}
             placeholder="Password"
             class="w-92"
           />
-          <Button @click="loginWithEmail" label="Login" class="w-92"></Button>
+          <Button @click="async () => await loginWithEmail()" label="Login" class="w-92"></Button>
         </div>
       </template>
     </Card>
