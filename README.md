@@ -19,4 +19,10 @@ Run the frontend:
 npm run dev
 ```
 
-Visit [http://localhost:5173/](http://localhost:5173/)
+## e2e
+
+From `docker` folder start backend and frontend containers:
+(Only tested on Windows so far)
+```bash
+$env:MODE="development"; docker-compose up --build
+```
