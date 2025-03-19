@@ -66,7 +66,7 @@ const items = ref([
     <Menubar v-if="user?.isLoggedIn" :model="items">
       <template #end> <AvatarButton :user="user" /> </template
     ></Menubar>
-    <div class="content">
+    <div>
       <DynamicDialog />
       <RouterView />
     </div>
@@ -77,10 +77,4 @@ const items = ref([
   </div>
 </template>
 
-<style scoped>
-.content {
-  display: flex;
-  flex-direction: column;
-  padding-bottom: 24px;
-}
-</style>
+<style scoped></style>

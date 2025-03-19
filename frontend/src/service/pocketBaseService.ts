@@ -158,9 +158,14 @@ export class PocketBaseService {
   }
 
   Logout() {
+    console.log('Logging out..');
+
     const user = useUserStore();
     user.setLoginStats(false);
-    this.pocketBase.authStore.clear();
+
+    //Somehow logout threw an error that this is undefined
+    const tPB = new PocketBase(import.meta.env.VITE_PB_BACKEND);
+    tPB.authStore.clear();
   }
 
   handleAuthError() {
