@@ -11,7 +11,13 @@ RUN npm install
 
 COPY . .
 
-RUN if [ "$MODE" = "production" ]; then npm run build; else npm run build:dev; fi
+RUN if [ "$MODE" = "production" ]; then \
+      npm run build; \
+    elif [ "$MODE" = "test" ]; then \
+      npm run build:test; \
+    else \
+      npm run build:dev; \
+    fi
 
 # Runtime stage with NGINX
 FROM nginx as runtime

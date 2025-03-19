@@ -29,6 +29,5 @@ $env:MODE="development"; docker-compose up --build
 
 From `e2e` folder start the tests locally using `npx playwright test` or:
 ```bash
-docker run --rm --name playwright-tests --network magbox-network --env CI=true --entrypoint npx mcr.microsoft.com/playwright:latest playwright test
-
+docker run --rm --name playwright-tests --network docker_magbox-network --env CI=true -v "${PWD}:/workspace" -w /workspace --entrypoint npx mcr.microsoft.com/playwright:v1.51.1-jammy playwright test
 ```
