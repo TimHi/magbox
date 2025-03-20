@@ -7,5 +7,8 @@ cd ../backend
 docker build -t magbox-backend .
 
 cd ../docker
-$env:MODE="test"; docker-compose up --build -d
-
+if [ "$OS" = "Windows_NT" ]; then
+  $env:MODE="test"; docker-compose up --build -d
+else
+  MODE="test" docker-compose up --build -d
+fi

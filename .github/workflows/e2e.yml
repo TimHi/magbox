@@ -15,15 +15,22 @@ jobs:
       - name: Set up Docker
         run: |
           chmod +x docker/setup.sh
-          ./docker/setup.sh
+          cd docker
+          ./setup.sh
+
+      - name: Install dependencies
+        run: |
+          cd e2e
+          npm ci
 
       - name: Run Playwright tests
         run: |
+          cd e2e
           docker run --rm \
             --name playwright-tests \
             --network docker_magbox-network \
             --env CI=true \
-            -v "${{ github.workspace }}:/workspace" \
+            -v "${{ github.workspace }}/e2e:/workspace" \
             -w /workspace \
             --entrypoint npx \
             mcr.microsoft.com/playwright:v1.51.1-jammy \
