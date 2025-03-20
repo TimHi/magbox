@@ -25,7 +25,7 @@ From `docker` folder start backend and frontend containers, then run the playwri
 (Only tested on Windows so far):
 ```bash
 $env:MODE="development"; docker-compose up --build
-```
+``` 
 
 From `e2e` folder start the tests locally using `npx playwright test` or:
 ```bash
