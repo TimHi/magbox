@@ -24,8 +24,8 @@ jobs:
           npm ci
 
       - name: Run Playwright tests
+        working-directory: ./e2e
         run: |
-          cd e2e
           docker run --rm \
             --name playwright-tests \
             --network docker_magbox-network \
