@@ -2,14 +2,11 @@
 import type { UserModel } from '@/model/userModel';
 import { PocketBaseService } from '@/service/pocketBaseService';
 import { ref } from 'vue';
+import { useUserStore } from '@/stores/user.ts';
 
 const op = ref();
 const pb = new PocketBaseService();
-
-defineProps<{
-  user: UserModel;
-}>();
-
+const user = useUserStore();
 const token = ref<string | undefined>();
 
 const toggle = (event: any) => {
@@ -28,11 +25,11 @@ const toggle = (event: any) => {
     <div class="flex flex-col gap-2">
       <div class="flex flex-col">
         <p class="text-m">User</p>
-        <p class="font-light text-sm">{{ user.username }}</p>
+        <p class="font-light text-sm">{{ user.user.username }}</p>
         <p class="text-m">E-Mail</p>
         <div class="flex flex-row gap-2 items-center">
           <span class="icon-[solar--letter-broken]"></span>
-          <p class="font-light text-sm">{{ user.email }}</p>
+          <p class="font-light text-sm">{{ user.user.email }}</p>
         </div>
       </div>
 
@@ -57,7 +54,7 @@ const toggle = (event: any) => {
         severity="danger"
         label="Logout"
         data-testid="btn-logout"
-        @click="pb.Logout"
+        @click="async () => pb.Logout()"
       />
     </div>
   </Popover>

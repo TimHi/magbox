@@ -2,6 +2,7 @@
 import { PocketBaseService } from '../service/pocketBaseService';
 import { useUserStore } from '../stores/user';
 import { ref } from 'vue';
+import router from '@/router';
 const user = useUserStore();
 const pb = new PocketBaseService();
 
@@ -9,12 +10,16 @@ const useEmail = ref(import.meta.env.MODE !== 'production');
 const email = ref<string | undefined>(undefined);
 const password = ref<string | undefined>(undefined);
 
-function login() {
+async function login() {
   if (user.user.isLoggedIn) {
-    pb.Logout();
+    await pb.Logout();
+    await router.replace('/login');
   } else {
     try {
-      pb.SignInUsingOAuth2().catch(() => console.error('Login Error'));
+      const success = await pb.SignInUsingOAuth2();
+      if (success) {
+        await router.push('/');
+      }
     } catch (err) {
       console.error(err);
     }
@@ -23,7 +28,10 @@ function login() {
 
 async function loginWithEmail() {
   if (email.value !== undefined && password.value !== undefined) {
-    await pb.SignInUsingEmail(email.value, password.value);
+    const success = await pb.SignInUsingEmail(email.value, password.value);
+    if (success) {
+      await router.push('/');
+    }
   }
 }
 </script>
@@ -57,7 +65,7 @@ async function loginWithEmail() {
               icon="pi pi-discord"
               data-testid="login-button"
               severity="primary"
-              @click="login"
+              @click="async () => login()"
             ></Button>
           </div>
         </div>

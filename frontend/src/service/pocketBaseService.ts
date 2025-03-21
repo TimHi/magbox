@@ -4,6 +4,7 @@ import type { LinkModel } from '../model/linkModel';
 import type { DocumentPreview } from '../model/previewModel';
 import type { TagModel } from '../model/TagModel';
 import type { UserModel } from '@/model/userModel';
+import router from '@/router';
 
 export class PocketBaseService {
   private pocketBase: PocketBase;
@@ -16,29 +17,41 @@ export class PocketBaseService {
     return this.pocketBase.authStore.record;
   }
 
+  //TODO: Refactor this mess
   //Really just used in e2e Tests, idk about sending the pw in clear text
-  async SignInUsingEmail(email: string, password: string): Promise<void> {
+  async SignInUsingEmail(email: string, password: string): Promise<boolean> {
     const user = useUserStore();
     await this.pocketBase.collection('users').authWithPassword(email, password);
     user.setLoginStats(this.pocketBase.authStore.isValid);
+    const userDetails: UserModel | undefined = await this.getUserDetail();
+    if (userDetails === undefined) {
+      user.setLoginStats(false);
+      return false;
+    } else {
+      user.setUser(userDetails);
+    }
+    return this.pocketBase.authStore.isValid;
   }
 
-  async SignInUsingOAuth2(): Promise<void> {
+  async SignInUsingOAuth2(): Promise<boolean> {
     const user = useUserStore();
-    return this.pocketBase
-      .collection('users')
-      .authWithOAuth2({ provider: 'discord' })
-      .then(() => {
-        if (
-          this.pocketBase.authStore.isValid &&
-          this.pocketBase.authStore.token !== undefined &&
-          this.pocketBase.authStore.record
-        ) {
-          user.setLoginStats(true);
-        } else {
-          user.setLoginStats(false);
-        }
-      });
+    await this.pocketBase.collection('users').authWithOAuth2({ provider: 'discord' });
+    if (
+      this.pocketBase.authStore.isValid &&
+      this.pocketBase.authStore.token !== undefined &&
+      this.pocketBase.authStore.record
+    ) {
+      const userDetails: UserModel | undefined = await this.getUserDetail();
+      if (userDetails === undefined) {
+        user.setLoginStats(false);
+      } else {
+        user.setUser(userDetails);
+      }
+      return true;
+    } else {
+      user.setLoginStats(false);
+    }
+    return false;
   }
 
   IsUserLoggedIn(): boolean {
@@ -52,7 +65,7 @@ export class PocketBaseService {
         expand: 'categorie'
       });
     } catch (err: unknown) {
-      this.handleAuthError();
+      await this.handleAuthError();
       console.error(err);
       return [];
     }
@@ -62,7 +75,7 @@ export class PocketBaseService {
     try {
       return await this.pocketBase.collection('links').getFullList({ expand: 'categorie' });
     } catch (err: unknown) {
-      this.handleAuthError();
+      await this.handleAuthError();
       console.error(err);
       return [];
     }
@@ -74,7 +87,7 @@ export class PocketBaseService {
         filter: 'boxed = false'
       });
     } catch (err: unknown) {
-      this.handleAuthError();
+      await this.handleAuthError();
       console.error(err);
       return [];
     }
@@ -84,7 +97,7 @@ export class PocketBaseService {
     try {
       return await this.pocketBase.collection('categories').getFullList();
     } catch (err: unknown) {
-      this.handleAuthError();
+      await this.handleAuthError();
       console.error(err);
       return [];
     }
@@ -132,7 +145,7 @@ export class PocketBaseService {
     try {
       return await this.pocketBase.collection('links').create(data);
     } catch (err: unknown) {
-      this.handleAuthError();
+      await this.handleAuthError();
       console.error(err);
     }
   }
@@ -145,7 +158,7 @@ export class PocketBaseService {
     try {
       return await this.pocketBase.collection('categories').create(data);
     } catch (err: unknown) {
-      this.handleAuthError();
+      await this.handleAuthError();
       console.error(err);
     }
   }
@@ -158,25 +171,24 @@ export class PocketBaseService {
     try {
       return this.pocketBase.collection('links').delete(id);
     } catch (err: unknown) {
-      this.handleAuthError();
+      await this.handleAuthError();
       console.error(err);
       return false;
     }
   }
 
-  Logout() {
-    console.log('Logging out..');
-
+  async Logout() {
     const user = useUserStore();
     user.setLoginStats(false);
 
     //Somehow logout threw an error that this is undefined
     const tPB = new PocketBase(import.meta.env.VITE_PB_BACKEND);
     tPB.authStore.clear();
+    await router.replace('/login');
   }
 
-  handleAuthError() {
-    this.Logout();
+  async handleAuthError() {
+    await this.Logout();
   }
 
   async setToken(token: string): Promise<void> {
