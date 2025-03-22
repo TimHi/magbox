@@ -37,18 +37,14 @@ const handleInputConfirm = async () => {
 };
 
 async function validateURL(url: string) {
-  try {
-    new URL(url);
-    validUrl.value = true;
-    const result = await getPreview(url);
-    result !== undefined
-      ? (preview = result)
-      : (preview = new DocumentPreview('', '', '', '', [], ''));
-    return true;
-  } catch (validationError) {
-    validUrl.value = false;
-    return false;
+  validUrl.value = URL.canParse(url);
+
+  if (!validUrl.value) {
+    preview = new DocumentPreview('', '', '', '', [], '');
+    return;
   }
+
+  preview = (await getPreview(url)) ?? new DocumentPreview('', '', '', '', [], '');
 }
 
 async function submit() {
@@ -80,8 +76,7 @@ async function getPreview(url: string) {
 }
 
 function removeFromPicked(picked: TagModel) {
-  const newList = pickedTags.value.filter((t) => t.id !== picked.id);
-  pickedTags.value = newList;
+  pickedTags.value = pickedTags.value.filter((t) => t.id !== picked.id);
 }
 function addToPicked(picked: TagModel) {
   const isInList = pickedTags.value.find((t) => t.id === picked.id);
@@ -148,8 +143,8 @@ const filteredTags = computed(() => {
     />
     <p class="text-l pt-2">Picked Tags</p>
     <div class="tag-list pt-2" data-testid="li-picked-tags">
-      <div class="tag" v-for="tag in pickedTags" :key="tag.id + '_picked'">
-        <Chip :label="tag.name" @click="removeFromPicked(tag)" />
+      <div class="tag" v-for="pTag in pickedTags" :key="pTag.id + '_picked'">
+        <Chip :label="pTag.name" @click="removeFromPicked(pTag)" />
       </div>
       <div v-if="pickedTags.length === 0" class="pt-2">
         <p class="font-thin text-sm">No Tags selected</p>
@@ -160,8 +155,8 @@ const filteredTags = computed(() => {
     <p class="text-l">Available Tags</p>
     <div class="flex flex-col">
       <div class="tag-list pt-2" data-testid="li-tags">
-        <div class="tag" v-for="tag in filteredTags" :key="tag.id + '_available'">
-          <Chip :label="tag.name" @click="addToPicked(tag)" />
+        <div class="tag" v-for="fTag in filteredTags" :key="fTag.id + '_available'">
+          <Chip :label="fTag.name" @click="addToPicked(fTag)" />
         </div>
       </div>
       <div v-if="inputVisible">
@@ -184,36 +179,28 @@ const filteredTags = computed(() => {
           label="New Tag"
           @click="showInput"
           size="small"
-          variant="outlined"
+          variant="filled"
         />
       </div>
     </div>
-    <Divider />
-    <Button
-      v-if="validUrl"
-      icon="pi pi-check"
-      data-testid="btn-submit-link"
-      label="Submit"
-      @click="submit"
-      size="small"
-      variant="outlined"
-    />
-    <Button
-      label="Back"
-      @click="() => router.back()"
-      size="small"
-      variant="outlined"
-      :fluid="false"
-      :pt="{ root: '!max-w-24' }"
-    />
+    <div v-if="validUrl">
+      <Divider />
+
+      <Button
+        :pt="{ root: '!max-w-24 !min-w-24' }"
+        icon="pi pi-check"
+        :fluid="false"
+        data-testid="btn-submit-link"
+        label="Submit"
+        @click="submit"
+        size="small"
+        variant="filled"
+      />
+    </div>
   </div>
 </template>
 
 <style>
-.darkText {
-  color: var(--color-heading);
-}
-
 .tag-list {
   display: flex;
   flex-direction: row;
@@ -225,9 +212,5 @@ const filteredTags = computed(() => {
   margin-right: 4px;
   margin-bottom: 4px;
   display: flex;
-}
-
-.add-tag {
-  width: 90px;
 }
 </style>

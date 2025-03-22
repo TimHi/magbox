@@ -62,18 +62,34 @@ const items = ref([
 
 <template>
   <Menubar :model="items">
-    <template #end> <AvatarButton /> </template
-  ></Menubar>
+    <template #end>
+      <AvatarButton />
+    </template>
+  </Menubar>
   <div class="m-4">
     <div class="pb-2">
-      <p class="font-light">Sort your links</p>
+      <p class="font-light">
+        Sort your links
+      </p>
     </div>
     <div v-if="unsortedLinks.length === 0">
-      <p class="text-xl">No unboxed links. Youre good to go!</p>
+      <p class="text-xl">
+        No unboxed links. Youre good to go!
+      </p>
     </div>
-    <div v-else class="flex flex-wrap gap-2">
-      <div v-for="link in unsortedLinks" :key="link.id">
-        <LinkCard :link="link" :key="link.id" :tags="tagsInStore" />
+    <div
+      v-else
+      class="flex flex-wrap gap-2"
+    >
+      <div
+        v-for="link in unsortedLinks"
+        :key="link.id"
+      >
+        <LinkCard
+          :link="link"
+          :key="link.id"
+          :tags="tagsInStore"
+        />
       </div>
     </div>
   </div>

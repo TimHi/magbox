@@ -111,18 +111,18 @@ export class PocketBaseService {
     }
   }
 
-  GetPreview(url: string): Promise<DocumentPreview | undefined> {
+  async GetPreview(url: string): Promise<DocumentPreview | undefined> {
     const encodedUrl = encodeURIComponent(encodeURIComponent(url));
     const requestUrl = new URL(import.meta.env.VITE_PB_BACKEND + 'api/url_preview/' + encodedUrl);
 
-    return fetch(requestUrl)
-      .then((res) => res.json())
-      .then((res) => {
-        if (res === 'Error Scraping') {
-          return undefined;
-        }
-        return res as DocumentPreview;
-      });
+    try {
+      const res = await fetch(requestUrl);
+      const data = await res.json();
+      return data === 'Error Scraping' ? undefined : (data as DocumentPreview);
+    } catch (error) {
+      console.error('Error fetching URL preview:', error);
+      return undefined;
+    }
   }
 
   async CreateLink(

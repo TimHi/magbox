@@ -5,5 +5,5 @@ import AddLinkForm from '../components/AddLinkForm.vue';
 </script>
 
 <template>
-    <AddLinkForm />
+  <AddLinkForm />
 </template>

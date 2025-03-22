@@ -33,24 +33,30 @@ const filteredLinks = computed(() => {
 <template>
   <div class="m-4">
     <div class="pb-2">
-      <p class="font-light">These are your collected links. Try filtering them and stuff.</p>
+      <p class="font-light">
+        These are your collected links. Try filtering them and stuff.
+      </p>
     </div>
     <div class="flex flex-row gap-2 pb-2">
       <MultiSelect
         v-model="selectedTag"
         :options="tags"
-        optionLabel="name"
-        optionValue="id"
+        option-label="name"
+        option-value="id"
         placeholder="Select Tags"
         class="w-full md:w-80"
       />
 
       <div class="flex flex-col justify-center">
         <div v-if="showAll">
-          <p class="font-thin">Hide read</p>
+          <p class="font-thin">
+            Hide read
+          </p>
         </div>
         <div v-else>
-          <p class="font-thin">Show all</p>
+          <p class="font-thin">
+            Show all
+          </p>
         </div>
 
         <ToggleSwitch v-model="showAll" />
