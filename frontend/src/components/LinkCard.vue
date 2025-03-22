@@ -27,8 +27,10 @@ async function onSubmitTags() {
         <img
           :src="link.image"
           class="max-h-[2rem] min-h-[2rem] max-w-[2rem] min-w-[2rem] rounded-full"
-        />
-        <p class="flex-1 truncate pl-2 flex-grow">{{ link.title }}</p>
+        >
+        <p class="flex-1 truncate pl-2 flex-grow">
+          {{ link.title }}
+        </p>
       </div>
     </template>
     <template #content>
@@ -37,12 +39,15 @@ async function onSubmitTags() {
       </p>
     </template>
     <template #footer>
-      <div v-if="!link.boxed" class="flex flex-col gap-2">
+      <div
+        v-if="!link.boxed"
+        class="flex flex-col gap-2"
+      >
         <MultiSelect
           v-model="selectedTags"
           :options="tags"
-          optionLabel="name"
-          optionValue="id"
+          option-label="name"
+          option-value="id"
           filter
           placeholder="Select Tags"
           class="w-full"

@@ -27,7 +27,12 @@ async function login() {
       <h1>Magbox 📮</h1>
     </div>
     <div v-if="isAuthenticated">
-      <Button data-testid="btn-logout" severity="primary" @click="login" label="Logout" />
+      <Button
+        data-testid="btn-logout"
+        severity="primary"
+        @click="login"
+        label="Logout"
+      />
     </div>
   </div>
 </template>

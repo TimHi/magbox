@@ -44,33 +44,50 @@ async function loginWithEmail() {
 
       <template #content>
         <div class="flex flex-col items-center gap-4">
-          <p class="text-2xl">Keep track of stuff you want to read later 📔✍️</p>
+          <p class="text-2xl">
+            Keep track of stuff you want to read later 📔✍️
+          </p>
           <p class="text-2xl">
             Send links directly to your using the
-            <a class="text-green-500" href="https://github.com/TimHi/magbox/releases/tag/ff-ext"
-              >Firefox extension</a
-            >
+            <a
+              class="text-green-500"
+              href="https://github.com/TimHi/magbox/releases/tag/ff-ext"
+            >Firefox extension</a>
             📬
           </p>
-          <p class="text-2xl">Sort, categorize and filter (WIP)📑</p>
-          <p class="text-2xl">Export to Obsidian (WIP) 📤💎</p>
+          <p class="text-2xl">
+            Sort, categorize and filter (WIP)📑
+          </p>
+          <p class="text-2xl">
+            Export to Obsidian (WIP) 📤💎
+          </p>
         </div>
       </template>
 
       <template #footer>
         <div class="flex flex-col items-center">
-          <p class="text-xl">Start exploring using</p>
+          <p class="text-xl">
+            Start exploring using
+          </p>
           <div class="flex flex-row gap-4">
             <Button
               icon="pi pi-discord"
               data-testid="login-button"
               severity="primary"
               @click="async () => login()"
-            ></Button>
+            />
           </div>
         </div>
-        <div v-if="useEmail" class="flex flex-col gap-2 items-center pt-4">
-          <InputText v-model="email" size="small" placeholder="Email" class="w-92" />
+        <div
+          v-if="useEmail"
+          class="flex flex-col gap-2 items-center pt-4"
+        >
+          <InputText
+            v-model="email"
+            size="small"
+            placeholder="Email"
+            class="w-92"
+          />
           <InputText
             v-model="password"
             type="password"
@@ -78,7 +95,11 @@ async function loginWithEmail() {
             placeholder="Password"
             class="w-92"
           />
-          <Button @click="async () => await loginWithEmail()" label="Login" class="w-92"></Button>
+          <Button
+            @click="async () => await loginWithEmail()"
+            label="Login"
+            class="w-92"
+          />
         </div>
       </template>
     </Card>

@@ -46,8 +46,10 @@ const items = ref([
 <template>
   <div>
     <Menubar :model="items">
-      <template #end> <AvatarButton /> </template
-    ></Menubar>
+      <template #end>
+        <AvatarButton />
+      </template>
+    </Menubar>
     <LinkDataGrid />
   </div>
 </template>
