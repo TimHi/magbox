@@ -3,12 +3,13 @@ import { computed, ref } from 'vue';
 import LinkTable from './LinkTable.vue';
 import { useTagStore } from '../stores/tags';
 import { useLinkStore } from '@/stores/links';
+import { storeToRefs } from 'pinia';
 
 const linkStore = useLinkStore();
 const tagStore = useTagStore();
 
 const selectedTag = ref<string[]>([]);
-const links = computed(() => linkStore.links);
+const { links } = storeToRefs(linkStore)
 const tags = computed(() => tagStore.tags);
 const showAll = ref(false);
 
