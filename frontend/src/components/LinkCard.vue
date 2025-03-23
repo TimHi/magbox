@@ -19,7 +19,7 @@ async function onSubmitTags() {
 <template>
   <Card
     :pt="{
-      root: 'min-w-64 min-h-32 p-2 max-w-64 justify-between'
+      root: 'min-w-64 min-h-32 p-2 max-w-64 justify-between',
     }"
   >
     <template #header>
@@ -39,10 +39,7 @@ async function onSubmitTags() {
       </p>
     </template>
     <template #footer>
-      <div
-        v-if="!link.boxed"
-        class="flex flex-col gap-2"
-      >
+      <div v-if="!link.boxed" class="flex flex-col gap-2">
         <MultiSelect
           v-model="selectedTags"
           :options="tags"

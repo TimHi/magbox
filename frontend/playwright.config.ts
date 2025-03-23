@@ -20,7 +20,7 @@ const config: PlaywrightTestConfig = {
      * Maximum time expect() should wait for the condition to be met.
      * For example in `await expect(locator).toHaveText();`
      */
-    timeout: 5000
+    timeout: 5000,
   },
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
@@ -41,7 +41,7 @@ const config: PlaywrightTestConfig = {
     trace: 'on-first-retry',
 
     /* Only on CI systems run the tests headless */
-    headless: !!process.env.CI
+    headless: !!process.env.CI,
   },
 
   /* Configure projects for major browsers */
@@ -49,9 +49,9 @@ const config: PlaywrightTestConfig = {
     {
       name: 'chromium',
       use: {
-        ...devices['Desktop Chrome']
-      }
-    }
+        ...devices['Desktop Chrome'],
+      },
+    },
   ],
 
   /* Folder for test artifacts such as screenshots, videos, traces, etc. */
@@ -64,12 +64,14 @@ const config: PlaywrightTestConfig = {
      * Use the preview server on CI for more realistic testing.
     Playwright will re-use the local server if there is already a dev-server running.
      */
-    command: process.env.CI ? 'vite preview --port 5173 --mode test' : 'npm run preview:test',
+    command: process.env.CI
+      ? 'vite preview --port 5173 --mode test'
+      : 'npm run preview:test',
     port: 5173,
     reuseExistingServer: true, //cant reuse due to login fake
     stdout: 'ignore',
-    stderr: 'pipe'
-  }
+    stderr: 'pipe',
+  },
 };
 
 export default config;

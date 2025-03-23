@@ -5,7 +5,7 @@ import { PocketBaseService } from '@/service/pocketBaseService.ts';
 export const useUserStore = defineStore('user', {
   state: () => ({
     pb: new PocketBaseService(),
-    user: { isLoggedIn: false, username: '', email: '' } as UserModel
+    user: { isLoggedIn: false, username: '', email: '' } as UserModel,
   }),
 
   actions: {
@@ -25,12 +25,12 @@ export const useUserStore = defineStore('user', {
         this.user = {
           username: refreshedUser.username,
           email: refreshedUser.email,
-          isLoggedIn: this.pb.IsUserLoggedIn()
+          isLoggedIn: this.pb.IsUserLoggedIn(),
         };
         return this.user;
       } else {
         return undefined;
       }
-    }
-  }
+    },
+  },
 });

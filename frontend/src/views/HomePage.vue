@@ -12,14 +12,14 @@ const items = ref([
     icon: 'pi pi-home',
     command: () => {
       router.push('/');
-    }
+    },
   },
   {
     label: `Box`,
     icon: 'pi pi-star',
     command: () => {
       router.push('/box');
-    }
+    },
   },
   {
     label: 'Add New',
@@ -30,17 +30,17 @@ const items = ref([
         props: {
           header: 'Add Link',
           style: {
-            width: '50vw'
+            width: '50vw',
           },
           breakpoints: {
             '960px': '75vw',
-            '640px': '90vw'
+            '640px': '90vw',
           },
-          modal: true
-        }
+          modal: true,
+        },
       });
-    }
-  }
+    },
+  },
 ]);
 </script>
 <template>

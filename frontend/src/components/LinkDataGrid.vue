@@ -18,13 +18,17 @@ const filteredLinks = computed(() => {
     if (selectedTag.value?.length === 0) return unreadLinks;
     else
       return unreadLinks.filter((link) =>
-        link.categorie.some((categorieFK) => selectedTag.value?.includes(categorieFK))
+        link.categorie.some((categorieFK) =>
+          selectedTag.value?.includes(categorieFK),
+        ),
       );
   } else {
     if (selectedTag.value?.length === 0) return links.value;
     else
       return links.value.filter((link) =>
-        link.categorie.some((categorieFK) => selectedTag.value?.includes(categorieFK))
+        link.categorie.some((categorieFK) =>
+          selectedTag.value?.includes(categorieFK),
+        ),
       );
   }
 });
@@ -49,14 +53,10 @@ const filteredLinks = computed(() => {
 
       <div class="flex flex-col justify-center">
         <div v-if="showAll">
-          <p class="font-thin">
-            Hide read
-          </p>
+          <p class="font-thin">Hide read</p>
         </div>
         <div v-else>
-          <p class="font-thin">
-            Show all
-          </p>
+          <p class="font-thin">Show all</p>
         </div>
 
         <ToggleSwitch v-model="showAll" />
