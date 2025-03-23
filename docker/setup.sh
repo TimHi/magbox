@@ -2,7 +2,7 @@
 #1 - true/false for e2e
 cd ../frontend
 echo "Build frontend"
-docker build -t magbox-frontend --build-arg VITE_ENV=test .
+docker build -t magbox-frontend --build-arg VITE_ENV=$2 .
 
 cd ../backend
 echo "Build backend"
@@ -11,9 +11,9 @@ docker build -t magbox-backend .
 cd ../docker
 echo "Starting Container"
 if [ "$OS" = "Windows_NT" ]; then
-  $env:MODE="test"; docker-compose up --build -d
+  $env:MODE="$2"; docker-compose up --build -d
 else
-  MODE="test" docker-compose up --build -d
+  MODE="$2" docker-compose up --build -d
 fi
 
 if [ "$1" = "true" ]; then
