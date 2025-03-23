@@ -87,7 +87,7 @@ function deleteLink(link: LinkModel) {
       <template #body="slotProps">
         <div class="flex flex-row gap-2">
           <i class="pi pi-pencil" />
-          <i class="pi pi-trash text-red-500!" @click="deleteLink(slotProps.data)" />
+          <i class="pi pi-trash text-red-500!" @click="deleteLink(slotProps.data)" :data-testid="`${slotProps.data.title}-delete-action-button`" />
         </div>
       </template>
     </Column>
