@@ -16,7 +16,7 @@ jobs:
         run: |
           chmod +x docker/setup.sh
           cd docker
-          ./setup.sh
+          ./setup.sh false
 
       - name: Install dependencies
         run: |
