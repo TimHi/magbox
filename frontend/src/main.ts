@@ -43,5 +43,16 @@ const userStore = useUserStore();
 const pb = new PocketBaseService();
 userStore.setLoginStats(pb.IsUserLoggedIn());
 
+router.beforeEach(async (to, _, next) => {
+  const isUserLoggedIn = pb.IsUserLoggedIn();
+  if (to.path !== '/login' && !isUserLoggedIn) {
+    next({ path: '/login' });
+  } else if (to.path === '/login' && isUserLoggedIn) {
+    next({ path: '/' });
+  } else {
+    next();
+  }
+});
+
 app.use(router);
 app.mount('#app');
