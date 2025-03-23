@@ -7,7 +7,7 @@ import type { TagModel } from '../model/TagModel';
 export const useTagStore = defineStore('tagStore', {
   state: () => ({
     pbService: new PocketBaseService(),
-    tags: [] as TagModel[]
+    tags: [] as TagModel[],
   }),
   actions: {
     async getTagsFromBackend() {
@@ -21,12 +21,16 @@ export const useTagStore = defineStore('tagStore', {
       return result;
     },
     doesTagExist(tagName: string) {
-      return this.tags.find((t) => t.name.toLowerCase() === tagName.toLowerCase()) !== undefined;
+      return (
+        this.tags.find(
+          (t) => t.name.toLowerCase() === tagName.toLowerCase(),
+        ) !== undefined
+      );
     },
     async getAllTags(): Promise<TagModel[]> {
       const tags = (await this.pbService.GetTags()) as TagModel[];
       this.tags = tags;
       return tags;
-    }
-  }
+    },
+  },
 });

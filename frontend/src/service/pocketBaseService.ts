@@ -35,7 +35,9 @@ export class PocketBaseService {
 
   async SignInUsingOAuth2(): Promise<boolean> {
     const user = useUserStore();
-    await this.pocketBase.collection('users').authWithOAuth2({ provider: 'discord' });
+    await this.pocketBase
+      .collection('users')
+      .authWithOAuth2({ provider: 'discord' });
     if (
       this.pocketBase.authStore.isValid &&
       this.pocketBase.authStore.token !== undefined &&
@@ -62,7 +64,7 @@ export class PocketBaseService {
     try {
       return await this.pocketBase.collection('links').getFullList({
         filter: 'boxed = true',
-        expand: 'categorie'
+        expand: 'categorie',
       });
     } catch (err: unknown) {
       await this.handleAuthError();
@@ -73,7 +75,9 @@ export class PocketBaseService {
 
   async GetAllLinks(): Promise<LinkModel[]> {
     try {
-      return await this.pocketBase.collection('links').getFullList({ expand: 'categorie' });
+      return await this.pocketBase
+        .collection('links')
+        .getFullList({ expand: 'categorie' });
     } catch (err: unknown) {
       await this.handleAuthError();
       console.error(err);
@@ -84,7 +88,7 @@ export class PocketBaseService {
   async GetUnsortedLinks(): Promise<LinkModel[]> {
     try {
       return await this.pocketBase.collection('links').getFullList({
-        filter: 'boxed = false'
+        filter: 'boxed = false',
       });
     } catch (err: unknown) {
       await this.handleAuthError();
@@ -107,13 +111,17 @@ export class PocketBaseService {
     if (this.pocketBase.authStore.record?.id === undefined) {
       return undefined;
     } else {
-      return await this.pocketBase.collection('users').getOne(this.pocketBase.authStore.record.id);
+      return await this.pocketBase
+        .collection('users')
+        .getOne(this.pocketBase.authStore.record.id);
     }
   }
 
   async GetPreview(url: string): Promise<DocumentPreview | undefined> {
     const encodedUrl = encodeURIComponent(encodeURIComponent(url));
-    const requestUrl = new URL(import.meta.env.VITE_PB_BACKEND + 'api/url_preview/' + encodedUrl);
+    const requestUrl = new URL(
+      import.meta.env.VITE_PB_BACKEND + 'api/url_preview/' + encodedUrl,
+    );
 
     try {
       const res = await fetch(requestUrl);
@@ -129,7 +137,7 @@ export class PocketBaseService {
     link: string,
     preview: DocumentPreview | undefined,
     categories: string[],
-    read = false
+    read = false,
   ): Promise<LinkModel | undefined> {
     const data = {
       link: link,
@@ -139,7 +147,7 @@ export class PocketBaseService {
       read: read,
       categorie: categories,
       title: preview?.Title ?? '',
-      image: (preview?.Images.length ?? 0) > 0 ? preview?.Images[0] : ''
+      image: (preview?.Images.length ?? 0) > 0 ? preview?.Images[0] : '',
     };
 
     try {
@@ -153,7 +161,7 @@ export class PocketBaseService {
   async CreateTag(name: string): Promise<TagModel | undefined> {
     const data = {
       name: name,
-      userFK: this.pocketBase.authStore.model?.id
+      userFK: this.pocketBase.authStore.model?.id,
     };
     try {
       return await this.pocketBase.collection('categories').create(data);
@@ -192,8 +200,14 @@ export class PocketBaseService {
   }
 
   async setToken(token: string): Promise<void> {
-    if (this.pocketBase.authStore.isValid && this.pocketBase.authStore.record !== null) {
-      const currentUser = { ...this.pocketBase.authStore.record, exttoken: token };
+    if (
+      this.pocketBase.authStore.isValid &&
+      this.pocketBase.authStore.record !== null
+    ) {
+      const currentUser = {
+        ...this.pocketBase.authStore.record,
+        exttoken: token,
+      };
       await this.pocketBase
         .collection('users')
         .update(this.pocketBase.authStore.record.id, currentUser);

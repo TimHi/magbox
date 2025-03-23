@@ -28,14 +28,14 @@ const items = ref([
     icon: 'pi pi-home',
     command: () => {
       r.push('/');
-    }
+    },
   },
   {
     label: `Box`,
     icon: 'pi pi-star',
     command: () => {
       r.push('/box');
-    }
+    },
   },
   {
     label: 'Add New',
@@ -46,17 +46,17 @@ const items = ref([
         props: {
           header: 'Add Link',
           style: {
-            width: '50vw'
+            width: '50vw',
           },
           breakpoints: {
             '960px': '75vw',
-            '640px': '90vw'
+            '640px': '90vw',
           },
-          modal: true
-        }
+          modal: true,
+        },
       });
-    }
-  }
+    },
+  },
 ]);
 </script>
 
@@ -68,28 +68,14 @@ const items = ref([
   </Menubar>
   <div class="m-4">
     <div class="pb-2">
-      <p class="font-light">
-        Sort your links
-      </p>
+      <p class="font-light">Sort your links</p>
     </div>
     <div v-if="unsortedLinks.length === 0">
-      <p class="text-xl">
-        No unboxed links. Youre good to go!
-      </p>
+      <p class="text-xl">No unboxed links. Youre good to go!</p>
     </div>
-    <div
-      v-else
-      class="flex flex-wrap gap-2"
-    >
-      <div
-        v-for="link in unsortedLinks"
-        :key="link.id"
-      >
-        <LinkCard
-          :link="link"
-          :key="link.id"
-          :tags="tagsInStore"
-        />
+    <div v-else class="flex flex-wrap gap-2">
+      <div v-for="link in unsortedLinks" :key="link.id">
+        <LinkCard :link="link" :key="link.id" :tags="tagsInStore" />
       </div>
     </div>
   </div>

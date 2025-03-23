@@ -44,7 +44,8 @@ async function validateURL(url: string) {
     return;
   }
 
-  preview = (await getPreview(url)) ?? new DocumentPreview('', '', '', '', [], '');
+  preview =
+    (await getPreview(url)) ?? new DocumentPreview('', '', '', '', [], '');
 }
 
 async function submit() {
@@ -54,7 +55,7 @@ async function submit() {
     title.value,
     description.value,
     preview.Images,
-    preview.Link
+    preview.Link,
   );
   const categorieIds = pickedTags.value.map((t) => t.id);
   linkStore
@@ -86,9 +87,10 @@ function addToPicked(picked: TagModel) {
 async function addNewTag() {
   if (tagStore.doesTagExist(tag.value)) {
     const tagFromList = tagsInStore.value.find(
-      (t) => t.name.toLowerCase() === tag.value.toLowerCase()
+      (t) => t.name.toLowerCase() === tag.value.toLowerCase(),
     );
-    if (tagFromList === undefined) throw new Error('Tag is in store but not found in list');
+    if (tagFromList === undefined)
+      throw new Error('Tag is in store but not found in list');
     addToPicked(tagFromList);
   } else {
     const newTag = await tagStore.addTag(tag.value);
@@ -155,7 +157,11 @@ const filteredTags = computed(() => {
     <p class="text-l">Available Tags</p>
     <div class="flex flex-col">
       <div class="tag-list pt-2" data-testid="li-tags">
-        <div class="tag" v-for="fTag in filteredTags" :key="fTag.id + '_available'">
+        <div
+          class="tag"
+          v-for="fTag in filteredTags"
+          :key="fTag.id + '_available'"
+        >
           <Chip :label="fTag.name" @click="addToPicked(fTag)" />
         </div>
       </div>

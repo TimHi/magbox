@@ -20,16 +20,16 @@ app.use(PrimeVue, {
   theme: {
     preset: Aura,
     options: {
-      darkModeSelector: false || 'none'
-    }
-  }
+      darkModeSelector: false || 'none',
+    },
+  },
 });
 
 app.component('PButton', Button);
 app.use(DialogService);
 app.use(createPinia());
 app.use(mdiVue, {
-  icons: mdijs
+  icons: mdijs,
 });
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component);

@@ -55,20 +55,14 @@ async function loginWithEmail() {
             >Firefox extension</a>
             📬
           </p>
-          <p class="text-2xl">
-            Sort, categorize and filter (WIP)📑
-          </p>
-          <p class="text-2xl">
-            Export to Obsidian (WIP) 📤💎
-          </p>
+          <p class="text-2xl">Sort, categorize and filter (WIP)📑</p>
+          <p class="text-2xl">Export to Obsidian (WIP) 📤💎</p>
         </div>
       </template>
 
       <template #footer>
         <div class="flex flex-col items-center">
-          <p class="text-xl">
-            Start exploring using
-          </p>
+          <p class="text-xl">Start exploring using</p>
           <div class="flex flex-row gap-4">
             <Button
               icon="pi pi-discord"
@@ -78,10 +72,7 @@ async function loginWithEmail() {
             />
           </div>
         </div>
-        <div
-          v-if="useEmail"
-          class="flex flex-col gap-2 items-center pt-4"
-        >
+        <div v-if="useEmail" class="flex flex-col gap-2 items-center pt-4">
           <InputText
             v-model="email"
             size="small"
