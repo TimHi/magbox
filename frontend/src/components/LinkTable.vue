@@ -3,6 +3,7 @@ import type { LinkModel } from '@/model/linkModel';
 import { useDialog } from 'primevue';
 import DeleteDialog, { type DeleteDialogData } from '@/components/dialog/DeleteDialog.vue';
 import { useLinkStore } from '@/stores/links.ts';
+import EditLinkDialog, { type EditLinkDialogData } from '@/components/dialog/EditLinkDialog.vue';
 
 defineProps<{
   links: LinkModel[];
@@ -32,7 +33,27 @@ function deleteLink(link: LinkModel) {
   const d = dialog.open(DeleteDialog, {data});
 }
 
-
+function editLink(link: LinkModel) {
+  const data: EditLinkDialogData = {
+    link,
+    saveCallback: async () => {
+      await linkStore.updateLink(link);
+      d.close();
+    }
+  }
+  const d = dialog.open(EditLinkDialog, {data, props: {
+      header: 'Edit Link',
+      style: {
+        width: '50vw',
+      },
+      breakpoints: {
+        '960px': '75vw',
+        '640px': '90vw',
+      },
+      modal: true,
+    }
+  });
+}
 
 
 </script>
@@ -85,8 +106,8 @@ function deleteLink(link: LinkModel) {
     </Column>
     <Column header="Actions">
       <template #body="slotProps">
-        <div class="flex flex-row gap-2">
-          <i class="pi pi-pencil" />
+        <div class="flex flex-row gap-4">
+          <i class="pi pi-pencil" @click="editLink(slotProps.data)" :data-testid="`${slotProps.data.title}-edit-action-button`" />
           <i class="pi pi-trash text-red-500!" @click="deleteLink(slotProps.data)" :data-testid="`${slotProps.data.title}-delete-action-button`" />
         </div>
       </template>

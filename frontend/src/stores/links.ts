@@ -25,9 +25,7 @@ export const useLinkStore = defineStore('linkStore', {
       }
     },
     async updateLink(updatedLink: LinkModel) {
-      const result = (await this.pbService.UpdateLink(
-        updatedLink,
-      )) as LinkModel;
+      const result: LinkModel = await this.pbService.UpdateLink(updatedLink);
       if (result) {
         const index = this.links.findIndex(
           (link) => link.id === updatedLink.id,

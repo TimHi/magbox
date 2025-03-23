@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed, inject, onMounted, type Ref, ref } from 'vue';
-import router from '../router';
 import { useLinkStore } from '../stores/links';
 import { PocketBaseService } from '../service/pocketBaseService';
 import { DocumentPreview } from '../model/previewModel';

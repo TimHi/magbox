@@ -171,7 +171,7 @@ export class PocketBaseService {
     }
   }
 
-  async UpdateLink(link: LinkModel) {
+  async UpdateLink(link: LinkModel):Promise<LinkModel> {
     return await this.pocketBase.collection('links').update(link.id, link);
   }
 
