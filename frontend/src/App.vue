@@ -25,14 +25,9 @@ watch(user, async (newUser) => {
 
 <template>
   <div>
-    <div>
-      <DynamicDialog />
-      <RouterView />
-    </div>
-
-    <div id="footer">
-      <FooterBar />
-    </div>
+    <DynamicDialog />
+    <RouterView />
+    <FooterBar />
   </div>
 </template>
 

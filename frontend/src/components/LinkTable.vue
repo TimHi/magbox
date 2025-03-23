@@ -1,9 +1,16 @@
 <script setup lang="ts">
 import type { LinkModel } from '@/model/linkModel';
+import { useDialog } from 'primevue';
+import DeleteDialog, { type DeleteDialogData } from '@/components/dialog/DeleteDialog.vue';
+import { useLinkStore } from '@/stores/links.ts';
 
 defineProps<{
   links: LinkModel[];
 }>();
+
+const dialog = useDialog();
+//TODO_THL: as composable
+const linkStore = useLinkStore();
 function randomColor() {
   const letters = '0123456789ABCDEF';
   let color = '#';
@@ -12,6 +19,22 @@ function randomColor() {
   }
   return color;
 }
+
+function deleteLink(link: LinkModel) {
+  const data: DeleteDialogData = {
+    header: `Delete link: '${link.title}'`,
+    description: "Do you want to delete the link? This action can not be reversed.",
+    deleteCallback: async () => {
+      await linkStore.deleteLink(link);
+      d.close();
+    }
+  }
+  const d = dialog.open(DeleteDialog, {data});
+}
+
+
+
+
 </script>
 <template>
   <DataTable
@@ -48,12 +71,12 @@ function randomColor() {
       <template #body="slotProps">
         <div class="flex flex-row gap-2">
           <div
-            v-for="categorie in slotProps.data.expand.categorie"
-            :key="categorie.id"
+            v-for="category in slotProps.data.expand?.categorie"
+            :key="category.id"
             class="flex"
           >
             <Chip
-              :label="categorie.name"
+              :label="category.name"
               :style="{ backgroundColor: randomColor() }"
             />
           </div>
@@ -62,10 +85,10 @@ function randomColor() {
     </Column>
     <Column header="Actions">
       <template #body="slotProps">
-        <a class="underline decoration-green-400"
-           :href="slotProps.data.link"
-        >{{ slotProps.data.title }}
-        </a>
+        <div class="flex flex-row gap-2">
+          <i class="pi pi-pencil" />
+          <i class="pi pi-trash text-red-500!" @click="deleteLink(slotProps.data)" />
+        </div>
       </template>
     </Column>
   </DataTable>

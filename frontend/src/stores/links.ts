@@ -9,6 +9,15 @@ export const useLinkStore = defineStore('linkStore', {
     links: [] as LinkModel[],
   }),
   actions: {
+    async deleteLink(link: LinkModel){
+      const success = await this.pbService.DeleteLinkEntry(link.id);
+      console.log(success);
+      console.log(this.links.length);
+      if(success){
+        this.links = this.links.filter((l) => l.id !== link.id);
+      }
+      console.log(this.links.length);
+    },
     async fetchAllLinks() {
       const result = await this.pbService.GetAllLinks();
       if (result) {

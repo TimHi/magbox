@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
+import { computed, inject, onMounted, type Ref, ref } from 'vue';
 import router from '../router';
 import { useLinkStore } from '../stores/links';
 import { PocketBaseService } from '../service/pocketBaseService';
 import { DocumentPreview } from '../model/previewModel';
 import { useTagStore } from '../stores/tags';
 import type { TagModel } from '../model/TagModel';
+import type { DynamicDialogInstance } from 'primevue/dynamicdialogoptions';
 
 const linkStore = useLinkStore();
 const link = ref('');
@@ -19,6 +20,8 @@ const pb = new PocketBaseService();
 const tagStore = useTagStore();
 const tagsInStore = ref<TagModel[]>([]);
 const pickedTags = ref([] as TagModel[]);
+
+const dialogRef = inject<Ref<DynamicDialogInstance>>('dialogRef');
 
 onMounted(async () => {
   tagsInStore.value = await tagStore.getAllTags();
@@ -61,7 +64,7 @@ async function submit() {
   linkStore
     .createLink(link.value, previewData, categorieIds)
     .then(() => {
-      router.push('/');
+       dialogRef?.value.close();
     })
     .catch(() => console.error('Error creating link'));
 }
