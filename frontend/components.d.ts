@@ -20,6 +20,7 @@ declare module 'vue' {
     Divider: typeof import('primevue/divider')['default']
     DynamicDialog: typeof import('primevue/dynamicdialog')['default']
     EditLinkDialog: typeof import('./src/components/dialog/EditLinkDialog.vue')['default']
+    FloatLabel: typeof import('primevue/floatlabel')['default']
     FooterBar: typeof import('./src/components/FooterBar.vue')['default']
     InputText: typeof import('primevue/inputtext')['default']
     LinkCard: typeof import('./src/components/LinkCard.vue')['default']
