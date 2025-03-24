@@ -7,7 +7,7 @@ toolchain go1.24.1
 require (
 	github.com/badoux/goscraper v0.0.0-20190827161153-36995ce6b19f
 	github.com/charmbracelet/log v0.4.1
-	github.com/pocketbase/pocketbase v0.26.1
+	github.com/pocketbase/pocketbase v0.26.3
 )
 
 require (
@@ -24,7 +24,7 @@ require (
 	github.com/go-logfmt/logfmt v0.6.0 // indirect
 	github.com/go-ozzo/ozzo-validation/v4 v4.3.0 // indirect
 	github.com/go-sql-driver/mysql v1.8.1 // indirect
-	github.com/golang-jwt/jwt/v5 v5.2.1 // indirect
+	github.com/golang-jwt/jwt/v5 v5.2.2 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/lucasb-eyer/go-colorful v1.2.0 // indirect
