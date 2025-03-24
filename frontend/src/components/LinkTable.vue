@@ -21,16 +21,28 @@ function randomColor() {
   return color;
 }
 
+
+
 function deleteLink(link: LinkModel) {
   const data: DeleteDialogData = {
-    header: `Delete link: '${link.title}'`,
-    description: "Do you want to delete the link? This action can not be reversed.",
+    description: "Are you sure you want to delete this? This action cannot be undone.",
     deleteCallback: async () => {
       await linkStore.deleteLink(link);
       d.close();
     }
   }
-  const d = dialog.open(DeleteDialog, {data});
+  const d = dialog.open(DeleteDialog, {data, props: {
+      header: `Delete Link: '${link.title}'`,
+      style: {
+        width: '50vw',
+      },
+      breakpoints: {
+        '960px': '75vw',
+        '640px': '90vw',
+      },
+      modal: true,
+    }
+  });
 }
 
 function editLink(link: LinkModel) {
