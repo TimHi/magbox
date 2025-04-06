@@ -28,6 +28,10 @@ func main() {
 		se.Router.GET("/api/collect_link/{token}/{url}", func(e *core.RequestEvent) error {
 			return api.CollectLinkFromUser(e, app)
 		})
+
+		se.Router.POST("/api/import_bookmarks/{browser}", func(e *core.RequestEvent) error {
+			return api.ImportBookmarks(e, app)
+		})
 		return se.Next()
 	})
 
