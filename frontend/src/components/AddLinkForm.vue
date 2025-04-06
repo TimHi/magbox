@@ -167,7 +167,7 @@ const filteredTags = computed(() => {
           <Chip :label="fTag.name" @click="addToPicked(fTag)" />
         </div>
       </div>
-      <div v-if="inputVisible">
+      <div v-if="inputVisible" class="flex flex-row gap-8">
         <Textarea
           v-model="tag"
           data-testid="input-tag"
@@ -178,6 +178,7 @@ const filteredTags = computed(() => {
           style="resize: none"
           @blur="handleInputConfirm"
         />
+        <Button @click="handleInputConfirm" label="Add" />
       </div>
 
       <div v-else class="pt-2">
@@ -195,14 +196,14 @@ const filteredTags = computed(() => {
       <Divider />
 
       <Button
-        :pt="{ root: '!max-w-24 !min-w-24' }"
+        :pt="{ root: '!max-w-24 !min-w-48' }"
         icon="pi pi-check"
         :fluid="false"
         data-testid="btn-submit-link"
-        label="Submit"
+        label="Submit Link"
         @click="submit"
         size="small"
-        variant="filled"
+        variant="outlined"
       />
     </div>
   </div>
