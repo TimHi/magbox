@@ -37,7 +37,7 @@
     "@iconify/json": "^2.2.335",
     "@iconify/tailwind4": "^1.0.6",
     "@playwright/test": "^1.52.0",
-    "@primevue/auto-import-resolver": "^4.3.3",
+    "@primevue/auto-import-resolver": "^4.3.4",
     "@rushstack/eslint-patch": "^1.11.0",
     "@tsconfig/node18": "^18.2.4",
     "@tsconfig/node22": "^22.0.1",
