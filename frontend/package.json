@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.29.0",
-    "@iconify/json": "^2.2.347",
+    "@iconify/json": "^2.2.349",
     "@iconify/tailwind4": "^1.0.6",
     "@playwright/test": "^1.53.0",
     "@primevue/auto-import-resolver": "^4.3.5",
